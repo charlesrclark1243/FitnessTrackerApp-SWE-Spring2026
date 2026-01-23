@@ -1,24 +1,30 @@
-# CEN5035 (SWE) Spring 2026 - Group Project
+# Fitness Tracker App (CEN5035 SWE Group Project, Spring 2026)
 
 **Date Started:** 2026-01-21
 
 ## Contents
-- [Team](#team)
-- [Proposal](#proposal)
+- [Team Members](#team-members)
+- [Description](#description)
+  - [Stack](#stack)
 - [Usage](#usage)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
   - [How to Use](#how-to-use)
 
-## Team
-- Suhashi N. De Silva
-- Ahmed Ahsan
-- Helen Radomski
-- Charlie Clark
+## Team Members
+- Suhashi N. De Silva (Frontend)
+- Ahmed Ahsan (Frontend)
+- Helen Radomski (Backend)
+- Charlie Clark (Backend)
 
-## Proposal
+## Description
 
-*TODO...*
+Our Fitness Tracker app will allow users to log the workouts and better understand their fitness progress. This includes storing and visualizing workout histories and metrics (BMI, weight, BFP, etc.), as well as a social aspect with progress/milestone sharing and competitive leaderboards. 
+
+### Stack
+
+**Frontend:** Angular (TypeScript) \
+**Backend:** Golang
 
 ## Usage
 
