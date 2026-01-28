@@ -19,7 +19,7 @@
 
 ## Description
 
-Our Fitness Tracker app will allow users to log the workouts and better understand their fitness progress. This includes storing and visualizing workout histories and metrics (BMI, weight, BFP, etc.), as well as a social aspect with progress/milestone sharing and competitive leaderboards. 
+Our Fitness Tracker app will allow users to log the workouts and better understand their fitness progress. This includes storing and visualizing workout histories and metrics (BMI, weight, BFP, etc.), as well as a social aspect with progress/milestone sharing and competitive leaderboards. Giving a plan based on their BMI, weight, BFP, etc. 
 
 ### Stack
 
