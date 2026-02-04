@@ -5,3 +5,11 @@
 # Helen ignore files
 
 # Charlie ignore files
+
+# Go
+backend/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
