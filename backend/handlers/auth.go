@@ -64,18 +64,18 @@ func Register(c *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	// Ensure username is not empty and meets length requirements
-	if len(registerReq.Password) < 6 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Password must be at least 6 characters long."})
+	// Ensure username meets length requirements
+	if len(registerReq.Username) < 6 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Username must be at least 6 characters long."})
 		return
 	} else if len(registerReq.Username) > 50 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Username must not exceed 50 characters."})
 		return
 	}
 
-	// Ensure password is not empty
-	if len(registerReq.Password) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Password cannot be empty."})
+	// Ensure password meets length requirements
+	if len(registerReq.Password) < 6 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Password must be at least 6 characters long."})
 		return
 	}
 
