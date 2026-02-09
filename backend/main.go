@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -40,48 +39,12 @@ func main() {
 
 	// Register endpoint
 	r.POST("/api/auth/register", func(c *gin.Context) {
-		var registerReq handlers.RegisterRequest
+		handlers.Register(c, db)
+	})
 
-		// Bind and validate JSON
-		if err := c.ShouldBindJSON(&registerReq); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
-		// Check if username already exists
-		var existingUser models.User
-		if err := db.Where("username = ?", registerReq.Username).First(&existingUser).Error; err == nil {
-			c.JSON(http.StatusConflict, gin.H{"error": "Username already taken."})
-			return
-		}
-
-		// Hash the password
-		hashedPassword, err := handlers.HashPassword(registerReq.Password)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password."})
-			return
-		}
-
-		// Create new user
-		newUser := models.User{
-			Username:     registerReq.Username,
-			PasswordHash: hashedPassword,
-		}
-
-		// Save new user to database
-		if err := db.Create(&newUser).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create new user."})
-			return
-		}
-
-		// Return success response
-		c.JSON(http.StatusCreated, gin.H{
-			"message": "User registered successfully",
-			"user": gin.H{
-				"id":       newUser.ID,
-				"username": newUser.Username,
-			},
-		})
+	// Login endpoint
+	r.POST("/api/auth/login", func(c *gin.Context) {
+		handlers.Login(c, db)
 	})
 
 	// Start the server

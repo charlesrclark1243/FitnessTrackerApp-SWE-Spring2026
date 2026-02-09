@@ -13,3 +13,4 @@ backend/bin/
 *.dll
 *.so
 *.dylib
+*.db
