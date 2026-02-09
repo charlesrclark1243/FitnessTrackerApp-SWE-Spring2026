@@ -4,9 +4,20 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func main() {
+	// Initialize SQLite database
+	db, err := gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to databse: ", err)
+	}
+
+	// Auto-migrate database models
+	// db.AutoMigrate(&models.User{}, &models.HealthProfile{})
+
 	// Create a new Gin router with default middleware (logger and recovery)
 	r := gin.Default()
 
