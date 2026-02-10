@@ -1,5 +1,7 @@
 # Nihara ignore files
-
+node_modules
+.angular
+dist
 # Ahmed ignore files
 
 # Helen ignore files
