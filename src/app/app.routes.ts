@@ -1,10 +1,28 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login';
-import { RegisterComponent } from './auth/register/register';
+import { LoginComponent } from './features/auth/components/login/login';
+import { RegisterComponent } from './features/auth/components/register/register';
+import { HomeComponent } from './features/home/home';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-  { path: 'auth/login', component: LoginComponent },
-  { path: 'auth/register', component: RegisterComponent },
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/auth/login' }
+  // Protected route - requires authentication
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [authGuard]
+  },
+  // Public routes
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  // Redirect unknown routes to home
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
