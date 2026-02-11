@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, map, switchMap, throwError, of, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 // Interface for user data
@@ -13,6 +13,9 @@ interface User {
   weight?: number;
   dateOfBirth?: string;
   sex?: string;
+  neck?: number;  // cm
+  waist?: number; // cm
+  hips?: number;  // cm (only used for females)
 }
 
 @Injectable({
@@ -21,6 +24,7 @@ interface User {
 export class AuthService {
   // API endpoint - CHANGE THIS to your backend URL
   private apiUrl = 'http://localhost:3000/api/auth';
+
   
   // BehaviorSubject to track current user state
   private currentUserSubject: BehaviorSubject<User | null>;
@@ -111,4 +115,60 @@ export class AuthService {
     // Redirect to login page
     this.router.navigate(['/login']);
   }
+
+  // Dev-only login (no backend needed)
+  devLogin(username: string): void {
+    const user: User = {
+      id: 'dev',
+      username,
+      token: 'dev-token',
+    };
+
+    if (this.isBrowser) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    this.currentUserSubject.next(user);
+  }
+
+
+  updateProfile(profile: {
+    height?: number;
+    weight?: number;
+    dateOfBirth?: string;
+    sex?: string;
+    neck?: number;
+    waist?: number;
+    hips?: number;
+  }): Observable<User> {
+    const user = this.currentUserValue;
+    if (!user) return of(null as unknown as User);
+
+    // local apply function (keeps app state consistent)
+    const applyLocal = (updatedUser: User) => {
+      if (this.isBrowser) {
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      }
+      this.currentUserSubject.next(updatedUser);
+    };
+
+    // API-first: PATCH /api/users/:id
+    return this.http.patch<User>(`http://localhost:3000/api/users/${user.id}`, profile).pipe(
+      tap(updatedUser => applyLocal(updatedUser)),
+
+      // fallback: still update locally if API is down (dev convenience)
+      catchError(() => {
+        const updatedLocal = { ...user, ...profile } as User;
+        applyLocal(updatedLocal);
+        return of(updatedLocal);
+      })
+    );
+  }
+
+
+
+
 }
+
+
+

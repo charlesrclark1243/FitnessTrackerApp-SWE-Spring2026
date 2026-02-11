@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "username": "demo",
+      "password": "demo",
+      "token": "demo-token",
+      "height": 150,
+      "weight": 56,
+      "dateOfBirth": "2001-07-18T04:00:00.000Z",
+      "sex": "female",
+      "neck": 45,
+      "waist": 70,
+      "hips": 90
+    }
+  ]
+}

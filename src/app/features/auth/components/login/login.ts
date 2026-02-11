@@ -58,7 +58,6 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
 
     this.authService.login(
