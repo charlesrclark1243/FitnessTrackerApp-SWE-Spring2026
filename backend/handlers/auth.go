@@ -5,15 +5,11 @@ import (
 	"gorm.io/gorm"
 
 	"net/http"
-	"time"
-
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
+	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
 )
 
-var jwtSecret = []byte("your-secret-key-change-this-in-production")
 
 type registerRequest struct {
 	Username string `json:"username" binding:"required"`
@@ -25,35 +21,6 @@ type loginRequest struct {
 	Password string `json:"password" binding:"required"`
 }
 
-type Claims struct {
-	UserID   uint   `json:"user_id"`
-	Username string `json:"username"`
-	jwt.RegisteredClaims
-}
-
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes), err
-}
-
-func checkPasswordHash(hash, password string) bool {
-	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
-}
-
-func generateJWT(userID uint, username string) (string, error) {
-	claims := Claims{
-		UserID:   userID,
-		Username: username,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), // Token expires in 24 hours
-			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			Issuer:    "fitness-tracker-app",
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtSecret)
-}
 
 func Register(c *gin.Context, db *gorm.DB) {
 	var registerReq registerRequest
@@ -87,7 +54,7 @@ func Register(c *gin.Context, db *gorm.DB) {
 	}
 
 	// Hash the password
-	hashedPassword, err := hashPassword(registerReq.Password)
+	hashedPassword, err := utils.HashPassword(registerReq.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password."})
 		return
@@ -105,10 +72,18 @@ func Register(c *gin.Context, db *gorm.DB) {
 		return
 	}
 
+	//generate token
+	token, err := utils.GenerateToken(newUser.ID, newUser.Username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
+
 	// Return success response
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User registered successfully",
 		"user": gin.H{
+			"token":    token,
 			"id":       newUser.ID,
 			"username": newUser.Username,
 		},
@@ -132,13 +107,13 @@ func Login(c *gin.Context, db *gorm.DB) {
 	}
 
 	// Check password
-	if !checkPasswordHash(user.PasswordHash, loginReq.Password) {
+	if !utils.CheckPasswordHash(user.PasswordHash, loginReq.Password) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password."})
 		return
 	}
 
 	// Generate JWT token
-	token, err := generateJWT(user.ID, user.Username)
+	token, err := utils.GenerateToken(user.ID, user.Username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token."})
 		return
