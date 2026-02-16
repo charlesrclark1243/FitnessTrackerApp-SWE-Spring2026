@@ -2,6 +2,7 @@
 node_modules
 .angular
 dist
+.github
 # Ahmed ignore files
 
 # Helen ignore files
