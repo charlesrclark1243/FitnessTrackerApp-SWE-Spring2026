@@ -9,7 +9,7 @@
 
 ## Authors
 - Suhashi N. De Silva (Frontend)
-- Ahmed Ahsan (Frontend)
+- Ahmed Rageeb Ahsan (Frontend)
 - Helen Radomski (Backend)
 - Charlie Clark (Backend)
 
@@ -28,6 +28,9 @@
 - As a user, I want to log my water consumption, so I can ensure I am hydrated.
 - As a user, I want to track my calories consumed, so I can meet my daily goals.
 - As a user, I want to track my macros (protein, carbs, etc.), so I can ensure I am consuming a balanced diet.
+- As a fitness app user, I want to add and manage friends, so that I can connect with people I know and stay motivated through social support.
+- As a fitness app user, I want to post updates and interact with my friends’ posts, so that I can share my fitness journey and engage with others for encouragement.
+- As a fitness app user, I want to share my progress and achievements with my friends, so that I can stay accountable and motivated by social feedback.
 
 ## Issues to Address
 - Front End:
