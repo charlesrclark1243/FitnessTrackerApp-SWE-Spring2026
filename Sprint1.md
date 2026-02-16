@@ -49,11 +49,16 @@
   - JWT Authentication Middleware
   - User Profile
   - Health Profile CRUD
-  - Staatistics Calculation Endpoint
+  - Statistics Calculation Endpoint
   - Unit Tests
 
 ## What was Completed
-- Scaffolding
+-Scaffolding
+- Authentication Service
+- Authentication Guard
+- Registration Page
+- Login Page
+- Navigation and Logout
 - Gin + GORM + SQLite Setup
 - User Registration Endpoint
 - User Login Endpoint + JWT Gen
