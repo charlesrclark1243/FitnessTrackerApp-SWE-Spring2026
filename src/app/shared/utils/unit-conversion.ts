@@ -1,6 +1,7 @@
 // src/app/shared/utils/unit-conversion.ts
 
-export const LB_PER_KG = 0.45359237;
+export const LB_PER_KG = 2.20462262185;
+export const KG_PER_LB = 0.45359237;
 export const CM_PER_IN = 2.54;
 export const IN_PER_FT = 12;
 export type LengthUnit = 'cm' | 'in';
@@ -8,7 +9,7 @@ export type WeightUnit = 'kg' | 'lbs';
 
 export function lbsToKg(lbs: number | null): number | null {
   if (lbs === null) return null;
-  return lbs / LB_PER_KG;
+  return lbs * KG_PER_LB;
 }
 
 export function kgToLbs(kg: number): number {

@@ -13,7 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { ProfileStatsComponent } from '../profile-stats/profile-stats';
-import { LengthUnit, cmToIn, inToCm, ftInToCm, lbsToKg  } from '../../../shared/utils/unit-conversion';
+import { LengthUnit, cmToIn, inToCm, ftInToCm, cmToFtIn, kgToLbs, lbsToKg  } from '../../../shared/utils/unit-conversion';
 
 
 type HeightUnit = 'cm' | 'ftin';
@@ -76,17 +76,65 @@ export class HealthProfileComponent {
     if (u?.neck != null) this.form.patchValue({ neckCm: u.neck });
     if (u?.waist != null) this.form.patchValue({ waistCm: u.waist });
     if (u?.hips != null) this.form.patchValue({ hipsCm: u.hips });
-  }
+
+    const h = this.form.value.heightCm;
+    if (h != null) {
+    const { ft, inch } = cmToFtIn(h);
+    this.form.patchValue({ heightFt: ft, heightIn: inch }, { emitEvent: false });
+    }
+
+    const w = this.form.value.weightKg;
+    if (w != null) {
+    this.form.patchValue({ weightLbs: this.round1(kgToLbs(w)!) }, { emitEvent: false });
+    }
+}
 
   setHeightUnit(unit: HeightUnit) {
+    if (this.heightUnit === unit) return;
+
+    if (unit === 'ftin') {
+        // cm -> ft/in
+        const cm = this.num(this.form.value.heightCm);
+        if (cm != null) {
+        const { ft, inch } = cmToFtIn(cm);
+        this.form.patchValue({ heightFt: ft, heightIn: inch }, { emitEvent: false });
+        } else {
+        this.form.patchValue({ heightFt: null, heightIn: null }, { emitEvent: false });
+        }
+    } else {
+        // ft/in -> cm
+        const cm = ftInToCm(this.num(this.form.value.heightFt), this.num(this.form.value.heightIn));
+        this.form.patchValue({ heightCm: cm != null ? this.round1(cm) : null }, { emitEvent: false });
+    }
+
     this.heightUnit = unit;
     this.savedMsg = '';
-  }
+    }
+
 
   setWeightUnit(unit: WeightUnit) {
+    if (this.weightUnit === unit) return;
+
+    if (unit === 'lbs') {
+        // kg -> lbs
+        const kg = this.num(this.form.value.weightKg);
+        this.form.patchValue(
+        { weightLbs: kg != null ? this.round1(kgToLbs(kg)!) : null },
+        { emitEvent: false }
+        );
+    } else {
+        // lbs -> kg
+        const kg = lbsToKg(this.num(this.form.value.weightLbs));
+        this.form.patchValue(
+        { weightKg: kg != null ? this.round1(kg) : null },
+        { emitEvent: false }
+        );
+    }
+
     this.weightUnit = unit;
     this.savedMsg = '';
-  }
+    }
+
 
   setCircUnit(unit: LengthUnit) {
     this.circUnit = unit;
@@ -109,6 +157,10 @@ export class HealthProfileComponent {
     const cm = this.circUnit === 'cm' ? n : inToCm(n);
     this.form.get(controlName)?.setValue(cm as any);
 }
+
+  private round1(n: number): number {
+        return Math.round(n * 10) / 10;
+    }
 
 
   save() {
