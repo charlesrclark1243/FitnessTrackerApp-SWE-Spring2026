@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 	
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
