@@ -10,7 +10,6 @@ import (
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/routes"
-	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
 )
 
 func main() {

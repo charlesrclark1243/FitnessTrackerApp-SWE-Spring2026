@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/middleware"
@@ -19,7 +20,7 @@ import (
 )
 
 func setupProfileTestDB(t *testing.T) *gorm.DB {
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent),})
 	if err != nil {
 		t.Fatalf("Failed to connect to test database: %v", err)
 	}
