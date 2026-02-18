@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  <span class="app-title">My Fitness App</span>
+  
+  <span class="spacer"></span>
+  
+  <!-- Show when user is authenticated -->
+  @if (isAuthenticated$ | async) {
+    <span class="username">
+      Welcome, {{ username$ | async }}!
+    </span>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  }
+  
+  <!-- Show when user is NOT authenticated -->
+  @if (!(isAuthenticated$ | async)) {
+    <a mat-button routerLink="/login">Login</a>
+    <a mat-button routerLink="/register">Register</a>
+  }
+</mat-toolbar>

@@ -1,0 +1,33 @@
+<div class="stats-wrap" *ngIf="vm$ | async as vm">
+  <div class="stats-title">Profile Stats</div>
+
+  <ng-container *ngIf="vm.ready; else missingTpl">
+    <div class="stats-grid">
+      <div class="stat-tile">
+        <div class="k">Age</div>
+        <div class="v">{{ vm.age }} <span class="u">yrs</span></div>
+      </div>
+
+      <div class="stat-tile">
+        <div class="k">BMI</div>
+        <div class="v">{{ vm.bmi | number:'1.1-1' }}</div>
+      </div>
+
+      <div class="stat-tile">
+        <div class="k">Deurenberg BFP</div>
+        <div class="v">
+          <ng-container *ngIf="vm.bfp !== null; else naTpl">
+            {{ vm.bfp | number:'1.1-1' }}<span class="u">%</span>
+          </ng-container>
+          <ng-template #naTpl><span class="na">N/A</span></ng-template>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #missingTpl>
+    <div class="missing">
+      Complete your {{ vm.missing.join(', ') }} to see stats.
+    </div>
+  </ng-template>
+</div>
