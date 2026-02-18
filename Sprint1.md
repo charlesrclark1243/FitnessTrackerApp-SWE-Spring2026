@@ -69,7 +69,7 @@
 
 ## What was Completed
 
-Everything listed in [Issues to Address](#issues-to-address) werre completed.
+Everything listed in [Issues to Address](#issues-to-address) was completed.
 
 
 ## What was not Completed
@@ -82,6 +82,7 @@ Everything on the agenda for this sprint was completed.
  - [Registration and Login Demos](https://youtu.be/9Y1C6hkqflg)
  - [Registration/Login Safeguards Demo](https://youtu.be/8tutanrsKT0)
  - [SQLite DB Integration Demo](https://youtu.be/ngLfHvj9ueI)
+ - [JWT middleware, Profile CRUD, Stats Calcluations Demo](https://youtu.be/IfIyOON5vHo)
 
 ### Frontend
 
