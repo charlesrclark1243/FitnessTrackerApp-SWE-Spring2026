@@ -31,6 +31,15 @@
 - As a fitness app user, I want to add and manage friends, so that I can connect with people I know and stay motivated through social support.
 - As a fitness app user, I want to post updates and interact with my friends’ posts, so that I can share my fitness journey and engage with others for encouragement.
 - As a fitness app user, I want to share my progress and achievements with my friends, so that I can stay accountable and motivated by social feedback.
+- As a user, I want to browse a categorized exercise library so that I can easily discover workouts for different muscle groups and fitness goals.
+- As a user, I want to see detailed instructions, images, and tips for each exercise so that I can perform it safely and correctly.
+- As a user, I want to mark exercises as favorites so that I can quickly access them later.
+- As a user, I want to create a personalized workout plan from library exercises so that I can follow a structured routine.
+- As a user, I want to select from ready-made workout plans based on my fitness level so that I can start quickly without designing my own routine.
+- As a user, I want to assign workout plans to specific days so that I can maintain a consistent routine.
+- As a user, I want to record the time spent and exercises completed so that I can track my progress.
+- As a user, I want to see my past workouts in a calendar view so that I can monitor consistency over time.
+- As a user, I want to see trends in workout duration and frequency so that I can evaluate improvement.
 
 ## Issues to Address
 - Front End:
