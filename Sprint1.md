@@ -6,6 +6,9 @@
 3. [Issues to Address](#issues-to-address)
 4. [What was Completed](#what-was-completed)
 5. [What was not Completed](#what-was-not-completed)
+6. [Demos](#demos)
+  1. [Backend](#backend)
+  2. [Frontend](#frontend)
 
 ## Authors
 - Suhashi N. De Silva (Frontend)
@@ -80,6 +83,17 @@
 ## What was not Completed
 
 Everything on the agenda for this sprint was completed.
+
+## Demos
+
+### Backend
+ - [Registration and Login Demos](https://youtu.be/9Y1C6hkqflg)
+ - [Registration/Login Safeguards Demo](https://youtu.be/8tutanrsKT0)
+ - [SQLite DB Integration Demo](https://youtu.be/ngLfHvj9ueI)
+
+### Frontend
+
+
 
 
 
