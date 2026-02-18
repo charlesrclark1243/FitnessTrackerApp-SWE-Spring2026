@@ -56,7 +56,7 @@
   - Unit Tests
 
 ## What was Completed
--Scaffolding
+- Scaffolding
 - Authentication Service
 - Authentication Guard
 - Registration Page
@@ -69,6 +69,8 @@
 
 
 ## What was not Completed
+
+Everything on the agenda for this sprint was completed.
 
 
 
