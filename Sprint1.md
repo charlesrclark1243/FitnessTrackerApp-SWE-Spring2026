@@ -85,8 +85,5 @@ Everything on the agenda for this sprint was completed.
  - [JWT middleware, Profile CRUD, Stats Calcluations Demo](https://youtu.be/IfIyOON5vHo)
 
 ### Frontend
-
-
-
-https://www.youtube.com/watch?v=8I2uSmhJQu8
+ - [Frontend Demo](https://www.youtube.com/watch?v=8I2uSmhJQu8)
 
