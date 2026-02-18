@@ -68,16 +68,8 @@
   - Unit Tests
 
 ## What was Completed
-- Scaffolding
-- Authentication Service
-- Authentication Guard
-- Registration Page
-- Login Page
-- Navigation and Logout
-- Gin + GORM + SQLite Setup
-- User Registration Endpoint
-- User Login Endpoint + JWT Gen
-- User Profile
+
+Everything listed in [Issues to Address](#issues-to-address) werre completed.
 
 
 ## What was not Completed
