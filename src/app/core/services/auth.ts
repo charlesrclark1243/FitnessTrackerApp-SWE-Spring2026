@@ -22,7 +22,7 @@ interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  // API endpoint - CHANGE THIS to your backend URL
+  // API endpoint - CHANGE THIS to your  URL
   private apiUrl = 'http://localhost:3000/api/auth';
 
   
@@ -169,6 +169,7 @@ export class AuthService {
 
 
 }
+
 
 
 
