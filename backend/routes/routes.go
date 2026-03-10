@@ -29,6 +29,10 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 
 			// stats calculation
 			protected.GET("/profile/stats", handlers.GetStats)
+
+			// weight log CRUD
+			protected.POST("/weight", handlers.AddWeightLog)
+			protected.GET("/weight", handlers.GetWeightLogs)
 		}
 	}
 }
