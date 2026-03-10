@@ -6,12 +6,14 @@ import (
 
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
+	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 type AddWeightLogRequest struct {
-	WeightKG float64    `json:"weight_kg" binding:"required,gt=0"`
+	Weight   float64    `json:"weight" binding:"required,gt=0"`
+	Unit     string     `json:"unit"` // "metric" (kg) or "imperial" (lbs), optional
 	LoggedAt *time.Time `json:"logged_at"`
 }
 
@@ -27,6 +29,22 @@ func AddWeightLog(c *gin.Context) {
 		return
 	}
 
+	// Get user's preferred units from health profile
+	var profile models.HealthProfile
+	preferredUnits := "metric" // default
+	if err := database.GetDB().Where("user_id = ?", userID).First(&profile).Error; err == nil {
+		preferredUnits = profile.PreferredUnits
+	}
+
+	// If unit is not specified in request, use user's preferred units
+	unit := req.Unit
+	if unit == "" {
+		unit = preferredUnits
+	}
+
+	// Convert to kg for storage (canonical format)
+	weightKG := utils.ConvertWeightToKg(req.Weight, unit)
+
 	loggedAt := time.Now()
 	if req.LoggedAt != nil {
 		loggedAt = *req.LoggedAt
@@ -34,7 +52,7 @@ func AddWeightLog(c *gin.Context) {
 
 	weightLog := models.WeightLog{
 		UserID:   userID,
-		WeightKG: req.WeightKG,
+		WeightKG: weightKG,
 		LoggedAt: loggedAt,
 	}
 
@@ -55,6 +73,13 @@ func AddWeightLog(c *gin.Context) {
 func GetWeightLogs(c *gin.Context) {
 	userID := c.GetUint("userID")
 
+	// Get user's preferred units from health profile
+	var profile models.HealthProfile
+	preferredUnits := "metric" // default
+	if err := database.GetDB().Where("user_id = ?", userID).First(&profile).Error; err == nil {
+		preferredUnits = profile.PreferredUnits
+	}
+
 	var weightLogs []models.WeightLog
 	result := database.GetDB().Where(
 		"user_id = ?", userID,
@@ -70,7 +95,27 @@ func GetWeightLogs(c *gin.Context) {
 		return
 	}
 
+	// Convert weights to user's preferred units for display
+	type WeightLogResponse struct {
+		ID       uint      `json:"id"`
+		UserID   uint      `json:"user_id"`
+		Weight   float64   `json:"weight"`
+		Unit     string    `json:"unit"`
+		LoggedAt time.Time `json:"logged_at"`
+	}
+
+	response := make([]WeightLogResponse, len(weightLogs))
+	for i, log := range weightLogs {
+		response[i] = WeightLogResponse{
+			ID:       log.ID,
+			UserID:   log.UserID,
+			Weight:   utils.ConvertWeightFromKg(log.WeightKG, preferredUnits),
+			Unit:     preferredUnits,
+			LoggedAt: log.LoggedAt,
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{
-		"entries": weightLogs,
+		"entries": response,
 	})
 }
