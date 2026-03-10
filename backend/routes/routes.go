@@ -12,7 +12,7 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 	api := router.Group("/api")
 	{
 		//public endpoints
-		api.POST("/auth/register/", func(c *gin.Context) {
+		api.POST("/auth/register", func(c *gin.Context) {
 			handlers.Register(c, db)
 		})
 		api.POST("/auth/login", func(c *gin.Context) {

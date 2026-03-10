@@ -2,7 +2,9 @@ package main
 
 import (
 	"log"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
@@ -15,6 +17,16 @@ func main() {
 
 	// Create a new Gin router with default middleware (logger and recovery)
 	r := gin.Default()
+
+	// Configure CORS to allow frontend access
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:4200"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	// Define routes
 	r.GET("/", func(c *gin.Context) {

@@ -5,11 +5,11 @@ import (
 	"gorm.io/gorm"
 
 	"net/http"
+	"time"
 
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
 )
-
 
 type registerRequest struct {
 	Username string `json:"username" binding:"required"`
@@ -20,7 +20,6 @@ type loginRequest struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
-
 
 func Register(c *gin.Context, db *gorm.DB) {
 	var registerReq registerRequest
@@ -79,15 +78,35 @@ func Register(c *gin.Context, db *gorm.DB) {
 		return
 	}
 
+	// Try to get profile if it exists
+	var profile models.HealthProfile
+	response := gin.H{
+		"id":       newUser.ID,
+		"username": newUser.Username,
+		"token":    token,
+	}
+
+	if err := db.Where("user_id = ?", newUser.ID).First(&profile).Error; err == nil {
+		// Profile exists, add profile fields to response
+		if profile.DateOfBirth != nil {
+			response["dateOfBirth"] = profile.DateOfBirth.Format(time.RFC3339)
+		}
+		response["sex"] = profile.Sex
+		response["height"] = profile.HeightCM
+		response["weight"] = profile.WeightKG
+		if profile.NeckCM != nil {
+			response["neck"] = *profile.NeckCM
+		}
+		if profile.WaistCM != nil {
+			response["waist"] = *profile.WaistCM
+		}
+		if profile.HipsCM != nil {
+			response["hips"] = *profile.HipsCM
+		}
+	}
+
 	// Return success response
-	c.JSON(http.StatusCreated, gin.H{
-		"message": "User registered successfully",
-		"user": gin.H{
-			"token":    token,
-			"id":       newUser.ID,
-			"username": newUser.Username,
-		},
-	})
+	c.JSON(http.StatusCreated, response)
 }
 
 func Login(c *gin.Context, db *gorm.DB) {
@@ -119,13 +138,33 @@ func Login(c *gin.Context, db *gorm.DB) {
 		return
 	}
 
+	// Get profile data if it exists
+	var profile models.HealthProfile
+	response := gin.H{
+		"id":       user.ID,
+		"username": user.Username,
+		"token":    token,
+	}
+
+	if err := db.Where("user_id = ?", user.ID).First(&profile).Error; err == nil {
+		// Profile exists, add profile fields to response
+		if profile.DateOfBirth != nil {
+			response["dateOfBirth"] = profile.DateOfBirth.Format(time.RFC3339)
+		}
+		response["sex"] = profile.Sex
+		response["height"] = profile.HeightCM
+		response["weight"] = profile.WeightKG
+		if profile.NeckCM != nil {
+			response["neck"] = *profile.NeckCM
+		}
+		if profile.WaistCM != nil {
+			response["waist"] = *profile.WaistCM
+		}
+		if profile.HipsCM != nil {
+			response["hips"] = *profile.HipsCM
+		}
+	}
+
 	// Return success response with token
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Login successful",
-		"token":   token,
-		"user": gin.H{
-			"id":       user.ID,
-			"username": user.Username,
-		},
-	})
+	c.JSON(http.StatusOK, response)
 }
