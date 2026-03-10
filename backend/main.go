@@ -2,33 +2,19 @@ package main
 
 import (
 	"log"
-	
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	
+
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
-	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/routes"
 )
 
 func main() {
-	// Initialize database
-	db, err := gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
-	if err != nil {
-		log.Fatal("Failed to connect to database:", err)
-	}
-	log.Println("Database connected successfully")
+	// Initialize the database connection and perform migrations
+	database.Connect()
 
-	database.DB = db
-
-	// Auto-migrate database models
-	db.AutoMigrate(&models.User{}, &models.HealthProfile{})
-	log.Println("Migrations completed successfully")
-
-	//Create a new Gin router with default middleware (logger and recovery)
+	// Create a new Gin router with default middleware (logger and recovery)
 	r := gin.Default()
-
 
 	// Define routes
 	r.GET("/", func(c *gin.Context) {
@@ -39,8 +25,7 @@ func main() {
 		c.JSON(200, gin.H{"status": "OK"})
 	})
 
-
-	routes.SetupRoutes(r, db)
+	routes.SetupRoutes(r, database.GetDB())
 
 	log.Println("Server starting on :8080")
 	if err := r.Run(":8080"); err != nil {
