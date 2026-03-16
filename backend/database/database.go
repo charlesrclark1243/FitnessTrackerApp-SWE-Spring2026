@@ -35,6 +35,7 @@ func Connect() {
 	err = DB.AutoMigrate(
 		&models.User{},
 		&models.HealthProfile{},
+		&models.WaterIntake{},
 		&models.WeightLog{},
 	)
 
