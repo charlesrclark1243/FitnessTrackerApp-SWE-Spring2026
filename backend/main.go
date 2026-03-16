@@ -23,7 +23,11 @@ func main() {
 	database.DB = db
 
 	// Auto-migrate database models
-	db.AutoMigrate(&models.User{}, &models.HealthProfile{})
+	db.AutoMigrate(
+		&models.User{}, 
+		&models.HealthProfile{},
+		&models.WaterIntake{},
+	)
 	log.Println("Migrations completed successfully")
 
 	//Create a new Gin router with default middleware (logger and recovery)

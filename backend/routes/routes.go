@@ -29,6 +29,12 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			
 			// stats calculation
 			protected.GET("/profile/stats", handlers.GetStats)
+
+			// water intake
+			protected.POST("/water", handlers.LogWaterIntake)
+			protected.GET("/water", handlers.GetWaterIntakeLogs)
+			protected.GET("/water/summary", handlers.GetDailySummary)
+			protected.DELETE("/water/:id", handlers.DeleteWaterLog)
 		}
 	}
 }
