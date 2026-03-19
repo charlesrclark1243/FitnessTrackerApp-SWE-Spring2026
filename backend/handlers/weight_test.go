@@ -243,6 +243,53 @@ func TestAddWeightLog_CustomLoggedAt(t *testing.T) {
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
+	requestStartedAt := time.Now()
+
+	router.ServeHTTP(w, req)
+	requestFinishedAt := time.Now()
+
+	if w.Code != http.StatusOK {
+		t.Errorf("Expected status 200, got %d. Body: %s", w.Code, w.Body.String())
+	}
+
+	// Verify server time was used (custom client time is ignored)
+	var weightLog models.WeightLog
+	db.First(&weightLog)
+	if weightLog.LoggedAt.Before(requestStartedAt) || weightLog.LoggedAt.After(requestFinishedAt.Add(1*time.Second)) {
+		t.Errorf("Expected logged_at to use server time between %v and %v, got %v", requestStartedAt, requestFinishedAt, weightLog.LoggedAt)
+	}
+
+	if weightLog.LoggedAt.Equal(customTime) {
+		t.Errorf("Expected logged_at to ignore client custom time %v", customTime)
+	}
+}
+
+func TestModifyLastWeight_Success(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	db := setupWeightTestDB(t)
+	token := createWeightTestUser(t, db, 1, "testuser", "metric")
+
+	// Seed a single log to modify
+	original := models.WeightLog{
+		UserID:   1,
+		WeightKG: 70.0,
+		LoggedAt: time.Now().Add(-1 * time.Hour),
+	}
+	db.Create(&original)
+
+	router := gin.New()
+	router.Use(middleware.AuthMiddleware())
+	router.POST("/weight/modify", ModifyLastWeight)
+
+	body := map[string]interface{}{
+		"weight": 72.5,
+		"unit":   "metric",
+	}
+	jsonBody, _ := json.Marshal(body)
+	req := httptest.NewRequest("POST", "/weight/modify", bytes.NewBuffer(jsonBody))
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
 
 	router.ServeHTTP(w, req)
 
@@ -250,11 +297,120 @@ func TestAddWeightLog_CustomLoggedAt(t *testing.T) {
 		t.Errorf("Expected status 200, got %d. Body: %s", w.Code, w.Body.String())
 	}
 
-	// Verify custom timestamp was used
-	var weightLog models.WeightLog
-	db.First(&weightLog)
-	if !weightLog.LoggedAt.Equal(customTime) {
-		t.Errorf("Expected logged_at %v, got %v", customTime, weightLog.LoggedAt)
+	var updated models.WeightLog
+	db.First(&updated, original.ID)
+	if updated.WeightKG != 72.5 {
+		t.Errorf("Expected updated weight 72.5 kg, got %v", updated.WeightKG)
+	}
+}
+
+func TestModifyLastWeight_NoLogs(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	db := setupWeightTestDB(t)
+	token := createWeightTestUser(t, db, 1, "testuser", "metric")
+
+	router := gin.New()
+	router.Use(middleware.AuthMiddleware())
+	router.POST("/weight/modify", ModifyLastWeight)
+
+	body := map[string]interface{}{
+		"weight": 72.5,
+		"unit":   "metric",
+	}
+	jsonBody, _ := json.Marshal(body)
+	req := httptest.NewRequest("POST", "/weight/modify", bytes.NewBuffer(jsonBody))
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+
+	router.ServeHTTP(w, req)
+
+	if w.Code != http.StatusNotFound {
+		t.Errorf("Expected status 404 when no logs exist, got %d. Body: %s", w.Code, w.Body.String())
+	}
+}
+
+func TestModifyLastWeight_UserIsolation(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	db := setupWeightTestDB(t)
+	token1 := createWeightTestUser(t, db, 1, "user1", "metric")
+	createWeightTestUser(t, db, 2, "user2", "metric")
+
+	log1 := models.WeightLog{UserID: 1, WeightKG: 70.0, LoggedAt: time.Now()}
+	log2 := models.WeightLog{UserID: 2, WeightKG: 80.0, LoggedAt: time.Now()}
+	db.Create(&log1)
+	db.Create(&log2)
+
+	router := gin.New()
+	router.Use(middleware.AuthMiddleware())
+	router.POST("/weight/modify", ModifyLastWeight)
+
+	body := map[string]interface{}{
+		"weight": 71.0,
+		"unit":   "metric",
+	}
+	jsonBody, _ := json.Marshal(body)
+	req := httptest.NewRequest("POST", "/weight/modify", bytes.NewBuffer(jsonBody))
+	req.Header.Set("Authorization", "Bearer "+token1)
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+
+	router.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("Expected status 200, got %d. Body: %s", w.Code, w.Body.String())
+	}
+
+	var user1Log models.WeightLog
+	db.First(&user1Log, log1.ID)
+	if user1Log.WeightKG != 71.0 {
+		t.Errorf("Expected user1 weight to be updated to 71.0, got %v", user1Log.WeightKG)
+	}
+
+	var user2Log models.WeightLog
+	db.First(&user2Log, log2.ID)
+	if user2Log.WeightKG != 80.0 {
+		t.Errorf("Expected user2 weight to remain 80.0, got %v", user2Log.WeightKG)
+	}
+}
+
+func TestModifyLastWeight_DefaultsToPreferredUnits(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	db := setupWeightTestDB(t)
+	token := createWeightTestUser(t, db, 1, "testuser", "imperial")
+
+	original := models.WeightLog{
+		UserID:   1,
+		WeightKG: 90.0,
+		LoggedAt: time.Now().Add(-1 * time.Hour),
+	}
+	db.Create(&original)
+
+	router := gin.New()
+	router.Use(middleware.AuthMiddleware())
+	router.POST("/weight/modify", ModifyLastWeight)
+
+	// No unit specified -> should default to preferred imperial units
+	body := map[string]interface{}{
+		"weight": 220.462262185,
+	}
+	jsonBody, _ := json.Marshal(body)
+	req := httptest.NewRequest("POST", "/weight/modify", bytes.NewBuffer(jsonBody))
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+
+	router.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("Expected status 200, got %d. Body: %s", w.Code, w.Body.String())
+	}
+
+	var updated models.WeightLog
+	db.First(&updated, original.ID)
+	expectedKG := 100.0
+	if updated.WeightKG < expectedKG-0.01 || updated.WeightKG > expectedKG+0.01 {
+		t.Errorf("Expected updated weight ~100 kg (from preferred imperial), got %v", updated.WeightKG)
 	}
 }
 

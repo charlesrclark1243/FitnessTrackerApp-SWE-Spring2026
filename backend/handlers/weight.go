@@ -52,10 +52,9 @@ func AddWeightLog(c *gin.Context) {
 	// Convert to kg for storage (canonical format)
 	weightKG := utils.ConvertWeightToKg(req.Weight, unit)
 
+	// Server is the source of truth for log time.
+	// Any client-supplied logged_at is intentionally ignored.
 	loggedAt := time.Now()
-	if req.LoggedAt != nil {
-		loggedAt = *req.LoggedAt
-	}
 
 	weightLog := models.WeightLog{
 		UserID:   userID,
@@ -144,9 +143,17 @@ func ModifyLastWeight(c *gin.Context) {
 		"logged_at DESC",
 	).Limit(1).Find(&weightLogs)
 
-	if result.Error != nil || len(weightLogs) == 0 {
+	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to fetch weight logs: " + result.Error.Error(),
+		})
+
+		return
+	}
+
+	if len(weightLogs) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "No weight logs found to modify",
 		})
 
 		return

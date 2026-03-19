@@ -32,7 +32,7 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 
 			// weight log CRUD
 			protected.PUT("/weight/add", handlers.AddWeightLog)
-			protected.GET("/weight/get", handlers.GetWeightLogs)
+			protected.GET("/weight/logs", handlers.GetWeightLogs)
 			protected.POST("/weight/modify", handlers.ModifyLastWeight)
 		}
 	}
