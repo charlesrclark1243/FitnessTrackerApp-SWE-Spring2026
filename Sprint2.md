@@ -74,7 +74,7 @@ Allows a user to add a datapoint to their weight log.
 {
     "weight":    WEIGHT,   # required
     "unit":      UNIT,     # optional, "metric" (default) or "imperial"
-    "logged_at": DATETIME  # optional, usually handled automatically
+    "logged_at": DATETIME  # optional, handled automatically
 }
 ```
 
@@ -92,6 +92,10 @@ Allows a user to modify the most recent datapoint in their weight log (useful fo
 {
     "weight":    NEW_WEIGHT, # required
     "unit":      UNIT,       # optional, "metric" (default) or "imperial"
-    "logged_at": DATETIME    # optional, usually handled automatically
+    "logged_at": DATETIME    # optional, handled automatically
 }
 ```
+
+## Demo
+
+ADD LINK HERE
