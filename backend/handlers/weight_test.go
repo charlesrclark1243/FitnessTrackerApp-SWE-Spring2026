@@ -459,7 +459,7 @@ func TestGetWeightLogs_OrderedDescending(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &response)
 
 	entries := response["entries"]
-	
+
 	// Verify entries are ordered by logged_at DESC (most recent first)
 	if entries[0]["weight"] != 72.0 {
 		t.Errorf("Expected most recent weight (72.0) first, got %v", entries[0]["weight"])
