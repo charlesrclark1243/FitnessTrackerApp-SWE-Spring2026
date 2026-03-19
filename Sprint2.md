@@ -36,14 +36,40 @@
 
 ## Frontend Unit Test List
 
-| Test Description | File | Pass/Fail |
-| ---------------- | ---- | --------- |
+| Name | Description | File | Pass/Fail |
+| ---- | ----------- | ---- | --------- |
 
 
 ## Backend Unit Test List
 
-| Test Description | File | Pass/Fail |
-| ---------------- | ---- | --------- |
+| Name | Description | File | Pass/Fail |
+| ---- | ----------- | ---- | --------- |
+| TestRegister_Success | Test registration using valid inputs | `backend/handlers/auth_test.go` | PASS |
+| TestRegister_DuplicateUsername | Test registration using a username that's already in use | `backend/handlers/auth_test.go` | PASS |
+| TestRegister_ShortUsername | Test registration using a username that's too short to pass length validation | `backend/handlers/auth_test.go` | PASS |
+| TestRegister_ShortPassword | Test registration using a password that's too short to pass length validation | `backend/handlers/auth_test.go` | PASS |
+| TestLogin_Success | Test login using valid inputs | `backend/handlers/auth_test.go` | PASS |
+| TestLogin_WrongPassword | Test login using an incorrect password | `backend/handlers/auth_test.go` | PASS |
+| TestLogin_NonexistentUser | Test login for a user that doesn't exist | `backend/handlers/auth_test.go` | PASS |
+| TestAddWeightLog_Success_Metric | Test weight log addition using valid inputs (metric system) | `backend/handlers/weight_test.go` | PASS |
+| TestAddWeightLog_Success_Imperial | Test weight log addition using valid inputs (imperial system) | `backend/handlers/weight_test.go` | PASS |
+| TestAddWeightLog_DefaultsToPreferredUnits| Test weight log addition using valid inputs (default system) | `backend/handlers/weight_test.go` | PASS |
+| TestAddWeightLog_InvalidWeight | Test weight log addition using an invalid weight input | `backend/handlers/weight_test.go` | PASS |
+| TestAddWeightLog_MissingWeight | Test weight log addition without including a weight input in the JSON body | `backend/handlers/weight_test.go` | PASS |
+| TestTestAddWeightLog_CustomLoggedAt | Test weight log addition when a custom logged-at input is included (should be ignored) | `backend/handlers/weight_test.go` | PASS |
+| TestModifyLastWeight_Success | Test last weight log modification using valid inputs | `backend/handlers/weight_test.go` | PASS |
+| TestModifyLastWeight_NoLogs | Test last weight log modification when the weight log record is empty | `backend/handlers/weight_test.go` | PASS |
+| TestModifyLastWeight_UserIsolation | Test last weight log modification under auth isolation | `backend/handlers/weight_test.go` | PASS | 
+| TestModifyLastWeight_DefaultsToPreferredUnits | Test weight log modification using valid inputs (defult system) | `backend/handlers/weight_test.go` | PASS |
+| TestGetWeightLogs_Success_Metric | Test recent weight log retrieval using valid inputs (metric system) | `backend/handlers/weight_test.go` | PASS |
+| TestGetWeightLogs_Success_Imperial | Test recent weight log retrieval using valid inputs (imperial system) | `backend/handlers/weight_test.go` | PASS |
+| TestGetWeightLogs_Empty | Test recent weight log retrieval when the weight logs record is empty | `backend/handlers/weight_test.go` | PASS |
+| TestGetWeightLogs_UserIsolation | Test recent weight log retrieval under auth isolation | `backend/handlers/weight_test.go` | PASS |
+| TestGetWeightLogs_OrderDescending | Test recent weight log retrieval to ensure descending order (newest first) | `backend/handlers/weight_test.go` | PASS |
+| TestLbsToKg | Tests accurate conversion from pounds (lbs) to kilograms (kg) | `backend/utils/units_test.go` | PASS |
+| TestKgToLvs | Tests accurate conversion from kilograms (kg) to pounds (lbs) | `backend/utils/units_test.go` | PASS |
+| TestConvertWeightToKg | Tests accurate weight conversion to kilograms (kg) regardless of starting unit | `backend/utils/units_test.go` | PASS |
+| TestConvertWeightFromKg | Tests accurate weight conversion from kilograms (kg) regardless of ending unit | `backend/utils/units_test.go` | PASS |
 
 ## API Documentation
 
