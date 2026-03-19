@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
 	"gorm.io/gorm/logger"
 
 	"github.com/gin-gonic/gin"
@@ -59,21 +60,16 @@ func TestRegister_Success(t *testing.T) {
 	var response map[string]interface{}
 	json.Unmarshal(w.Body.Bytes(), &response)
 
-	if response["message"] != "User registered successfully" {
-		t.Errorf("Expected success message")
-	}
-
-	user, ok := response["user"].(map[string]interface{})
-	if !ok {
-		t.Fatal("Expected user object in response")
-	}
-
-	if user["token"] == nil {
+	if response["token"] == nil {
 		t.Error("Expected token in response")
 	}
 
-	if user["username"] != "testuser" {
-		t.Errorf("Expected username 'testuser', got %v", user["username"])
+	if response["username"] != "testuser" {
+		t.Errorf("Expected username 'testuser', got %v", response["username"])
+	}
+
+	if response["id"] == nil {
+		t.Error("Expected id in response")
 	}
 }
 
@@ -217,9 +213,11 @@ func TestLogin_Success(t *testing.T) {
 	if response["token"] == nil {
 		t.Error("Expected token in response")
 	}
-
-	if response["message"] != "Login successful" {
-		t.Errorf("Expected success message")
+	if response["username"] != "testuser" {
+		t.Errorf("Expected username 'testuser', got %v", response["username"])
+	}
+	if response["id"] == nil {
+		t.Error("Expected id in response")
 	}
 }
 
