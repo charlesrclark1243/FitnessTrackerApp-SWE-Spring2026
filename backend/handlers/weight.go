@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -25,14 +24,6 @@ func AddWeightLog(c *gin.Context) {
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid request: " + err.Error(),
-		})
-
-		return
-	}
-
-	if req.Weight <= 0.0 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Weight must be a positive number (got " + fmt.Sprintf("%.2f", req.Weight) + ")",
 		})
 
 		return
