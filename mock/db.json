@@ -5,13 +5,38 @@
       "username": "demo",
       "password": "demo",
       "token": "demo-token",
-      "height": 160.02,
-      "weight": 56,
-      "dateOfBirth": "2001-07-18T04:00:00.000Z",
+      "height": 170,
+      "weight": 58,
+      "dateOfBirth": "2006-06-13T04:00:00.000Z",
       "sex": "female",
       "neck": 45,
-      "waist": 70,
+      "waist": 54,
       "hips": 90
+    },
+    {
+      "id": "u_1771453769452",
+      "username": "nihara",
+      "password": "nihara",
+      "token": "nihara-token",
+      "height": 169.92600000000002,
+      "weight": 56.018657695,
+      "dateOfBirth": "2001-10-31T05:00:00.000Z",
+      "sex": "female",
+      "neck": 50.8,
+      "waist": 71.12,
+      "hips": 91.44
+    },
+    {
+      "id": "u_1771454911176",
+      "username": "john ",
+      "password": "john@123",
+      "token": "john -token",
+      "height": 165,
+      "weight": 68.0388555,
+      "dateOfBirth": "2005-06-15T04:00:00.000Z",
+      "sex": "male",
+      "neck": 30,
+      "waist": 45
     }
   ]
 }
