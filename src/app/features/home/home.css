@@ -4,8 +4,8 @@
   margin: 0 auto;
 }
 
-mat-card {
-  margin-bottom: 20px;
+.welcome-card {
+  margin-bottom: 32px;
 }
 
 mat-card-title {
@@ -16,4 +16,23 @@ mat-card-title {
 p {
   margin-bottom: 12px;
   line-height: 1.6;
+}
+
+.water-tracking-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive layout for larger screens */
+@media (min-width: 768px) {
+  .home-container {
+    max-width: 1200px;
+  }
+  
+  .water-tracking-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
 }

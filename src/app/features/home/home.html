@@ -1,12 +1,21 @@
 <div class="home-container">
-  <mat-card>
+  <!-- Welcome Card -->
+  <mat-card class="welcome-card">
     <mat-card-header>
       <mat-card-title>Welcome to Your Dashboard</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <p>Hello, <strong>{{ username$ | async }}</strong>!</p>
-      <p>You are successfully logged in and viewing a protected page.</p>
-      <p>This page is protected by the Auth Guard, which means only authenticated users can see it.</p>
+      <p>Track your daily water intake and stay hydrated throughout the day.</p>
     </mat-card-content>
   </mat-card>
+
+  <!-- Water Tracking Section -->
+  <div class="water-tracking-section">
+    <!-- Daily Display (Top) -->
+    <app-water-display></app-water-display>
+    
+    <!-- Quick Add (Bottom) -->
+    <app-water-intake></app-water-intake>
+  </div>
 </div>
