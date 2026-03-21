@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "mock:api": "node mock/server.js",
-    "start:all": "concurrently \"npm run start\" \"npm run mock:api\""
+    "start:all": "concurrently \"npm run start\" \"npm run mock:api\"",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run" 
   },
   "private": true,
   "dependencies": {
@@ -34,6 +36,7 @@
     "@types/node": "^20.0.0",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
+    "cypress": "^15.12.0",
     "express": "^5.2.1",
     "jasmine-core": "~5.1.0",
     "json-server": "^1.0.0-beta.5",

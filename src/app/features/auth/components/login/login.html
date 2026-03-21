@@ -14,7 +14,8 @@
             matInput 
             formControlName="username"
             placeholder="Enter username"
-            autocomplete="username">
+            autocomplete="username"
+            data-cy="login-username">
           
           @if (f['username'].invalid && f['username'].touched) {
             <mat-error>Username is required</mat-error>
@@ -29,7 +30,8 @@
             type="password"
             formControlName="password"
             placeholder="Enter password"
-            autocomplete="current-password">
+            autocomplete="current-password"
+            data-cy="login-password">
           
           @if (f['password'].invalid && f['password'].touched) {
             <mat-error>Password is required</mat-error>
@@ -49,7 +51,8 @@
           color="primary" 
           type="submit"
           [disabled]="loading"
-          class="full-width">
+          class="full-width"
+          data-cy="login-submit">
           @if (loading) {
             <mat-spinner diameter="20"></mat-spinner>
           } @else {

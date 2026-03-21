@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../core/services/auth';
 import { WaterIntakeComponent } from './components/water-intake/water-intake';
 import { WaterDisplayComponent } from './components/water-display/water-display';
+import { WeightLogComponent } from './components/weight-log/weight-log';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,7 +15,8 @@ import { map } from 'rxjs/operators';
     CommonModule, 
     MatCardModule,
     WaterIntakeComponent,
-    WaterDisplayComponent
+    WaterDisplayComponent,
+    WeightLogComponent
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
