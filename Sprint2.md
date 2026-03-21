@@ -39,6 +39,15 @@
 | Name | Description | File | Pass/Fail |
 | ---- | ----------- | ---- | --------- |
 
+End-to-End Tests (Cypress)
+Name	Description	File	Status
+Login Flow Tests			
+should display login link	Test that login link is visible when not logged in	login.cy.ts	PASS
+should navigate to login page	Test navigation to login page and form elements	login.cy.ts	PASS
+should show error with invalid	Test error message with invalid credentials	login.cy.ts	PASS
+should successfully login and logout successfully	Test complete registration and login flow	login.cy.ts	PASS
+
+
 
 ## Backend Unit Test List
 
