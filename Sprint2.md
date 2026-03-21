@@ -57,6 +57,35 @@
 | should show success message            | Test success message when goal reached                        | water-intake.cy.ts   | PASS   |
 
 
+## Unit Tests - Services
+
+| Name                         | Description                                      | File                      | Status |
+|------------------------------|--------------------------------------------------|---------------------------|--------|
+| AuthService Tests            |                                                  |                           |        |
+| should be created            | Test service instantiation                       | auth.service.spec.ts      | PASS   |
+| should return null user initially | Test currentUserValue returns null         | auth.service.spec.ts      | PASS   |
+| should return null token     | Test getToken() returns null when logged out     | auth.service.spec.ts      | PASS   |
+| should login successfully    | Test login with valid credentials                | auth.service.spec.ts      | PASS   |
+| should save to localStorage  | Test user persistence after login                | auth.service.spec.ts      | PASS   |
+| should register successfully | Test registration with valid data                | auth.service.spec.ts      | PASS   |
+| WaterService Tests           |                                                  |                           |        |
+| should be created            | Test service instantiation                       | water.service.spec.ts     | PASS   |
+| should start with 0ml        | Test initial water intake is zero                | water.service.spec.ts     | PASS   |
+| should have 2000ml goal      | Test default daily goal                          | water.service.spec.ts     | PASS   |
+| should add water correctly   | Test adding water intake                         | water.service.spec.ts     | PASS   |
+| should accumulate multiple   | Test multiple entries accumulate                 | water.service.spec.ts     | PASS   |
+| should remove last entry     | Test removeLastEntry() function                  | water.service.spec.ts     | PASS   |
+| should handle empty undo     | Test undo with no entries                        | water.service.spec.ts     | PASS   |
+| should update goal           | Test updateGoal() changes target                 | water.service.spec.ts     | PASS   |
+| should calculate percentage  | Test percentage calculation                      | water.service.spec.ts     | PASS   |
+| should cap at 100%           | Test percentage max is 100%                      | water.service.spec.ts     | PASS   |
+| should adjust with goal change | Test percentage updates with new goal         | water.service.spec.ts     | PASS   |
+| should reset daily data      | Test resetDay() clears entries                   | water.service.spec.ts     | PASS   |
+| should emit on changes       | Test Observable emits updates                    | water.service.spec.ts     | PASS   |
+| should save to localStorage  | Test data persistence                            | water.service.spec.ts     | PASS   |
+| should add timestamps        | Test timestamp on each entry                     | water.service.spec.ts     | PASS   |
+
+
 ## Backend Unit Test List
 
 | Name | Description | File | Pass/Fail |
