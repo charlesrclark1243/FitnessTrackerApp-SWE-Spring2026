@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ProfileStatsComponent } from '../profile-stats/profile-stats';
 import { LengthUnit, cmToIn, inToCm, ftInToCm, cmToFtIn, kgToLbs, lbsToKg  } from '../../../shared/utils/unit-conversion';
@@ -34,6 +35,7 @@ type CircUnit = 'cm' | 'ftin';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonToggleModule,
+    MatIconModule,
     ProfileStatsComponent
   ],
   templateUrl: './health-profile.html',
