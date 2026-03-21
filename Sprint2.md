@@ -39,14 +39,22 @@
 ## End-to-End Tests (Cypress)
 
 
-| Name                                   | Description                                                   | File         | Status |
-|----------------------------------------|---------------------------------------------------------------|--------------|--------|
-| Login Flow Tests                       |                                                               |              |        |
-| should display login link              | Test that login link is visible when not logged in            | login.cy.ts  | PASS   |
-| should navigate to login page          | Test navigation to login page and form elements               | login.cy.ts  | PASS   |
-| should show error with invalid         | Test error message with invalid credentials                   | login.cy.ts  | PASS   |
-| should successfully login and logout successfully | Test complete registration and login flow           | login.cy.ts  | PASS   |
-
+| Name                                   | Description                                                   | File                 | Status |
+|----------------------------------------|---------------------------------------------------------------|----------------------|--------|
+| Login Flow Tests                       |                                                               |                      |        |
+| should display login link              | Test that login link is visible when not logged in            | login.cy.ts          | PASS   |
+| should navigate to login page          | Test navigation to login page and form elements               | login.cy.ts          | PASS   |
+| should show error with invalid         | Test error message with invalid credentials                   | login.cy.ts          | PASS   |
+| should successfully login and logout successfully | Test complete registration and login flow           | login.cy.ts          | PASS   |
+|Water Intake Tests                      |                                                                |                     |         |
+| should display water components        | Test water intake UI components visible                       | water-intake.cy.ts   | PASS   |
+| should start with 0ml                  | Test initial state shows zero intake                          | water-intake.cy.ts   | PASS   |
+| should add 250ml                       | Test quick-add 250ml button                                   | water-intake.cy.ts   | PASS   |
+| should add multiple entries            | Test multiple water entry accumulation                        | water-intake.cy.ts   | PASS   |
+| should add custom amount               | Test custom water amount input                                | water-intake.cy.ts   | PASS   |
+| should undo last entry                 | Test undo removes last water entry                            | water-intake.cy.ts   | PASS   |
+| should update progress bar             | Test progress bar updates correctly                           | water-intake.cy.ts   | PASS   |
+| should show success message            | Test success message when goal reached                        | water-intake.cy.ts   | PASS   |
 
 
 ## Backend Unit Test List
