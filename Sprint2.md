@@ -86,6 +86,42 @@
 | should add timestamps        | Test timestamp on each entry                     | water.service.spec.ts     | PASS   |
 
 
+
+## Unit Tests - Components
+
+| Name                              | Description                                   | File                          | Status |
+|-----------------------------------|-----------------------------------------------|-------------------------------|--------|
+| LoginComponent Tests              |                                               |                               |        |
+| should create component           | Test component instantiation                  | login.component.spec.ts       | PASS   |
+| should have login form            | Test form exists                              | login.component.spec.ts       | PASS   |
+| should have username field        | Test username control exists                  | login.component.spec.ts       | PASS   |
+| should have password field        | Test password control exists                  | login.component.spec.ts       | PASS   |
+| should mark empty invalid         | Test empty form validation                    | login.component.spec.ts       | PASS   |
+| should mark filled valid          | Test filled form validation                   | login.component.spec.ts       | PASS   |
+| RegisterComponent Tests           |                                               |                               |        |
+| should create component           | Test component instantiation                  | register.component.spec.ts    | PASS   |
+| should have registration form     | Test form exists                              | register.component.spec.ts    | PASS   |
+| should have username field        | Test username control exists                  | register.component.spec.ts    | PASS   |
+| should have password field        | Test password control exists                  | register.component.spec.ts    | PASS   |
+| should have confirm field         | Test confirmPassword exists                   | register.component.spec.ts    | PASS   |
+| should have height field          | Test height control exists                    | register.component.spec.ts    | PASS   |
+| should have weight field          | Test weight control exists                    | register.component.spec.ts    | PASS   |
+| should have dateOfBirth field     | Test dateOfBirth exists                       | register.component.spec.ts    | PASS   |
+| should have sex field             | Test sex control exists                       | register.component.spec.ts    | PASS   |
+| should mark empty invalid         | Test empty form validation                    | register.component.spec.ts    | PASS   |
+| should validate password match    | Test password mismatch validation             | register.component.spec.ts    | PASS   |
+| NavigationComponent Tests         |                                               |                               |        |
+| should create component           | Test component instantiation                  | navigation.component.spec.ts  | PASS   |
+| should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.component.spec.ts  | PASS   |
+| should have username              | Test username$ exists                         | navigation.component.spec.ts  | PASS   |
+| should have logout method         | Test logout() exists                          | navigation.component.spec.ts  | PASS   |
+
+
+
+
+
+
+
 ## Backend Unit Test List
 
 | Name | Description | File | Pass/Fail |
