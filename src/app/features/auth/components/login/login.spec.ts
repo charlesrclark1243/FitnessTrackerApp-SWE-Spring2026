@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { ActivatedRoute, provideRouter } from '@angular/router';
-
 import { LoginComponent } from './login';
+import { AuthService } from '../../../../core/services/auth';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,22 +13,41 @@ describe('LoginComponent', () => {
       imports: [LoginComponent],
       providers: [
         provideHttpClient(),
-        provideHttpClientTesting(),
-        provideRouter([]),
-        {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { queryParams: {} } }
-        }
+        provideRouter([])
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the login component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a login form', () => {
+    expect(component.loginForm).toBeTruthy();
+  });
+
+  it('should have username field in form', () => {
+    const usernameControl = component.loginForm.get('username');
+    expect(usernameControl).toBeTruthy();
+  });
+
+  it('should have password field in form', () => {
+    const passwordControl = component.loginForm.get('password');
+    expect(passwordControl).toBeTruthy();
+  });
+
+  it('should mark empty form as invalid', () => {
+    expect(component.loginForm.valid).toBeFalsy();
+  });
+
+  it('should mark filled form as valid', () => {
+    component.loginForm.controls['username'].setValue('testuser');
+    component.loginForm.controls['password'].setValue('password123');
+    
+    expect(component.loginForm.valid).toBeTruthy();
   });
 });
