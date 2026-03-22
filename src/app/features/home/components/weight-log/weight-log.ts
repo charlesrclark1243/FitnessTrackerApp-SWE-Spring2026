@@ -70,17 +70,33 @@ export class WeightLogComponent implements OnInit {
   onSubmit(): void {
     if (this.form.invalid) return;
 
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.loading = true;
+
     const rawWeight = Number(this.form.value.weight);
-    const weightKG = this.unit === 'kg' ? rawWeight : rawWeight * 0.45359237;
+    const weightKG =
+      this.unit === 'kg' ? rawWeight : rawWeight * 0.45359237;
 
     this.weightService.logWeight(weightKG).subscribe({
       next: () => {
         this.successMessage = 'Weight logged successfully.';
+        this.loading = false;
         this.form.reset();
-        this.loadRecentWeights(); // reload only here
+
+        // only refresh when logs are visible
+        if (this.showLogs) {
+          this.loadRecentWeights();
+        }
+
+        // update profile weight
+        this.authService.updateProfile({ weight: weightKG }).subscribe({
+          error: () => {}
+        });
       },
       error: () => {
         this.errorMessage = 'Failed to log weight.';
+        this.loading = false;
       }
     });
   }

@@ -6,7 +6,7 @@
       "password": "demo",
       "token": "demo-token",
       "height": 170,
-      "weight": 76,
+      "weight": 57.2,
       "dateOfBirth": "2000-01-01T00:00:00.000Z",
       "sex": "male"
     },
@@ -93,6 +93,12 @@
       "userId": 1,
       "weightKG": 76,
       "loggedAt": "2026-03-20T23:45:13.260Z"
+    },
+    {
+      "id": 1774142165634,
+      "userId": 1,
+      "weightKG": 58,
+      "loggedAt": "2026-03-22T01:16:05.634Z"
     }
   ]
 }

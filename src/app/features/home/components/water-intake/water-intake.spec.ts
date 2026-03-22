@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WaterIntake } from './water-intake';
+import { WaterIntakeComponent } from './water-intake';
 
-describe('WaterIntake', () => {
-  let component: WaterIntake;
-  let fixture: ComponentFixture<WaterIntake>;
-
+describe('WaterIntakeComponent', () => {
+  let component: WaterIntakeComponent;
+  let fixture: ComponentFixture<WaterIntakeComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WaterIntake]
+      imports: [WaterIntakeComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WaterIntake);
+    fixture = TestBed.createComponent(WaterIntakeComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
