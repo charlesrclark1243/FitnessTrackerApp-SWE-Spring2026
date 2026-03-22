@@ -55,6 +55,17 @@
 | should undo last entry                 | Test undo removes last water entry                            | water-intake.cy.ts   | PASS   |
 | should update progress bar             | Test progress bar updates correctly                           | water-intake.cy.ts   | PASS   |
 | should show success message            | Test success message when goal reached                        | water-intake.cy.ts   | PASS   |
+| Profile Page Tests                     |                                                               |                      |        |
+| Renders profile page with stats & form | Test if profile page loads with stats and editable form       | profile.cy.ts        | PASS   |
+| Shows profile stats correctly          | Test stats are displayed correctly from mocked user data      | profile.cy.ts        | PASS   |
+| Allows editing and saving profile      | Test user can edit profile and save changes                   | profile.cy.ts        | PASS   |
+| Shows BFP as N/A for unsupported sex   | Test BFP displays N/A when sex is unsupported                 | profile.cy.ts        | PASS   |
+| Profile stats missing state            |                                                               |                      |        |
+| Shows missing data message             | Test message appears when required profile data is incomplete | profile.cy.ts        | PASS   |
+|Weight Log & Display Tests              |                                                               |                      |        |
+| Logs a weight & display the history    | Test whether user can log a weight & its displays in history  | weight-log.cy.ts     | PASS   |
+| Show the last 30 logs                  | Test last 30 weight logs are displayed when user clicks       | weight-log.cy.ts     | PASS   |
+
 
 
 ## Unit Tests - Services
@@ -87,6 +98,7 @@
 
 
 
+
 ## Unit Tests - Components
 
 | Name                              | Description                                   | File                          | Status |
@@ -115,7 +127,20 @@
 | should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.component.spec.ts  | PASS   |
 | should have username              | Test username$ exists                         | navigation.component.spec.ts  | PASS   |
 | should have logout method         | Test logout() exists                          | navigation.component.spec.ts  | PASS   |
-
+| WeightLogComponent Tests          |                                               |           
+| should create                     | Test component instantiation                  | weight-log.component.spec.ts  | PASS   |
+| should load recent weights on init| Test recent weights are loaded on component initialization | weight-log.component.spec.ts | PASS |
+| should populate logs when loadRecentWeights succeeds | Test logs populate correctly on successful load| weight-log.component.spec.ts | PASS |
+| should show error when loadRecentWeights fails   | Test error message is shown when loading logs fails| weight-log.component.spec.ts | PASS |
+| should toggle logs and load them first time only | Test logs toggle and load only on first expansion| weight-log.component.spec.ts | PASS |
+| should not refresh logs when logs are hidden | Test logs do not refresh if hidden after submit      | weight-log.component.spec.ts | PASS |
+| should refresh logs after successful submit  | Test logs refresh if visible after submit            | weight-log.component.spec.ts | PASS |
+| should not submit if form is invalid         | Test form submission is blocked when invalid         | weight-log.component.spec.ts | PASS |
+| should submit kg weight directly             | Test kg value is submitted without conversion        | weight-log.component.spec.ts | PASS |
+| should convert lbs to kg before submit       | Test lbs input is converted to kg before submission  | weight-log.component.spec.ts | PASS |
+| should show error message when submit fails  | Test error message appears on submission failure     | weight-log.component.spec.ts | PASS |
+| should display weight in kg when unit is kg  | Test weight is displayed correctly in kg             | weight-log.component.spec.ts | PASS |
+| should display weight in lbs when unit is lbs| Test weight is displayed correctly in lbs            | weight-log.component.spec.ts | PASS |
 
 
 
