@@ -14,3 +14,10 @@ backend/bin/
 *.so
 *.dylib
 *.db
+
+# Angular
+.angular/
+node_modules/
+
+# Extra
+*.log
