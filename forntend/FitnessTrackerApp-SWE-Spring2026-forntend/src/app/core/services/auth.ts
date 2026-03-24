@@ -23,7 +23,7 @@ interface User {
 })
 export class AuthService {
   // API endpoint - CHANGE THIS to   URL
-  private apiUrl = 'http://localhost:3000/api/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
 
   
   // BehaviorSubject to track current user state
@@ -152,8 +152,8 @@ export class AuthService {
       this.currentUserSubject.next(updatedUser);
     };
 
-    // API-first: PATCH /api/users/:id
-    return this.http.patch<User>(`http://localhost:3000/api/users/${user.id}`, profile).pipe(
+    // API-first: PUT /api/profile
+    return this.http.put<User>('http://localhost:8080/api/profile', profile).pipe(
       tap(updatedUser => applyLocal(updatedUser)),
 
       // fallback: still update locally if API is down (dev convenience)
