@@ -1,0 +1,65 @@
+<mat-card class="weight-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">scale</mat-icon>
+      Log Weight
+    </mat-card-title>
+    <!-- <mat-card-subtitle>Track your last 30 days</mat-card-subtitle> -->
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="weight-form">
+      <div class="unit-row">
+        <mat-button-toggle-group [value]="unit" (change)="unit = $event.value"  data-cy="weight-unit-toggle">
+          <mat-button-toggle value="kg">kg</mat-button-toggle>
+          <mat-button-toggle value="lbs">lbs</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="entry-row">
+        <mat-form-field appearance="outline" class="weight-input">
+          <mat-label>Weight</mat-label>
+          <input matInput type="number" formControlName="weight" data-cy="weight-input"/>
+          <span matTextSuffix>{{ unit }}</span>
+          <mat-error *ngIf="form.get('weight')?.invalid && form.get('weight')?.touched">
+            Enter a valid weight
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading || form.invalid" data-cy="log-weight-btn">
+          {{ loading ? 'Logging...' : 'Log Weight' }}
+        </button>
+      </div>
+
+      <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+      <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <button
+        mat-button
+        type="button"
+        class="toggle-logs-btn"
+        (click)="toggleLogs()" data-cy="toggle-weight-logs-btn">
+        {{ showLogs ? 'Hide last 30 logs' : 'View last 30 logs' }}
+      </button>
+    </form>
+
+    <div class="history" *ngIf="showLogs" data-cy="weight-history">
+    <div class="history-header">
+      <h3>Last 30 Logs</h3>
+    </div>
+
+    <div *ngIf="logs.length === 0" class="empty">
+      No weight logs yet.
+    </div>
+
+    <div *ngFor="let log of logs" class="log-row" data-cy="weight-log-row">
+      <div class="log-main">{{ displayWeight(log.weightKG) }}</div>
+      <div class="log-date">{{ log.loggedAt | date:'medium' }}</div>
+    </div>
+  </div>
+  </mat-card-content>
+</mat-card>

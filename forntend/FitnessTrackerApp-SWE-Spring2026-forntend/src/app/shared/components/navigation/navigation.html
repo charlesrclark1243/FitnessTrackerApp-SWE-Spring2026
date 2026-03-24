@@ -8,6 +8,20 @@
     <span class="username">
       Welcome, {{ username$ | async }}!
     </span>
+     <a
+      mat-button
+      routerLink="/home"
+      routerLinkActive="active-link"
+      class="nav-link">
+      Home
+    </a>
+         <a
+      mat-button
+      routerLink="/profile"
+      routerLinkActive="active-link"
+      class="nav-link">
+      Profile
+    </a>
     <button mat-button (click)="logout()">
       <mat-icon>logout</mat-icon>
       Logout

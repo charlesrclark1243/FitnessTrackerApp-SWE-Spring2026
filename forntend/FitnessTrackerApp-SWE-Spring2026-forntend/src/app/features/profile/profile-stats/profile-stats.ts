@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { map } from 'rxjs';
 import { AuthService } from '../../../core/services/auth';
 import { calcAgeYears, calcBmiKgCm, calcDeurenbergBfp } from '../../../shared/utils/profile-stats';
@@ -9,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-profile-stats',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './profile-stats.html',
   styleUrl: './profile-stats.css',
 })
