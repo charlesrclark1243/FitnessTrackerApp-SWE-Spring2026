@@ -177,6 +177,15 @@
 | TestKgToLvs | Tests accurate conversion from kilograms (kg) to pounds (lbs) | `backend/utils/units_test.go` | PASS |
 | TestConvertWeightToKg | Tests accurate weight conversion to kilograms (kg) regardless of starting unit | `backend/utils/units_test.go` | PASS |
 | TestConvertWeightFromKg | Tests accurate weight conversion from kilograms (kg) regardless of ending unit | `backend/utils/units_test.go` | PASS |
+| TestLogWaterIntake_Success | Tests submission of water log | `backend/handlers/water_intake_test.go` | PASS |
+| TestLogWaterIntake_InvalidAmount | Tests the validation of water amount (non zero, not negative, not too large) | `backend/handlers/water_intake_test.go` | PASS |
+| TestGetWaterIntakeLogs_Success | Tests that logs can be accessed | `backend/handlers/water_intake_test.go` | PASS |
+| TestGetWaterIntakeLogs_FilterByDate | Tests that logs can be sorted by date |  `backend/handlers/water_intake_test.go` | PASS |
+| TestGetDailySummary_Success | Tests that daily summary | `backend/handlers/water_intake_test.go` | PASS |
+| TestDeleteWaterLog_Success | Tests that water log can be deleted | `backend/handlers/water_intake_test.go` | PASS |
+| TestDeleteWaterLog_NotFound | Tests response for deleting a non existent log | `backend/handlers/water_intake_test.go` | PASS |
+| TestWaterIntake_Unauthorized | Tests logging without authorization | `backend/handlers/water_intake_test.go` | PASS |
+
 
 ## API Documentation
 
