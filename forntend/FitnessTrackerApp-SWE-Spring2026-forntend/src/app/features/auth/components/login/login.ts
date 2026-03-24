@@ -66,10 +66,11 @@ export class LoginComponent {
     ).subscribe({
       next: () => {
         // Success - redirect to return URL or home
+        this.loading = false;
         this.router.navigate([this.returnUrl]);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Login failed. Please check your credentials.';
+        this.errorMessage = error.error?.message || error.error?.error || 'Login failed. Please check your credentials.';
         this.loading = false;
       }
     });

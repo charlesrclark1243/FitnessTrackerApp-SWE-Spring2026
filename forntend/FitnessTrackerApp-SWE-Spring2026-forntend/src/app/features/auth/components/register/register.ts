@@ -129,11 +129,12 @@ export class RegisterComponent {
     this.authService.register(formData).subscribe({
       next: () => {
         // Success - redirect to home/dashboard
+        this.loading = false;
         this.router.navigate(['/']);
       },
       error: (error) => {
         // Error - show message
-        this.errorMessage = error.error?.message || 'Registration failed. Please try again.';
+        this.errorMessage = error.error?.message || error.error?.error || 'Registration failed. Please try again.';
         this.loading = false;
       }
     });
