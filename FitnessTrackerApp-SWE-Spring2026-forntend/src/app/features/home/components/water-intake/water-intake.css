@@ -1,0 +1,83 @@
+.water-intake-card {
+  margin-bottom: 20px;
+}
+
+mat-card-header {
+  margin-bottom: 16px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+}
+
+.title-icon {
+  color: #2196f3;
+}
+
+/* Quick Add Buttons */
+.quick-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.quick-add-btn {
+  flex: 1;
+  min-width: 120px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 16px;
+}
+
+.quick-add-btn mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+/* Custom Section */
+.custom-section {
+  margin-bottom: 20px;
+}
+
+.custom-toggle-btn {
+  width: 100%;
+  height: 48px;
+  font-size: 15px;
+}
+
+.custom-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-input {
+  flex: 1;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+}

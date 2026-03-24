@@ -1,0 +1,92 @@
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats-card,
+.profile-card {
+  margin-bottom: 20px;
+}
+
+.profile-card {
+  width: 100%;
+}
+
+.title-icon {
+  color: #3f51b5;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.form {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.full {
+  width: 100%;
+}
+
+.field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.block-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.toggle {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: -10px;
+}
+
+.primary-btn {
+  margin-top: 6px;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.saved {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-top: -6px;
+}
+
+@media (max-width: 768px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .field-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
