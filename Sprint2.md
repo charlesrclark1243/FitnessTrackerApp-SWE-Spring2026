@@ -210,6 +210,67 @@ Allows an existing user to sign into their account and access protected endpoint
 }
 ```
 
+### `GET api/profile`
+
+Allows a user to access their profile.
+```
+{
+  	"date_of_birth": "DATE",
+	  "sex": "SEX",
+	  "height_cm": HEIGHT,
+  	"weight_kg": WEIGHT,
+  	"activity_level": "ACTIVITY LEVEL"
+}
+```
+
+### `PUT api/profile`
+
+Allows a user to update their profile data.
+```
+{
+  	"date_of_birth": "DATE",
+	  "sex": "SEX",
+	  "height_cm": HEIGHT,
+  	"weight_kg": WEIGHT,
+  	"activity_level": "ACTIVITY LEVEL"
+}
+```
+### `GET api/profile/stats`
+
+Allows a user to access their profile statistics.
+```
+{
+  	"date_of_birth": "DATE",
+	  "sex": "SEX",
+	  "height_cm": HEIGHT,
+  	"weight_kg": WEIGHT,
+  	"activity_level": "ACTIVITY LEVEL"
+}
+```
+
+### `POST api/water`
+
+Allows a user to log their water intake.
+```
+{
+  	"amount_ml": AMOUNT
+}
+```
+
+### `GET api/water`
+
+Allows a user to view their water intake log.
+```
+# NO BODY NECESSARY
+```
+
+### `GET api/water/summary`
+
+Allows a user to view their water intake summary.
+```
+# NO BODY NECESSARY
+```
+
 ### `PUT api/weight/add`
 
 Allows a user to add a datapoint to their weight log.
