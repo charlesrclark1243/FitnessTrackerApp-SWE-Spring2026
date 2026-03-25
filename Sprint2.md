@@ -20,6 +20,7 @@
 - As a user, I'd like to be able to easily log my current weight in my preferred units of measure, so I can hold myself accountable for my actions and self-constraint.
 - As a user, I'd like to be able to view my most recently logged weights, again in my preferred units of measure, so I can understand my short-term progress and trends.
 - As a user, I'd like an app that correctly connects the backend servers to the frontend client, so I know the app actually works as advertised.
+- As a user, I'd like to be able to log how much water I drink, so I can stay hydrated.
 
 ## New Issues to Address
 
@@ -240,4 +241,4 @@ Allows a user to modify the most recent datapoint in their weight log (useful fo
 
 ## Demo
 
-ADD LINK HERE
+Please find our full Sprint 2 demo here: [https://youtu.be/YMtHhxROB3M](https://youtu.be/YMtHhxROB3M).
