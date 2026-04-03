@@ -65,10 +65,10 @@ func TestLogExercise_Success(t *testing.T) {
 	// create request
 	loggedAt := time.Now().Add(-1 * time.Hour)
 	body := map[string]interface{}{
-		"type":             "Running",
-		"duration":         30,
-		"calories_burned":  300,
-		"logged_at":        loggedAt,
+		"type":            "Running",
+		"duration":        30,
+		"calories_burned": 300,
+		"logged_at":       loggedAt,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))
@@ -119,9 +119,9 @@ func TestLogExercise_SuccessWithoutLoggedAt(t *testing.T) {
 
 	// create request without logged_at (should use current time)
 	body := map[string]interface{}{
-		"type":             "Cycling",
-		"duration":         45,
-		"calories_burned":  450,
+		"type":            "Cycling",
+		"duration":        45,
+		"calories_burned": 450,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))
@@ -156,9 +156,9 @@ func TestLogExercise_Unauthorized(t *testing.T) {
 
 	// request without token
 	body := map[string]interface{}{
-		"type":             "Running",
-		"duration":         30,
-		"calories_burned":  300,
+		"type":            "Running",
+		"duration":        30,
+		"calories_burned": 300,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))
@@ -196,15 +196,15 @@ func TestLogExercise_MissingRequiredFields(t *testing.T) {
 		{
 			"missing type",
 			map[string]interface{}{
-				"duration":         30,
-				"calories_burned":  300,
+				"duration":        30,
+				"calories_burned": 300,
 			},
 		},
 		{
 			"missing duration",
 			map[string]interface{}{
-				"type":             "Running",
-				"calories_burned":  300,
+				"type":            "Running",
+				"calories_burned": 300,
 			},
 		},
 		{
@@ -243,9 +243,9 @@ func TestLogExercise_InvalidDuration(t *testing.T) {
 
 	// request with negative duration
 	body := map[string]interface{}{
-		"type":             "Running",
-		"duration":         -10,
-		"calories_burned":  300,
+		"type":            "Running",
+		"duration":        -10,
+		"calories_burned": 300,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))
@@ -279,9 +279,9 @@ func TestLogExercise_InvalidCalories(t *testing.T) {
 
 	// request with negative calories
 	body := map[string]interface{}{
-		"type":             "Running",
-		"duration":         30,
-		"calories_burned":  -100,
+		"type":            "Running",
+		"duration":        30,
+		"calories_burned": -100,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))
@@ -316,10 +316,10 @@ func TestLogExercise_FutureLoggedAt(t *testing.T) {
 	// request with future time
 	futureTime := time.Now().Add(1 * time.Hour)
 	body := map[string]interface{}{
-		"type":             "Running",
-		"duration":         30,
-		"calories_burned":  300,
-		"logged_at":        futureTime,
+		"type":            "Running",
+		"duration":        30,
+		"calories_burned": 300,
+		"logged_at":       futureTime,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/exercise/log", bytes.NewBuffer(jsonBody))

@@ -319,8 +319,8 @@ func TestCalculateCalorieGoal_VerifyCalorieAdjustments(t *testing.T) {
 	router.POST("/calories/goal", CalculateCalorieGoal)
 
 	testCases := []struct {
-		name      string
-		direction string
+		name        string
+		direction   string
 		shouldLower bool
 	}{
 		{"Lose weight", "lose", true},
