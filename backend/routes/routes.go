@@ -40,6 +40,13 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			protected.PUT("/weight/add", handlers.AddWeightLog)
 			protected.GET("/weight/logs", handlers.GetWeightLogs)
 			protected.POST("/weight/modify", handlers.ModifyLastWeight)
+
+			// calorie goal calculation
+			protected.POST("/caloriegoal", handlers.CalculateCalorieGoal)
+
+			// exercise log CRUD
+			protected.POST("/exercise/add", handlers.LogExercise)
+			protected.GET("/exercise/logs", handlers.GetExerciseLogs)
 		}
 	}
 }

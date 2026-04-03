@@ -2,6 +2,7 @@ package utils
 
 import (
 	"time"
+
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 )
 
@@ -12,12 +13,12 @@ func CalculateAge(dob *time.Time) int {
 	}
 	now := time.Now()
 	age := now.Year() - dob.Year()
-	
+
 	// adjust if birthday hasn't occurred this year yet
 	if now.Month() < dob.Month() || (now.Month() == dob.Month() && now.Day() < dob.Day()) {
 		age--
 	}
-	
+
 	return age
 }
 
@@ -41,7 +42,7 @@ func CalculateBFP(bmi float64, age int, sex string) float64 {
 	} else {
 		sexFactor = 0
 	}
-	
+
 	bfp := (1.20 * bmi) + (0.23 * float64(age)) - (10.8 * sexFactor) - 5.4
 	return roundToTwo(bfp)
 }
@@ -95,4 +96,15 @@ func CalculateStats(profile *models.HealthProfile) models.ProfileStats {
 // helper function to round to 2 decimal places
 func roundToTwo(val float64) float64 {
 	return float64(int(val*100+0.5)) / 100
+}
+
+func CalculateAgeYears(dob *time.Time) float32 {
+	if dob == nil {
+		return 0
+	}
+
+	now := time.Now()
+	age := now.Year() - dob.Year()
+
+	return float32(age)
 }
