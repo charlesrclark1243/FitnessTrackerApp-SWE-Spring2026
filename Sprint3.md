@@ -67,6 +67,17 @@
 |Weight Log & Display Tests              |                                                               |                      |        |
 | Logs a weight & display the history    | Test whether user can log a weight & its displays in history  | weight-log.cy.ts     | PASS   |
 | Show the last 30 logs                  | Test last 30 weight logs are displayed when user clicks       | weight-log.cy.ts     | PASS   |
+| should display calorie tracking components | Test calorie tracker UI components are visible | calorie-tracking.cy.ts | PASS |
+| should start with 0 consumed and burned | Test initial state shows zero calories | calorie-tracking.cy.ts | PASS |
+| should add consumed calories (quick) | Test quick-add snack button adds 150 calories | calorie-tracking.cy.ts | PASS |
+| should add burned calories (quick) | Test quick-add walk button burns 150 calories | calorie-tracking.cy.ts | PASS |
+| should calculate net calories correctly | Test net calories = consumed - burned | calorie-tracking.cy.ts | PASS |
+| should undo last calorie entry | Test undo removes most recent calorie entry | calorie-tracking.cy.ts | PASS |
+| should update progress bar | Test progress bar updates | calorie-tracking.cy.ts | PASS |
+| should show warning at goal | Test warning when goal reached | calorie-tracking.cy.ts | PASS |
+| should edit daily calorie goal | Test user can change goal | calorie-tracking.cy.ts | PASS |
+| should show entries with descriptions | Test entries display names | calorie-tracking.cy.ts | PASS |
+
 
 
 
