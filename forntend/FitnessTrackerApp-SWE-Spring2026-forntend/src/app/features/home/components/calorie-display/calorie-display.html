@@ -1,0 +1,134 @@
+<mat-card class="calorie-display-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">local_fire_department</mat-icon>
+      Today's Calorie Summary
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (calorieData) {
+      <!-- Summary Stats -->
+      <div class="stats-grid">
+        <div class="stat-box consumed">
+          <mat-icon>restaurant</mat-icon>
+          <div class="stat-label">Consumed</div>
+          <div class="stat-value">{{ formatNumber(calorieData.consumed) }}</div>
+          <div class="stat-unit">calories</div>
+        </div>
+
+        <div class="stat-box burned">
+          <mat-icon>fitness_center</mat-icon>
+          <div class="stat-label">Burned</div>
+          <div class="stat-value">{{ formatNumber(calorieData.burned) }}</div>
+          <div class="stat-unit">calories</div>
+        </div>
+
+        <div class="stat-box net" [class.negative]="netCalories < 0">
+          <mat-icon>{{ netCalories >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+          <div class="stat-label">Net</div>
+          <div class="stat-value">{{ formatNumber(netCalories) }}</div>
+          <div class="stat-unit">calories</div>
+        </div>
+      </div>
+
+      <!-- Goal Display -->
+      <div class="goal-section">
+        @if (!isEditingGoal) {
+          <div class="goal-display">
+            <span class="goal-label">Daily Goal:</span>
+            <span class="goal-value">{{ formatNumber(calorieData.goal) }} cal</span>
+            <button 
+              mat-icon-button 
+              class="edit-goal-btn"
+              (click)="startEditGoal()"
+              matTooltip="Edit daily goal">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div class="remaining-display" [class.over-goal]="remainingCalories < 0">
+            <span>{{ remainingCalories >= 0 ? 'Remaining' : 'Over goal' }}: </span>
+            <strong>{{ formatNumber(remainingCalories >= 0 ? remainingCalories : -remainingCalories) }} cal</strong>
+          </div>
+        }
+        
+        @if (isEditingGoal) {
+          <div class="goal-edit">
+            <mat-form-field appearance="outline" class="goal-input">
+              <mat-label>Daily Goal</mat-label>
+              <input 
+                matInput 
+                type="number"
+                [(ngModel)]="newGoal"
+                min="500"
+                max="10000"
+                (keyup.enter)="saveGoal()">
+              <span matTextSuffix>cal</span>
+            </mat-form-field>
+            <button 
+              mat-icon-button 
+              color="primary"
+              (click)="saveGoal()">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button 
+              mat-icon-button
+              (click)="cancelEditGoal()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="percentage"
+          [color]="getProgressColor()"
+          class="calorie-progress">
+        </mat-progress-bar>
+        <div class="percentage-label">{{ percentage }}%</div>
+      </div>
+
+      <!-- Motivational Message -->
+      <div class="motivational-message" [class.warning]="percentage >= 100">
+        {{ getMotivationalMessage() }}
+      </div>
+
+      <!-- Today's Entries -->
+      @if (calorieData.entries.length > 0) {
+        <div class="entries-section">
+          <h4>Today's Entries ({{ calorieData.entries.length }})</h4>
+          <div class="entries-list">
+            @for (entry of calorieData.entries.slice().reverse(); track entry.timestamp) {
+              <mat-chip-row 
+                [class.consumed-chip]="entry.type === 'consumed'"
+                [class.burned-chip]="entry.type === 'burned'">
+                <mat-icon matChipAvatar>
+                  {{ entry.type === 'consumed' ? 'restaurant' : 'fitness_center' }}
+                </mat-icon>
+                <span class="entry-description">
+                  {{ entry.description || (entry.type === 'consumed' ? 'Food' : 'Exercise') }}
+                </span>
+                <span class="entry-amount">
+                  {{ entry.type === 'consumed' ? '+' : '-' }}{{ entry.amount }} cal
+                </span>
+                <span class="entry-time">
+                  {{ entry.timestamp | date:'shortTime' }}
+                </span>
+              </mat-chip-row>
+            }
+          </div>
+        </div>
+      }
+
+      @if (calorieData.entries.length === 0) {
+        <div class="no-entries">
+          <mat-icon>info_outline</mat-icon>
+          <p>No calories logged yet today. Start tracking your food and exercise!</p>
+        </div>
+      }
+    }
+  </mat-card-content>
+</mat-card>
