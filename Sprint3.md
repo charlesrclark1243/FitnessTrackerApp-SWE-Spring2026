@@ -138,43 +138,67 @@
 | Name                              | Description                                   | File                          | Status |
 |-----------------------------------|-----------------------------------------------|-------------------------------|--------|
 | LoginComponent Tests              |                                               |                               |        |
-| should create component           | Test component instantiation                  | login.component.spec.ts       | PASS   |
-| should have login form            | Test form exists                              | login.component.spec.ts       | PASS   |
-| should have username field        | Test username control exists                  | login.component.spec.ts       | PASS   |
-| should have password field        | Test password control exists                  | login.component.spec.ts       | PASS   |
-| should mark empty invalid         | Test empty form validation                    | login.component.spec.ts       | PASS   |
-| should mark filled valid          | Test filled form validation                   | login.component.spec.ts       | PASS   |
+| should create component           | Test component instantiation                  | login.spec.ts       | PASS   |
+| should have login form            | Test form exists                              | login.spec.ts       | PASS   |
+| should have username field        | Test username control exists                  | login.spec.ts       | PASS   |
+| should have password field        | Test password control exists                  | login.spec.ts       | PASS   |
+| should mark empty invalid         | Test empty form validation                    | login.spec.ts       | PASS   |
+| should mark filled valid          | Test filled form validation                   | login.spec.ts       | PASS   |
 | RegisterComponent Tests           |                                               |                               |        |
-| should create component           | Test component instantiation                  | register.component.spec.ts    | PASS   |
-| should have registration form     | Test form exists                              | register.component.spec.ts    | PASS   |
-| should have username field        | Test username control exists                  | register.component.spec.ts    | PASS   |
-| should have password field        | Test password control exists                  | register.component.spec.ts    | PASS   |
-| should have confirm field         | Test confirmPassword exists                   | register.component.spec.ts    | PASS   |
-| should have height field          | Test height control exists                    | register.component.spec.ts    | PASS   |
-| should have weight field          | Test weight control exists                    | register.component.spec.ts    | PASS   |
-| should have dateOfBirth field     | Test dateOfBirth exists                       | register.component.spec.ts    | PASS   |
-| should have sex field             | Test sex control exists                       | register.component.spec.ts    | PASS   |
-| should mark empty invalid         | Test empty form validation                    | register.component.spec.ts    | PASS   |
-| should validate password match    | Test password mismatch validation             | register.component.spec.ts    | PASS   |
+| should create component           | Test component instantiation                  | register.spec.ts    | PASS   |
+| should have registration form     | Test form exists                              | register.spec.ts    | PASS   |
+| should have username field        | Test username control exists                  | register.spec.ts    | PASS   |
+| should have password field        | Test password control exists                  | register.spec.ts    | PASS   |
+| should have confirm field         | Test confirmPassword exists                   | register.spec.ts    | PASS   |
+| should have height field          | Test height control exists                    | register.spec.ts    | PASS   |
+| should have weight field          | Test weight control exists                    | register.spec.ts    | PASS   |
+| should have dateOfBirth field     | Test dateOfBirth exists                       | register.spec.ts    | PASS   |
+| should have sex field             | Test sex control exists                       | register.spec.ts    | PASS   |
+| should mark empty invalid         | Test empty form validation                    | register.spec.ts    | PASS   |
+| should validate password match    | Test password mismatch validation             | register.spec.ts    | PASS   |
 | NavigationComponent Tests         |                                               |                               |        |
-| should create component           | Test component instantiation                  | navigation.component.spec.ts  | PASS   |
-| should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.component.spec.ts  | PASS   |
-| should have username              | Test username$ exists                         | navigation.component.spec.ts  | PASS   |
-| should have logout method         | Test logout() exists                          | navigation.component.spec.ts  | PASS   |
+| should create component           | Test component instantiation                  | navigation.spec.ts  | PASS   |
+| should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.spec.ts  | PASS   |
+| should have username              | Test username$ exists                         | navigation.spec.ts  | PASS   |
+| should have logout method         | Test logout() exists                          | navigation.spec.ts  | PASS   |
 | WeightLogComponent Tests          |                                               |           
-| should create                     | Test component instantiation                  | weight-log.component.spec.ts  | PASS   |
-| should load recent weights on init| Test recent weights are loaded on component initialization | weight-log.component.spec.ts | PASS |
-| should populate logs when loadRecentWeights succeeds | Test logs populate correctly on successful load| weight-log.component.spec.ts | PASS |
-| should show error when loadRecentWeights fails   | Test error message is shown when loading logs fails| weight-log.component.spec.ts | PASS |
-| should toggle logs and load them first time only | Test logs toggle and load only on first expansion| weight-log.component.spec.ts | PASS |
-| should not refresh logs when logs are hidden | Test logs do not refresh if hidden after submit      | weight-log.component.spec.ts | PASS |
-| should refresh logs after successful submit  | Test logs refresh if visible after submit            | weight-log.component.spec.ts | PASS |
-| should not submit if form is invalid         | Test form submission is blocked when invalid         | weight-log.component.spec.ts | PASS |
-| should submit kg weight directly             | Test kg value is submitted without conversion        | weight-log.component.spec.ts | PASS |
-| should convert lbs to kg before submit       | Test lbs input is converted to kg before submission  | weight-log.component.spec.ts | PASS |
-| should show error message when submit fails  | Test error message appears on submission failure     | weight-log.component.spec.ts | PASS |
-| should display weight in kg when unit is kg  | Test weight is displayed correctly in kg             | weight-log.component.spec.ts | PASS |
-| should display weight in lbs when unit is lbs| Test weight is displayed correctly in lbs            | weight-log.component.spec.ts | PASS |
+| should create                     | Test component instantiation                  | weight-log.spec.ts  | PASS   |
+| should load recent weights on init| Test recent weights are loaded on component initialization | weight-log.spec.ts | PASS |
+| should populate logs when loadRecentWeights succeeds | Test logs populate correctly on successful load| weight-log.spec.ts | PASS |
+| should show error when loadRecentWeights fails   | Test error message is shown when loading logs fails| weight-log.spec.ts | PASS |
+| should toggle logs and load them first time only | Test logs toggle and load only on first expansion| weight-log.spec.ts | PASS |
+| should not refresh logs when logs are hidden | Test logs do not refresh if hidden after submit      | weight-log.spec.ts | PASS |
+| should refresh logs after successful submit  | Test logs refresh if visible after submit            | weight-log.spec.ts | PASS |
+| should not submit if form is invalid         | Test form submission is blocked when invalid         | weight-log.spec.ts | PASS |
+| should submit kg weight directly             | Test kg value is submitted without conversion        | weight-log.spec.ts | PASS |
+| should convert lbs to kg before submit       | Test lbs input is converted to kg before submission  | weight-log.spec.ts | PASS |
+| should show error message when submit fails  | Test error message appears on submission failure     | weight-log.spec.ts | PASS |
+| should display weight in kg when unit is kg  | Test weight is displayed correctly in kg             | weight-log.spec.ts | PASS |
+| should display weight in lbs when unit is lbs| Test weight is displayed correctly in lbs            | weight-log.spec.ts | PASS |
+| should create the component | Test component instantiation | calorie-input.spec.ts | PASS |
+| should have quick consumed amounts | Test quick-add food buttons exist | calorie-input.spec.ts | PASS |
+| should have quick burned amounts | Test quick-add exercise buttons exist | calorie-input.spec.ts | PASS |
+| should start with custom inputs hidden | Test custom forms hidden initially | calorie-input.spec.ts | PASS |
+| should add quick consumed calories | Test quick food button calls service | calorie-input.spec.ts | PASS |
+| should add quick burned calories | Test quick exercise button calls service | calorie-input.spec.ts | PASS |
+| should toggle custom consumed | Test custom food form toggles correctly | calorie-input.spec.ts | PASS |
+| should toggle custom burned | Test custom exercise form toggles correctly | calorie-input.spec.ts | PASS |
+| should add custom consumed calories | Test custom food entry calls service | calorie-input.spec.ts | PASS |
+| should add custom burned calories | Test custom exercise entry calls service | calorie-input.spec.ts | PASS |
+| should not add invalid amount | Test invalid amount not submitted | calorie-input.spec.ts | PASS |
+| should call undo on service | Test undo button calls service method | calorie-input.spec.ts | PASS |
+| should create the component | Test component instantiation | calorie-display.spec.ts | PASS |
+| should subscribe to updates | Test subscribes to calorie intake Observable | calorie-display.spec.ts | PASS |
+| should start with 0 net calories | Test initial net calories is zero | calorie-display.spec.ts | PASS |
+| should format numbers with commas | Test number formatting (1234 → 1,234) | calorie-display.spec.ts | PASS |
+| should toggle goal editing | Test goal edit mode toggle | calorie-display.spec.ts | PASS |
+| should save new goal | Test saving new goal calls service | calorie-display.spec.ts | PASS |
+| should cancel goal editing | Test cancel button exits edit mode | calorie-display.spec.ts | PASS |
+| should get correct color for low % | Test progress bar color for < 50% | calorie-display.spec.ts | PASS |
+| should get correct color for mid % | Test progress bar color for 50–99% | calorie-display.spec.ts | PASS |
+| should get correct color for 100% | Test progress bar color for ≥ 100% | calorie-display.spec.ts | PASS |
+| should display motivational message | Test appropriate message based on progress | calorie-display.spec.ts | PASS |
+
 
 
 
