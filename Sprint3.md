@@ -108,6 +108,27 @@
 | should emit on changes       | Test Observable emits updates                    | water.service.spec.ts     | PASS   |
 | should save to localStorage  | Test data persistence                            | water.service.spec.ts     | PASS   |
 | should add timestamps        | Test timestamp on each entry                     | water.service.spec.ts     | PASS   |
+| should be created | Test service instantiation | calorie.service.spec.ts | PASS |
+| should start with 0 consumed and burned | Test initial state is zero | calorie.service.spec.ts | PASS |
+| should have default goal of 2000 | Test default daily calorie goal | calorie.service.spec.ts | PASS |
+| should add consumed calories correctly | Test adding food calories | calorie.service.spec.ts | PASS |
+| should add burned calories correctly | Test adding exercise calories | calorie.service.spec.ts | PASS |
+| should accumulate multiple entries | Test multiple calorie entries accumulate | calorie.service.spec.ts | PASS |
+| should calculate net calories | Test net = consumed - burned | calorie.service.spec.ts | PASS |
+| should remove last entry | Test removeLastEntry() removes most recent | calorie.service.spec.ts | PASS |
+| should handle undo when empty | Test undo on empty entries list | calorie.service.spec.ts | PASS |
+| should update daily goal | Test updateGoal() changes target | calorie.service.spec.ts | PASS |
+| should calculate percentage | Test percentage = net/goal * 100 | calorie.service.spec.ts | PASS |
+| should calculate percentage with burned | Test percentage accounts for exercise | calorie.service.spec.ts | PASS |
+| should cap percentage at 100% | Test percentage max is 100% | calorie.service.spec.ts | PASS |
+| should calculate remaining calories | Test remaining = goal - net | calorie.service.spec.ts | PASS |
+| should calculate remaining with burned | Test remaining considers exercise | calorie.service.spec.ts | PASS |
+| should reset daily data | Test resetDay() clears all entries | calorie.service.spec.ts | PASS |
+| should emit on changes | Test Observable emits when calories added | calorie.service.spec.ts | PASS |
+| should save to localStorage | Test data persists to localStorage | calorie.service.spec.ts | PASS |
+| should add timestamps | Test each entry has accurate timestamp | calorie.service.spec.ts | PASS |
+| should handle mixed entry types | Test both consumed and burned entries together | calorie.service.spec.ts | PASS |
+
 
 
 
