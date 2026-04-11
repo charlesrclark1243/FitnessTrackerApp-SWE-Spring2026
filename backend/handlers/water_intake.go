@@ -2,12 +2,14 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 	"time"
-	
+
 	"github.com/gin-gonic/gin"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/middleware"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
+	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
 )
 
 // LogWaterIntake - POST /api/water
@@ -19,7 +21,8 @@ func LogWaterIntake(c *gin.Context) {
 	}
 
 	var req struct {
-		AmountML int       `json:"amount_ml" binding:"required"`
+		Amount   float64   `json:"amount" binding:"required"`
+		Unit     string    `json:"unit"`                        // "ml" or "oz"
 		LoggedAt time.Time `json:"logged_at"`
 	}
 
@@ -28,15 +31,40 @@ func LogWaterIntake(c *gin.Context) {
 		return
 	}
 
+	// Default unit to ml
+	if req.Unit == "" {
+		req.Unit = "ml"
+	}
+
+	// Normalize unit
+	req.Unit = strings.ToLower(req.Unit)
+
+	// Validate unit
+	if req.Unit != "ml" && req.Unit != "oz" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Unit must be 'ml' or 'oz'"})
+		return
+	}
+
 	// Validation
-	if req.AmountML <= 0 {
+	if req.Amount <= 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Amount must be positive"})
 		return
 	}
 
-	if req.AmountML > 5000 { // Max 5 liters at once seems reasonable
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Amount too large (max 5000ml)"})
-		return
+	// Convert to ML for storage
+	var amountML int
+	if req.Unit == "oz" {
+		amountML = utils.OzToML(req.Amount)
+		if amountML > 150000 { // ~5000 oz is crazy
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Amount too large"})
+			return
+		}
+	} else {
+		amountML = int(req.Amount)
+		if amountML > 5000 { // Max 5 liters at once
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Amount too large (max 5000ml)"})
+			return
+		}
 	}
 
 	// Default to current time if not provided
@@ -52,7 +80,8 @@ func LogWaterIntake(c *gin.Context) {
 
 	waterLog := models.WaterIntake{
 		UserID:   userID,
-		AmountML: req.AmountML,
+		AmountML: amountML,
+		Unit:     req.Unit, // Store what unit they used
 		LoggedAt: req.LoggedAt,
 	}
 
@@ -61,10 +90,22 @@ func LogWaterIntake(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, waterLog)
+	// Return with both units for display
+	response := map[string]interface{}{
+		"id":         waterLog.ID,
+		"user_id":    waterLog.UserID,
+		"amount_ml":  waterLog.AmountML,
+		"amount_oz":  utils.RoundToTwo(utils.MLToOz(waterLog.AmountML)),
+		"unit":       waterLog.Unit,
+		"logged_at":  waterLog.LoggedAt,
+		"created_at": waterLog.CreatedAt,
+		"updated_at": waterLog.UpdatedAt,
+	}
+
+	c.JSON(http.StatusCreated, response)
 }
 
-// GetWaterIntakeLogs - GET /api/water?date=YYYY-MM-DD
+// GetWaterIntakeLogs - GET /api/water?date=YYYY-MM-DD&unit=ml|oz
 func GetWaterIntakeLogs(c *gin.Context) {
 	userID, ok := middleware.GetUserID(c)
 	if !ok {
@@ -72,13 +113,12 @@ func GetWaterIntakeLogs(c *gin.Context) {
 		return
 	}
 
-	dateStr := c.Query("date") // Optional: filter by date
+	dateStr := c.Query("date")
 
 	var logs []models.WaterIntake
 	query := database.DB.Where("user_id = ?", userID)
 
 	if dateStr != "" {
-		// Parse date and get start/end of day
 		date, err := time.Parse("2006-01-02", dateStr)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
@@ -98,10 +138,25 @@ func GetWaterIntakeLogs(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, logs)
+	// Add converted amounts to response
+	response := make([]map[string]interface{}, len(logs))
+	for i, log := range logs {
+		response[i] = map[string]interface{}{
+			"id":         log.ID,
+			"user_id":    log.UserID,
+			"amount_ml":  log.AmountML,
+			"amount_oz":  utils.RoundToTwo(utils.MLToOz(log.AmountML)),
+			"unit":       log.Unit, // Original unit they logged in
+			"logged_at":  log.LoggedAt,
+			"created_at": log.CreatedAt,
+			"updated_at": log.UpdatedAt,
+		}
+	}
+
+	c.JSON(http.StatusOK, response)
 }
 
-// GetDailySummary - GET /api/water/summary?date=YYYY-MM-DD
+// GetDailySummary - GET /api/water/summary?date=YYYY-MM-DD&unit=ml|oz
 func GetDailySummary(c *gin.Context) {
 	userID, ok := middleware.GetUserID(c)
 	if !ok {
@@ -121,7 +176,7 @@ func GetDailySummary(c *gin.Context) {
 	endOfDay := startOfDay.Add(24 * time.Hour)
 
 	var logs []models.WaterIntake
-	err = database.DB.Where("user_id = ? AND logged_at >= ? AND logged_at < ?", 
+	err = database.DB.Where("user_id = ? AND logged_at >= ? AND logged_at < ?",
 		userID, startOfDay, endOfDay).Find(&logs).Error
 
 	if err != nil {
@@ -129,22 +184,24 @@ func GetDailySummary(c *gin.Context) {
 		return
 	}
 
-	// Calculate totals
+	// Calculate totals (always in ML internally)
 	totalML := 0
 	for _, log := range logs {
 		totalML += log.AmountML
 	}
 
-	// Recommended daily intake: 2000ml (can be customized per user later)
+	// Goal: 2000ml (about 68 oz)
 	goalML := 2000
 	percentage := (float64(totalML) / float64(goalML)) * 100
 
 	summary := models.WaterIntakeSummary{
 		Date:       dateStr,
 		TotalML:    totalML,
+		TotalOZ:    utils.RoundToTwo(utils.MLToOz(totalML)),
 		EntryCount: len(logs),
 		GoalML:     goalML,
-		Percentage: roundToTwo(percentage),
+		GoalOZ:     utils.RoundToTwo(utils.MLToOz(goalML)),
+		Percentage: utils.RoundToTwo(percentage),
 	}
 
 	c.JSON(http.StatusOK, summary)
@@ -160,7 +217,6 @@ func DeleteWaterLog(c *gin.Context) {
 
 	logID := c.Param("id")
 
-	// Verify ownership before deleting
 	var log models.WaterIntake
 	if err := database.DB.Where("id = ? AND user_id = ?", logID, userID).First(&log).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Water log not found"})
@@ -173,9 +229,4 @@ func DeleteWaterLog(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Water log deleted successfully"})
-}
-
-// Helper function
-func roundToTwo(val float64) float64 {
-	return float64(int(val*100+0.5)) / 100
 }

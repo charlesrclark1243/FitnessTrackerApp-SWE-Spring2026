@@ -68,6 +68,21 @@ func UpdateProfile(c *gin.Context) {
 		return
 	}
 
+	if req.WeightGoal != "" {
+		validGoals := []string{"lose", "hold", "gain"}
+		valid := false
+		for _, goal := range validGoals {
+			if req.WeightGoal == goal {
+				valid = true
+				break
+			}
+		}
+		if !valid {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Weight goal must be 'lose', 'hold', or 'gain'"})
+			return
+		}
+	}
+
 	// check if profile already exists
 	var profile models.HealthProfile
 	err := database.DB.Where("user_id = ?", userID).First(&profile).Error
@@ -85,6 +100,7 @@ func UpdateProfile(c *gin.Context) {
 			HipsCM:         req.HipsCM,
 			ActivityLevel:  req.ActivityLevel,
 			PreferredUnits: req.PreferredUnits,
+			WeightGoal:     req.WeightGoal,
 		}
 		if err := database.DB.Create(&profile).Error; err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create profile"})
@@ -100,6 +116,7 @@ func UpdateProfile(c *gin.Context) {
 		profile.ActivityLevel = req.ActivityLevel
 		profile.PreferredUnits = req.PreferredUnits
 		profile.UpdatedAt = req.UpdatedAt
+		profile.WeightGoal = req.WeightGoal
 
 		if err := database.DB.Save(&profile).Error; err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update profile"})
