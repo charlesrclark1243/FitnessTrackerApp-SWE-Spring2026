@@ -5,11 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/database"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/middleware"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/utils"
+	"github.com/gin-gonic/gin"
 )
 
 // LogWaterIntake - POST /api/water
@@ -22,7 +22,7 @@ func LogWaterIntake(c *gin.Context) {
 
 	var req struct {
 		Amount   float64   `json:"amount" binding:"required"`
-		Unit     string    `json:"unit"`                        // "ml" or "oz"
+		Unit     string    `json:"unit"` // "ml" or "oz"
 		LoggedAt time.Time `json:"logged_at"`
 	}
 
@@ -55,7 +55,7 @@ func LogWaterIntake(c *gin.Context) {
 	var amountML int
 	if req.Unit == "oz" {
 		amountML = utils.OzToML(req.Amount)
-		if amountML > 150000 { // ~5000 oz is crazy
+		if amountML > 150000 { // 5000 oz is crazy
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Amount too large"})
 			return
 		}
@@ -184,7 +184,7 @@ func GetDailySummary(c *gin.Context) {
 		return
 	}
 
-	// Calculate totals (always in ML internally)
+	// Calculate totals
 	totalML := 0
 	for _, log := range logs {
 		totalML += log.AmountML
