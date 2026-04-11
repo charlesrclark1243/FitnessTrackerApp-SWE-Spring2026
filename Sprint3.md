@@ -263,7 +263,16 @@
 | TestGetExerciseLogs_Unauthorized | Tests what happens when an unauthorized user tries to retrieve their exercise logs. | `backend/handlers/exercise_test.go` | PASS |
 | TestGetExerciseLogs_MultipleUsers | Stress tests exercise log retrieval to ensure different users are kept separate. | `backend/handlers/exercise_test.go` | PASS |
 | TestGetExerciseLogs_LimitTo30 | Tests to make sure that the retrieved logs are limited to the last 30. | `backend/handlers/exercise_test.go` | PASS |
-
+|  TestLogCalorieIntake_Success | Tests a successful logging of calorie intake. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestLogCalorieIntake_InvalidAmount | Tests the validation of calorie amounts, making sure not negative, zero, or too large. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestLogCalorieIntake_InvalidMealType | Tests validation of meal types. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetCalorieIntakeLogs_Success | Tests retrieval of calorie logs. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetCalorieIntakeLogs_FilterByDate | Tests calorie log filtering by date. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetDailyCalorieSummary_Success | Tests daily summary feature. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetRecentCalorieLogs_Success | Tests retrieval of recent calorie logs. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestDeleteCalorieLog_Success | Tests deletion of calorie logs.  | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestDeleteCalorieLog_NotFound | Tests attempted deletion of nonexistent log. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestCalorieIntake_Unauthorized | Tests unauthorized attempt to log calorie intake. | `backend/handlers/calorie_intake_test.go` | PASS |
 
 ## API Documentation
 
@@ -292,11 +301,11 @@ Allows an existing user to sign into their account and access protected endpoint
 Allows a user to access their profile.
 ```
 {
-  	"date_of_birth": "DATE",
-	  "sex": "SEX",
-	  "height_cm": HEIGHT,
-  	"weight_kg": WEIGHT,
-  	"activity_level": "ACTIVITY LEVEL"
+  	"date_of_birth": "DATE",             # required
+	"sex": "SEX",						 # required
+	"height_cm": HEIGHT,                 # required
+  	"weight_kg": WEIGHT,                 # required
+  	"activity_level": "ACTIVITY LEVEL"   # required
 }
 ```
 
@@ -305,11 +314,12 @@ Allows a user to access their profile.
 Allows a user to update their profile data.
 ```
 {
-  	"date_of_birth": "DATE",
-	  "sex": "SEX",
-	  "height_cm": HEIGHT,
-  	"weight_kg": WEIGHT,
-  	"activity_level": "ACTIVITY LEVEL"
+  	"date_of_birth": "DATE",         # required
+    "sex": "SEX",                    # required
+    "height_cm": HEIGHT,             # required
+  	"weight_kg": WEIGHT,             # required
+  	"activity_level": "sedentary" | "light" | "moderate" | "active" | "very_active",  # required
+	"weight_goal": "lose" | "hold" | "gain"         # optional, defaults to "hold"
 }
 ```
 ### `GET api/profile/stats`
@@ -331,6 +341,8 @@ Allows a user to log their water intake.
 ```
 {
   	"amount_ml": AMOUNT
+	"unit": "ml" | "oz"
+	"logged_at": TIME
 }
 ```
 
@@ -339,6 +351,8 @@ Allows a user to log their water intake.
 Allows a user to view their water intake log.
 ```
 # NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD
 ```
 
 ### `GET api/water/summary`
@@ -346,6 +360,8 @@ Allows a user to view their water intake log.
 Allows a user to view their water intake summary.
 ```
 # NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD
 ```
 
 ### `PUT api/weight/add`
@@ -357,6 +373,13 @@ Allows a user to add a datapoint to their weight log.
     "unit":      UNIT,     # optional, "metric" (default) or "imperial"
     "logged_at": DATETIME  # optional, handled automatically
 }
+```
+
+### `DELETE api/water/:id`
+
+Deletes a specific water intake log.
+```
+# NO BODY NECESSARY
 ```
 
 ### `GET api/weight/list`
@@ -405,6 +428,51 @@ Allows the user to retrieve their last 30 exercise log records.
 # NO BODY NECESSARY
 ```
 
+### `POST api/calories`
+
+Allows user to log calorie intake with optional meal information.
+```
+{
+	"calories": INT,                                          # required, pos integer, max 10000
+	"food_name": STRING,									  # optional, max 200 characters
+	"meal_type": "breakfast" | "lunch" | "dinner" | "snack",  # optional
+	"logged_at": TIME										  # optional
+}
+```
+
+### `GET api/calories`
+
+Retrieves all calorie intake logs for the user.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD    # Filter logs by specific date
+```
+
+### `GET api/calories/recent`
+
+Retrieves the most recent calorie intake logs for the user.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?limit=INT    # Number of logs to retrieve (1-100, defaults to 30)
+```
+
+### `GET api/calories/summary`
+
+Retrieves daily calorie intake summary with goal tracking.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD    # Gets summary for specific date (defaults to today)
+```
+
+### `DELETE api/calories/:id`
+
+Deletes a specific calorie intake log.
+```
+NO BODY NECESSARY
+```
 ## Demo
 
 TODO (April 13, 2026 @ 3 pm)
