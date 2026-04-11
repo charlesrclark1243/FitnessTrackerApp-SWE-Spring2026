@@ -1,0 +1,176 @@
+<mat-card class="calorie-input-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">restaurant</mat-icon>
+      Calorie Tracker
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-tab-group>
+      <!-- Consumed Calories Tab -->
+      <mat-tab label="Food">
+        <div class="tab-content">
+          <!-- Quick Add Buttons for Consumed -->
+          <div class="quick-buttons">
+            @for (quickBtn of quickConsumed; track quickBtn.value) {
+              <button 
+                mat-raised-button 
+                color="primary"
+                class="quick-add-btn"
+                (click)="addQuickConsumed(quickBtn.value, quickBtn.label)"
+                [matTooltip]="'Add ' + quickBtn.value + ' calories'">
+                <mat-icon>{{ quickBtn.icon }}</mat-icon>
+                <span class="btn-label">{{ quickBtn.label }}</span>
+                <span class="btn-calories">{{ quickBtn.value }} cal</span>
+              </button>
+            }
+          </div>
+
+          <!-- Custom Amount Section for Consumed -->
+          <div class="custom-section">
+            @if (!showCustomConsumed) {
+              <button 
+                mat-stroked-button 
+                color="accent"
+                class="custom-toggle-btn"
+                (click)="toggleCustomConsumed()">
+                <mat-icon>add_circle_outline</mat-icon>
+                Custom Food
+              </button>
+            }
+
+            @if (showCustomConsumed) {
+              <div class="custom-input-container">
+                <mat-form-field appearance="outline" class="custom-input">
+                  <mat-label>Calories</mat-label>
+                  <input 
+                    matInput 
+                    type="number"
+                    [(ngModel)]="customAmount"
+                    placeholder="Amount"
+                    min="0"
+                    max="5000">
+                  <span matTextSuffix>cal</span>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="custom-input">
+                  <mat-label>Description</mat-label>
+                  <input 
+                    matInput 
+                    [(ngModel)]="customDescription"
+                    placeholder="e.g., Pizza slice"
+                    (keyup.enter)="addCustomConsumed()">
+                </mat-form-field>
+                
+                <button 
+                  mat-raised-button 
+                  color="accent"
+                  [disabled]="customAmount <= 0"
+                  (click)="addCustomConsumed()">
+                  <mat-icon>add</mat-icon>
+                  Add
+                </button>
+                
+                <button 
+                  mat-icon-button
+                  (click)="toggleCustomConsumed()"
+                  matTooltip="Cancel">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Burned Calories Tab -->
+      <mat-tab label="Exercise">
+        <div class="tab-content">
+          <!-- Quick Add Buttons for Burned -->
+          <div class="quick-buttons">
+            @for (quickBtn of quickBurned; track quickBtn.value) {
+              <button 
+                mat-raised-button 
+                color="warn"
+                class="quick-add-btn"
+                (click)="addQuickBurned(quickBtn.value, quickBtn.label)"
+                [matTooltip]="'Burn ' + quickBtn.value + ' calories'">
+                <mat-icon>{{ quickBtn.icon }}</mat-icon>
+                <span class="btn-label">{{ quickBtn.label }}</span>
+                <span class="btn-calories">-{{ quickBtn.value }} cal</span>
+              </button>
+            }
+          </div>
+
+          <!-- Custom Amount Section for Burned -->
+          <div class="custom-section">
+            @if (!showCustomBurned) {
+              <button 
+                mat-stroked-button 
+                color="accent"
+                class="custom-toggle-btn"
+                (click)="toggleCustomBurned()">
+                <mat-icon>add_circle_outline</mat-icon>
+                Custom Exercise
+              </button>
+            }
+
+            @if (showCustomBurned) {
+              <div class="custom-input-container">
+                <mat-form-field appearance="outline" class="custom-input">
+                  <mat-label>Calories</mat-label>
+                  <input 
+                    matInput 
+                    type="number"
+                    [(ngModel)]="customAmount"
+                    placeholder="Amount"
+                    min="0"
+                    max="5000">
+                  <span matTextSuffix>cal</span>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="custom-input">
+                  <mat-label>Description</mat-label>
+                  <input 
+                    matInput 
+                    [(ngModel)]="customDescription"
+                    placeholder="e.g., Swimming"
+                    (keyup.enter)="addCustomBurned()">
+                </mat-form-field>
+                
+                <button 
+                  mat-raised-button 
+                  color="accent"
+                  [disabled]="customAmount <= 0"
+                  (click)="addCustomBurned()">
+                  <mat-icon>add</mat-icon>
+                  Add
+                </button>
+                
+                <button 
+                  mat-icon-button
+                  (click)="toggleCustomBurned()"
+                  matTooltip="Cancel">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Undo Button -->
+    <div class="actions">
+      <button 
+        mat-button 
+        color="warn"
+        (click)="undoLast()"
+        matTooltip="Remove last entry">
+        <mat-icon>undo</mat-icon>
+        Undo Last
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

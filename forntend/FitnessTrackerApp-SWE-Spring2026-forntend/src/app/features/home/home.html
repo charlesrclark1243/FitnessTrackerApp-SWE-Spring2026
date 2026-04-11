@@ -1,3 +1,4 @@
+
 <div class="home-container">
   <!-- Welcome Card -->
   <mat-card class="welcome-card">
@@ -6,18 +7,41 @@
     </mat-card-header>
     <mat-card-content>
       <p>Hello, <strong>{{ username$ | async }}</strong>!</p>
-      <p>Track your daily water intake and stay hydrated throughout the day.</p>
+      <p>Track your daily water intake and calorie balance to stay healthy!</p>
     </mat-card-content>
   </mat-card>
 
-  <!-- Water Tracking Section -->
-  <div class="water-tracking-section">
-    <!-- Daily Display (Top) -->
-    <app-water-display></app-water-display>
+  <!-- Tracking Section -->
+  <div class="tracking-grid">
+    <!-- Calorie Tracking -->
+    <div class="tracking-column">
+      <app-calorie-display></app-calorie-display>
+      <app-calorie-input></app-calorie-input>
+    </div>
     
-    <!-- Quick Add (Bottom) -->
-    <app-water-intake></app-water-intake>
+    <!-- Water Tracking -->
+    <div class="tracking-column">
+      <app-water-display></app-water-display>
+      <app-water-intake></app-water-intake>
+    </div>
+    <div class="tracking-column">
+     <app-weight-log></app-weight-log>
+    </div>
   </div>
-
-  <app-weight-log></app-weight-log>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

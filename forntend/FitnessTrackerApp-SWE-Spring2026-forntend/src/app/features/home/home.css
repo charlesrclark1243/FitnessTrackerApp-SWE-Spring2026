@@ -1,6 +1,6 @@
 .home-container {
   padding: 40px 20px;
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -18,7 +18,14 @@ p {
   line-height: 1.6;
 }
 
-.water-tracking-section {
+/* Tracking Grid */
+.tracking-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.tracking-column {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -26,13 +33,7 @@ p {
 
 /* Responsive layout for larger screens */
 @media (min-width: 768px) {
-  .home-container {
-    max-width: 1200px;
-  }
-  
-  .water-tracking-section {
-    display: grid;
+  .tracking-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
   }
 }
