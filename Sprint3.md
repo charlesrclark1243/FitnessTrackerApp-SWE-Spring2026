@@ -77,6 +77,10 @@
 | should show warning at goal | Test warning when goal reached | calorie-tracking.cy.ts | PASS |
 | should edit daily calorie goal | Test user can change goal | calorie-tracking.cy.ts | PASS |
 | should show entries with descriptions | Test entries display names | calorie-tracking.cy.ts | PASS |
+| weight log graph | logs a new weight and keeps graph view available | PASS
+| editing most recent weight |opens Correct Recent form pre-filled with the most recent weight | PASS
+| successfully editing most recent weight | updates most recent weight entry and shows success message | PASS
+| failure of editing most recent weight | shows an error message when updating most recent weight fails | PASS
 
 
 
