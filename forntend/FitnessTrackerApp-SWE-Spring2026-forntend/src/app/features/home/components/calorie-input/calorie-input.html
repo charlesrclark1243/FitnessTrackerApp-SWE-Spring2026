@@ -7,54 +7,6 @@
   </mat-card-header>
 
   <mat-card-content>
-    <!-- Daily Goal Direction Selector -->
-    <div class="goal-setting-section">
-      <div class="goal-header">
-        <h3>Daily Calorie Goal</h3>
-        <p class="goal-description">Choose your goal to calculate your daily calorie target</p>
-      </div>
-
-      <div class="goal-options">
-        <mat-radio-group [(ngModel)]="selectedDirection" class="goal-radio-group">
-          <mat-radio-button value="lose" class="goal-radio">
-            <mat-icon class="goal-icon">trending_down</mat-icon>
-            <span class="goal-label">Lose Weight</span>
-            <span class="goal-detail">Create a deficit</span>
-          </mat-radio-button>
-
-          <mat-radio-button value="hold" class="goal-radio">
-            <mat-icon class="goal-icon">trending_flat</mat-icon>
-            <span class="goal-label">Maintain Weight</span>
-            <span class="goal-detail">Match your TDEE</span>
-          </mat-radio-button>
-
-          <mat-radio-button value="gain" class="goal-radio">
-            <mat-icon class="goal-icon">trending_up</mat-icon>
-            <span class="goal-label">Gain Weight</span>
-            <span class="goal-detail">Create a surplus</span>
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <button
-        mat-raised-button
-        color="primary"
-        class="set-goal-btn"
-        (click)="setGoal()"
-        [disabled]="settingGoal"
-        matTooltip="Calculate daily goal based on your TDEE">
-        <mat-icon>{{ settingGoal ? 'sync' : 'check_circle' }}</mat-icon>
-        {{ settingGoal ? 'Setting Goal...' : 'Set Daily Goal' }}
-      </button>
-
-      <div *ngIf="goalMessage" class="goal-message" [class.success]="!goalMessage.includes('Failed')">
-        <mat-icon>{{ goalMessage.includes('Failed') ? 'error' : 'check' }}</mat-icon>
-        {{ goalMessage }}
-      </div>
-    </div>
-
-    <mat-divider class="goal-divider"></mat-divider>
-
     <mat-tab-group>
       <!-- Consumed Calories Tab -->
       <mat-tab label="Food">

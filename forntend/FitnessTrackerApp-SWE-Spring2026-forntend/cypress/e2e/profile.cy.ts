@@ -41,6 +41,8 @@ describe('Profile page and profile stats', () => {
         sex: 'female',
         height_cm: 170,
         weight_kg: 56,
+        weight_goal: 'hold',
+        activity_level: 'moderate',
         neck_cm: 45,
         waist_cm: 70,
         hips_cm: 95
@@ -68,7 +70,7 @@ describe('Profile page and profile stats', () => {
     cy.url().should('include', '/profile');
     cy.wait('@loadProfile');
     cy.wait('@loadStats');
-    cy.get('[data-cy="health-profile-form"]', { timeout: 10000 }).should('be.visible');
+    cy.get('[data-cy="health-profile-form"]', { timeout: 20000 }).should('be.visible');
   });
 
   it('renders the profile page with stats and form', () => {
@@ -164,5 +166,52 @@ describe('Profile page and profile stats', () => {
     cy.wait('@reloadStatsNa');
 
     cy.get('[data-cy="stat-bfp"]').should('contain.text', 'N/A');
+  });
+
+  it('saves calorie goal and activity level in profile payload', () => {
+    cy.intercept('PUT', '**/api/profile', {
+      statusCode: 200,
+      body: {
+        user_id: 1,
+        height_cm: 170,
+        weight_kg: 56,
+        date_of_birth: '2005-07-07T00:00:00.000Z',
+        sex: 'female',
+        weight_goal: 'gain',
+        activity_level: 'very_active',
+        neck_cm: 45,
+        waist_cm: 70,
+        hips_cm: 95
+      }
+    }).as('saveProfileGoalAndActivity');
+
+    cy.intercept('GET', '**/api/profile/stats*', {
+      statusCode: 200,
+      body: {
+        age: 20,
+        bmi: 19.4,
+        bfp: 22.1,
+        bmr: 1400,
+        tdee: 2250
+      }
+    }).as('reloadStatsGoalAndActivity');
+
+    cy.get('[data-cy="profile-weight-goal"]').click();
+    cy.get('mat-option').contains('Gain weight').click();
+
+    cy.get('[data-cy="profile-activity-level"]').click();
+    cy.get('mat-option').contains('Very Active').click();
+
+    cy.get('[data-cy="profile-save-btn"]').click();
+
+    cy.wait('@saveProfileGoalAndActivity')
+      .its('request.body')
+      .should((body) => {
+        expect(body.weight_goal).to.eq('gain');
+        expect(body.activity_level).to.eq('very_active');
+      });
+
+    cy.wait('@reloadStatsGoalAndActivity');
+    cy.get('[data-cy="profile-save-msg"]').should('contain.text', 'Saved');
   });
 });

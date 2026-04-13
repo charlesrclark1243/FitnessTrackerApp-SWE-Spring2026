@@ -126,6 +126,31 @@
           </mat-form-field>
         </ng-template>
 
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Calorie Goal Direction</mat-label>
+          <mat-select formControlName="weightGoal" data-cy="profile-weight-goal">
+            <mat-option value="lose">Lose weight</mat-option>
+            <mat-option value="hold">Maintain weight</mat-option>
+            <mat-option value="gain">Gain weight</mat-option>
+          </mat-select>
+          <mat-hint>This preference is shown in your calorie output card.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Activity Level</mat-label>
+          <mat-select formControlName="activityLevel" data-cy="profile-activity-level">
+            <mat-option value="sedentary">Sedentary</mat-option>
+            <mat-option value="light">Light</mat-option>
+            <mat-option value="moderate">Moderate</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="very_active">Very Active</mat-option>
+          </mat-select>
+          <mat-hint>Used for calorie calculations and goal planning.</mat-hint>
+          <mat-error *ngIf="form.get('activityLevel')?.invalid && form.get('activityLevel')?.touched">
+            Activity level is required
+          </mat-error>
+        </mat-form-field>
+
         <!-- Circumference -->
         <div class="field-head">
           <div class="block-label">Measurements</div>

@@ -44,6 +44,50 @@
   color: #c62828;
 }
 
+/* Modify Weight Section */
+.modify-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.modify-toggle-btn {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.modify-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.modify-info {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 500;
+}
+
+.modify-input-row {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 12px;
+  align-items: start;
+}
+
+.modify-input {
+  width: 100%;
+}
+
+.modify-btn {
+  height: 56px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
 .history {
   margin-top: 24px;
   padding-top: 12px;

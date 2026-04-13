@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
+import { finalize } from 'rxjs/operators';
 import { WeightService } from '../../../../core/services/weight';
 import { AuthService } from '../../../../core/services/auth';
 
@@ -52,13 +53,19 @@ export class WeightLogComponent implements OnInit {
   loading = false;
   errorMessage = '';
   successMessage = '';
+  modifyErrorMessage = '';
   unit: 'kg' | 'lbs' = 'kg';
+  showModifyForm = false;
 
   readonly graphWidth = 640;
   readonly graphHeight = 260;
   readonly graphPadding = 28;
 
   form = this.fb.group({
+    weight: [null as number | null, [Validators.required, Validators.min(1)]]
+  });
+
+  modifyForm = this.fb.group({
     weight: [null as number | null, [Validators.required, Validators.min(1)]]
   });
 
@@ -88,6 +95,7 @@ export class WeightLogComponent implements OnInit {
 
     this.errorMessage = '';
     this.successMessage = '';
+    this.modifyErrorMessage = '';
     this.loading = true;
 
     const rawWeight = Number(this.form.value.weight);
@@ -111,6 +119,66 @@ export class WeightLogComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  modifyMostRecent(): void {
+    if (this.modifyForm.invalid || this.logs.length === 0) return;
+
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.modifyErrorMessage = '';
+    this.loading = true;
+
+    const rawWeight = Number(this.modifyForm.value.weight);
+    const weightKG =
+      this.unit === 'kg' ? rawWeight : rawWeight * 0.45359237;
+
+    let didSucceed = false;
+
+    this.weightService.modifyWeight(weightKG).pipe(
+      finalize(() => {
+        if (!didSucceed) {
+          this.modifyErrorMessage = 'Failed to update weight.';
+          this.errorMessage = 'Failed to update weight.';
+          this.loading = false;
+        }
+      })
+    ).subscribe({
+      next: (updatedLog) => {
+        if (!updatedLog || updatedLog.id <= 0 || !Number.isFinite(updatedLog.weightKG)) {
+          return;
+        }
+        didSucceed = true;
+        this.successMessage = 'Weight updated successfully.';
+        this.loading = false;
+        this.modifyForm.reset();
+        this.showModifyForm = false;
+        this.loadRecentWeights();
+
+        // update profile weight
+        this.authService.updateProfile({ weight: weightKG }).subscribe({
+          error: () => {}
+        });
+      },
+      error: () => {
+        // Error UI is handled by finalize when request does not succeed.
+      }
+    });
+  }
+
+  toggleModifyForm(): void {
+    this.showModifyForm = !this.showModifyForm;
+    this.modifyErrorMessage = '';
+    if (this.showModifyForm && this.logs.length > 0) {
+      // Pre-fill with current most recent weight
+      const mostRecentKG = this.logs[0].weightKG;
+      const displayValue = this.unit === 'kg' 
+        ? mostRecentKG.toFixed(1) 
+        : (mostRecentKG / 0.45359237).toFixed(1);
+      this.modifyForm.patchValue({ weight: parseFloat(displayValue) });
+    } else {
+      this.modifyForm.reset();
+    }
   }
 
   displayWeight(weightKG: number): string {

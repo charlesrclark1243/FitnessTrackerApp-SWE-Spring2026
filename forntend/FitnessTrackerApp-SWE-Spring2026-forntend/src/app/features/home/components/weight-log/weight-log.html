@@ -37,8 +37,51 @@
       </div>
 
       <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
-      <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="message error" *ngIf="errorMessage" data-cy="modify-weight-error">{{ errorMessage }}</div>
     </form>
+
+    <!-- Modify Most Recent Weight Form -->
+    <div *ngIf="logs.length > 0" class="modify-section">
+      <button
+        mat-stroked-button
+        color="accent"
+        class="modify-toggle-btn"
+        (click)="toggleModifyForm()"
+        matTooltip="Update your most recent weight entry">
+        <mat-icon>{{ showModifyForm ? 'close' : 'edit' }}</mat-icon>
+        {{ showModifyForm ? 'Correct Recent (Cancel)' : 'Correct Recent' }}
+      </button>
+
+      <form *ngIf="showModifyForm" [formGroup]="modifyForm" (ngSubmit)="modifyMostRecent()" class="modify-form">
+        <p class="modify-info">Update your most recent weight entry</p>
+        
+        <div class="modify-input-row">
+          <mat-form-field appearance="outline" class="modify-input">
+            <mat-label>New Weight</mat-label>
+            <input matInput type="number" formControlName="weight" data-cy="modify-weight-input"/>
+            <span matTextSuffix>{{ unit }}</span>
+            <mat-error *ngIf="modifyForm.get('weight')?.invalid && modifyForm.get('weight')?.touched">
+              Enter a valid weight
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="warn"
+            type="submit"
+            class="modify-btn"
+            [disabled]="loading || modifyForm.invalid"
+            data-cy="modify-weight-btn">
+            <mat-icon>{{ loading ? 'sync' : 'check' }}</mat-icon>
+            {{ loading ? 'Updating...' : 'Update' }}
+          </button>
+        </div>
+
+        <div class="message error" *ngIf="modifyErrorMessage || errorMessage" data-cy="modify-weight-error">
+          {{ modifyErrorMessage || errorMessage }}
+        </div>
+      </form>
+    </div>
 
     <div class="history" data-cy="weight-history">
       <mat-tab-group>

@@ -8,8 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatDividerModule } from '@angular/material/divider';
 import { CalorieService } from '../../../../core/services/calorie';
 
 @Component({
@@ -24,9 +22,7 @@ import { CalorieService } from '../../../../core/services/calorie';
     MatInputModule,
     MatFormFieldModule,
     MatTabsModule,
-    MatTooltipModule,
-    MatRadioModule,
-    MatDividerModule
+    MatTooltipModule
   ],
   templateUrl: './calorie-input.html',
   styleUrl: './calorie-input.css'
@@ -36,9 +32,6 @@ export class CalorieInputComponent {
   customDescription: string = '';
   showCustomConsumed = false;
   showCustomBurned = false;
-  selectedDirection: 'lose' | 'hold' | 'gain' = 'hold';
-  settingGoal = false;
-  goalMessage = '';
   
   // Quick add amounts for consumed calories
   quickConsumed = [
@@ -55,27 +48,6 @@ export class CalorieInputComponent {
   ];
 
   constructor(public calorieService: CalorieService) {}
-
-  // Set the daily calorie goal based on selected direction
-  setGoal(): void {
-    this.settingGoal = true;
-    this.goalMessage = '';
-    
-    this.calorieService.setDailyGoal(this.selectedDirection).subscribe({
-      next: (goal) => {
-        this.goalMessage = `Daily goal set to ${goal} calories (${this.selectedDirection} mode)`;
-        this.settingGoal = false;
-        // Clear message after 3 seconds
-        setTimeout(() => {
-          this.goalMessage = '';
-        }, 3000);
-      },
-      error: () => {
-        this.goalMessage = 'Failed to set daily goal. Please try again.';
-        this.settingGoal = false;
-      }
-    });
-  }
 
   // Add predefined consumed calories
   addQuickConsumed(amount: number, description: string): void {

@@ -65,6 +65,8 @@ export class HealthProfileComponent implements OnInit {
     neckCm: [null as number | null],
     waistCm: [null as number | null],
     hipsCm: [null as number | null],
+    weightGoal: ['hold' as 'lose' | 'hold' | 'gain'],
+    activityLevel: ['moderate' as 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active', Validators.required],
   });
 
   savedMsg = '';
@@ -112,6 +114,8 @@ export class HealthProfileComponent implements OnInit {
         neck_cm: u.neck,
         waist_cm: u.waist,
         hips_cm: u.hips,
+        weight_goal: 'hold',
+        activity_level: 'moderate',
       });
     }
   }
@@ -139,6 +143,16 @@ export class HealthProfileComponent implements OnInit {
 
     const hipsCm = profile?.hips_cm || profile?.hipsCM;
     if (hipsCm != null) this.form.patchValue({ hipsCm });
+
+    const weightGoal = profile?.weight_goal;
+    if (weightGoal === 'lose' || weightGoal === 'hold' || weightGoal === 'gain') {
+      this.form.patchValue({ weightGoal }, { emitEvent: false });
+    }
+
+    const activityLevel = profile?.activity_level;
+    if (activityLevel === 'sedentary' || activityLevel === 'light' || activityLevel === 'moderate' || activityLevel === 'active' || activityLevel === 'very_active') {
+      this.form.patchValue({ activityLevel }, { emitEvent: false });
+    }
 
     const h = this.form.value.heightCm;
     if (h != null) {
@@ -253,6 +267,8 @@ export class HealthProfileComponent implements OnInit {
         sex,
         height_cm: heightCm ?? undefined,
         weight_kg: weightKg ?? undefined, 
+      weight_goal: this.form.value.weightGoal ?? 'hold',
+        activity_level: this.form.value.activityLevel ?? 'moderate',
         neck_cm: this.form.value.neckCm ?? undefined,
         waist_cm: this.form.value.waistCm ?? undefined,
         hips_cm: this.form.get('sex')?.value === 'female'

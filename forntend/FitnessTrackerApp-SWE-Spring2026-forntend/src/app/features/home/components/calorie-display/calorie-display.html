@@ -34,56 +34,15 @@
 
       <!-- Goal Display -->
       <div class="goal-section">
-        @if (!isEditingGoal) {
-          <div class="goal-display">
-            <span class="goal-label">Daily Goal:</span>
-            <span class="goal-value">{{ formatNumber(calorieData.goal) }} cal</span>
-            <button 
-              mat-icon-button 
-              class="edit-goal-btn"
-              (click)="startEditGoal()"
-              matTooltip="Edit daily goal">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-          <div class="remaining-display" [class.over-goal]="remainingCalories < 0">
-            <span>{{ remainingCalories >= 0 ? 'Remaining' : 'Over goal' }}: </span>
-            <strong>{{ formatNumber(remainingCalories >= 0 ? remainingCalories : -remainingCalories) }} cal</strong>
-          </div>
-        }
-        
-        @if (isEditingGoal) {
-          <div class="goal-edit">
-            <mat-form-field appearance="outline" class="goal-input">
-              <mat-label>Target Direction</mat-label>
-              <mat-select [(ngModel)]="selectedGoalDirection">
-                <mat-option value="lose">Lose Weight</mat-option>
-                <mat-option value="hold">Maintain Weight</mat-option>
-                <mat-option value="gain">Gain Weight</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button 
-              mat-icon-button 
-              color="primary"
-              (click)="saveGoal()"
-              [disabled]="goalLoading">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button 
-              mat-icon-button
-              (click)="cancelEditGoal()"
-              [disabled]="goalLoading">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
-
-          @if (goalError) {
-            <div class="no-entries">
-              <mat-icon>error_outline</mat-icon>
-              <p>{{ goalError }}</p>
-            </div>
-          }
-        }
+        <div class="goal-display">
+          <span class="goal-label">Daily Goal:</span>
+          <span class="goal-value">{{ formatNumber(calorieData.goal) }} cal</span>
+          <span class="goal-mode">{{ goalDirectionLabel }}</span>
+        </div>
+        <div class="remaining-display" [class.over-goal]="remainingCalories < 0">
+          <span>{{ remainingCalories >= 0 ? 'Remaining' : 'Over goal' }}: </span>
+          <strong>{{ formatNumber(remainingCalories >= 0 ? remainingCalories : -remainingCalories) }} cal</strong>
+        </div>
       </div>
 
       <!-- Progress Bar -->

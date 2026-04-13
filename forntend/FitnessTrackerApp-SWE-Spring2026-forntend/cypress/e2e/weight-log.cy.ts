@@ -101,4 +101,59 @@ describe('Weight logging on Home page', () => {
     cy.contains('.mdc-tab__text-label', 'Graphs').click();
     cy.get('[data-cy="weight-graph"]').should('be.visible');
   });
+
+  it('opens Correct Recent form pre-filled with the most recent weight', () => {
+    cy.contains('button', 'Correct Recent').click();
+    cy.get('[data-cy="modify-weight-input"]').should('be.visible');
+    cy.get('[data-cy="modify-weight-input"]').should('have.value', '74.9');
+  });
+
+  it('updates most recent weight entry and shows success message', () => {
+    cy.intercept('POST', '**/api/weight/modify', {
+      statusCode: 200,
+      body: {
+        message: 'Weight updated successfully',
+        log: {
+          id: 203,
+          user_id: 1,
+          weight_kg: 73.5,
+          logged_at: '2026-04-02T08:00:00.000Z'
+        }
+      }
+    }).as('modifyWeight');
+
+    cy.intercept('PUT', '**/api/profile', {
+      statusCode: 200,
+      body: { id: 1, username: 'demo' }
+    }).as('updateProfileAfterModify');
+
+    cy.contains('button', 'Correct Recent').click();
+    cy.get('[data-cy="modify-weight-input"]').should('be.visible');
+    cy.get('[data-cy="modify-weight-input"]').clear().type('73.5');
+    cy.get('[data-cy="modify-weight-btn"]').click();
+
+    cy.wait('@modifyWeight');
+
+    cy.contains('Weight updated successfully.').should('be.visible');
+    cy.get('[data-cy="modify-weight-input"]').should('not.exist');
+  });
+
+  it('shows an error message when updating most recent weight fails', () => {
+    cy.intercept('POST', '**/api/weight/modify', {
+      statusCode: 500,
+      body: { error: 'Internal server error' }
+    }).as('modifyWeightFail');
+
+    cy.contains('button', 'Correct Recent').click();
+    cy.get('[data-cy="modify-weight-input"]').should('be.visible');
+    cy.get('[data-cy="modify-weight-input"]').clear().type('80.0');
+    cy.get('[data-cy="modify-weight-btn"]').click();
+
+    cy.wait('@modifyWeightFail')
+      .its('response.statusCode')
+      .should('eq', 500);
+
+    // Form should still be visible so user can retry after a failed update.
+    cy.get('[data-cy="modify-weight-input"]').should('be.visible');
+  });
 });
