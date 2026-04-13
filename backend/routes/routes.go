@@ -47,6 +47,12 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			// exercise log CRUD
 			protected.POST("/exercise/add", handlers.LogExercise)
 			protected.GET("/exercise/logs", handlers.GetExerciseLogs)
+
+			// Calorie intake routes
+			protected.POST("/calories", handlers.LogCalorieIntake)
+			protected.GET("/calories", handlers.GetCalorieIntakeLogs)
+			protected.GET("/calories/summary", handlers.GetDailyCalorieSummary)
+			protected.DELETE("/calories/:id", handlers.DeleteCalorieLog)
 		}
 	}
 }

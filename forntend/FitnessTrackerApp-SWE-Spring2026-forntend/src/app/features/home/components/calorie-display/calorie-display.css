@@ -1,0 +1,249 @@
+.calorie-display-card {
+  margin-bottom: 20px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+}
+
+.title-icon {
+  color: #ff5722;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.stat-box.consumed {
+  border-color: #4caf50;
+}
+
+.stat-box.burned {
+  border-color: #f44336;
+}
+
+.stat-box.net {
+  border-color: #2196f3;
+}
+
+.stat-box.net.negative {
+  border-color: #9c27b0;
+}
+
+.stat-box mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #666;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-top: 4px;
+}
+
+.stat-unit {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Goal Section */
+.goal-section {
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.goal-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.goal-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.goal-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.edit-goal-btn {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+
+.edit-goal-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.remaining-display {
+  text-align: center;
+  font-size: 14px;
+  color: #4caf50;
+}
+
+.remaining-display.over-goal {
+  color: #f44336;
+}
+
+.goal-edit {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  justify-content: center;
+}
+
+.goal-input {
+  width: 150px;
+}
+
+/* Progress Bar */
+.progress-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.calorie-progress {
+  height: 24px;
+  border-radius: 12px;
+}
+
+.percentage-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  font-size: 14px;
+}
+
+/* Motivational Message */
+.motivational-message {
+  text-align: center;
+  font-size: 16px;
+  color: #4caf50;
+  font-weight: 500;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: #e8f5e9;
+  border-radius: 8px;
+}
+
+.motivational-message.warning {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+/* Entries Section */
+.entries-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.entries-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+mat-chip-row {
+  justify-content: space-between;
+  padding: 8px 12px;
+}
+
+.consumed-chip {
+  background: #e8f5e9 !important;
+  border-left: 3px solid #4caf50;
+}
+
+.burned-chip {
+  background: #ffebee !important;
+  border-left: 3px solid #f44336;
+}
+
+.entry-description {
+  flex: 1;
+  font-weight: 500;
+}
+
+.entry-amount {
+  font-weight: 600;
+  margin: 0 12px;
+}
+
+.entry-time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* No Entries */
+.no-entries {
+  text-align: center;
+  padding: 32px 16px;
+  color: #999;
+}
+
+.no-entries mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #ddd;
+  margin-bottom: 12px;
+}
+
+.no-entries p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

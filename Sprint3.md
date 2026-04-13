@@ -67,6 +67,17 @@
 |Weight Log & Display Tests              |                                                               |                      |        |
 | Logs a weight & display the history    | Test whether user can log a weight & its displays in history  | weight-log.cy.ts     | PASS   |
 | Show the last 30 logs                  | Test last 30 weight logs are displayed when user clicks       | weight-log.cy.ts     | PASS   |
+| should display calorie tracking components | Test calorie tracker UI components are visible | calorie-tracking.cy.ts | PASS |
+| should start with 0 consumed and burned | Test initial state shows zero calories | calorie-tracking.cy.ts | PASS |
+| should add consumed calories (quick) | Test quick-add snack button adds 150 calories | calorie-tracking.cy.ts | PASS |
+| should add burned calories (quick) | Test quick-add walk button burns 150 calories | calorie-tracking.cy.ts | PASS |
+| should calculate net calories correctly | Test net calories = consumed - burned | calorie-tracking.cy.ts | PASS |
+| should undo last calorie entry | Test undo removes most recent calorie entry | calorie-tracking.cy.ts | PASS |
+| should update progress bar | Test progress bar updates | calorie-tracking.cy.ts | PASS |
+| should show warning at goal | Test warning when goal reached | calorie-tracking.cy.ts | PASS |
+| should edit daily calorie goal | Test user can change goal | calorie-tracking.cy.ts | PASS |
+| should show entries with descriptions | Test entries display names | calorie-tracking.cy.ts | PASS |
+
 
 
 
@@ -97,6 +108,27 @@
 | should emit on changes       | Test Observable emits updates                    | water.service.spec.ts     | PASS   |
 | should save to localStorage  | Test data persistence                            | water.service.spec.ts     | PASS   |
 | should add timestamps        | Test timestamp on each entry                     | water.service.spec.ts     | PASS   |
+| should be created | Test service instantiation | calorie.service.spec.ts | PASS |
+| should start with 0 consumed and burned | Test initial state is zero | calorie.service.spec.ts | PASS |
+| should have default goal of 2000 | Test default daily calorie goal | calorie.service.spec.ts | PASS |
+| should add consumed calories correctly | Test adding food calories | calorie.service.spec.ts | PASS |
+| should add burned calories correctly | Test adding exercise calories | calorie.service.spec.ts | PASS |
+| should accumulate multiple entries | Test multiple calorie entries accumulate | calorie.service.spec.ts | PASS |
+| should calculate net calories | Test net = consumed - burned | calorie.service.spec.ts | PASS |
+| should remove last entry | Test removeLastEntry() removes most recent | calorie.service.spec.ts | PASS |
+| should handle undo when empty | Test undo on empty entries list | calorie.service.spec.ts | PASS |
+| should update daily goal | Test updateGoal() changes target | calorie.service.spec.ts | PASS |
+| should calculate percentage | Test percentage = net/goal * 100 | calorie.service.spec.ts | PASS |
+| should calculate percentage with burned | Test percentage accounts for exercise | calorie.service.spec.ts | PASS |
+| should cap percentage at 100% | Test percentage max is 100% | calorie.service.spec.ts | PASS |
+| should calculate remaining calories | Test remaining = goal - net | calorie.service.spec.ts | PASS |
+| should calculate remaining with burned | Test remaining considers exercise | calorie.service.spec.ts | PASS |
+| should reset daily data | Test resetDay() clears all entries | calorie.service.spec.ts | PASS |
+| should emit on changes | Test Observable emits when calories added | calorie.service.spec.ts | PASS |
+| should save to localStorage | Test data persists to localStorage | calorie.service.spec.ts | PASS |
+| should add timestamps | Test each entry has accurate timestamp | calorie.service.spec.ts | PASS |
+| should handle mixed entry types | Test both consumed and burned entries together | calorie.service.spec.ts | PASS |
+
 
 
 
@@ -106,43 +138,67 @@
 | Name                              | Description                                   | File                          | Status |
 |-----------------------------------|-----------------------------------------------|-------------------------------|--------|
 | LoginComponent Tests              |                                               |                               |        |
-| should create component           | Test component instantiation                  | login.component.spec.ts       | PASS   |
-| should have login form            | Test form exists                              | login.component.spec.ts       | PASS   |
-| should have username field        | Test username control exists                  | login.component.spec.ts       | PASS   |
-| should have password field        | Test password control exists                  | login.component.spec.ts       | PASS   |
-| should mark empty invalid         | Test empty form validation                    | login.component.spec.ts       | PASS   |
-| should mark filled valid          | Test filled form validation                   | login.component.spec.ts       | PASS   |
+| should create component           | Test component instantiation                  | login.spec.ts       | PASS   |
+| should have login form            | Test form exists                              | login.spec.ts       | PASS   |
+| should have username field        | Test username control exists                  | login.spec.ts       | PASS   |
+| should have password field        | Test password control exists                  | login.spec.ts       | PASS   |
+| should mark empty invalid         | Test empty form validation                    | login.spec.ts       | PASS   |
+| should mark filled valid          | Test filled form validation                   | login.spec.ts       | PASS   |
 | RegisterComponent Tests           |                                               |                               |        |
-| should create component           | Test component instantiation                  | register.component.spec.ts    | PASS   |
-| should have registration form     | Test form exists                              | register.component.spec.ts    | PASS   |
-| should have username field        | Test username control exists                  | register.component.spec.ts    | PASS   |
-| should have password field        | Test password control exists                  | register.component.spec.ts    | PASS   |
-| should have confirm field         | Test confirmPassword exists                   | register.component.spec.ts    | PASS   |
-| should have height field          | Test height control exists                    | register.component.spec.ts    | PASS   |
-| should have weight field          | Test weight control exists                    | register.component.spec.ts    | PASS   |
-| should have dateOfBirth field     | Test dateOfBirth exists                       | register.component.spec.ts    | PASS   |
-| should have sex field             | Test sex control exists                       | register.component.spec.ts    | PASS   |
-| should mark empty invalid         | Test empty form validation                    | register.component.spec.ts    | PASS   |
-| should validate password match    | Test password mismatch validation             | register.component.spec.ts    | PASS   |
+| should create component           | Test component instantiation                  | register.spec.ts    | PASS   |
+| should have registration form     | Test form exists                              | register.spec.ts    | PASS   |
+| should have username field        | Test username control exists                  | register.spec.ts    | PASS   |
+| should have password field        | Test password control exists                  | register.spec.ts    | PASS   |
+| should have confirm field         | Test confirmPassword exists                   | register.spec.ts    | PASS   |
+| should have height field          | Test height control exists                    | register.spec.ts    | PASS   |
+| should have weight field          | Test weight control exists                    | register.spec.ts    | PASS   |
+| should have dateOfBirth field     | Test dateOfBirth exists                       | register.spec.ts    | PASS   |
+| should have sex field             | Test sex control exists                       | register.spec.ts    | PASS   |
+| should mark empty invalid         | Test empty form validation                    | register.spec.ts    | PASS   |
+| should validate password match    | Test password mismatch validation             | register.spec.ts    | PASS   |
 | NavigationComponent Tests         |                                               |                               |        |
-| should create component           | Test component instantiation                  | navigation.component.spec.ts  | PASS   |
-| should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.component.spec.ts  | PASS   |
-| should have username              | Test username$ exists                         | navigation.component.spec.ts  | PASS   |
-| should have logout method         | Test logout() exists                          | navigation.component.spec.ts  | PASS   |
+| should create component           | Test component instantiation                  | navigation.spec.ts  | PASS   |
+| should have isAuthenticated       | Test isAuthenticated$ exists                  | navigation.spec.ts  | PASS   |
+| should have username              | Test username$ exists                         | navigation.spec.ts  | PASS   |
+| should have logout method         | Test logout() exists                          | navigation.spec.ts  | PASS   |
 | WeightLogComponent Tests          |                                               |           
-| should create                     | Test component instantiation                  | weight-log.component.spec.ts  | PASS   |
-| should load recent weights on init| Test recent weights are loaded on component initialization | weight-log.component.spec.ts | PASS |
-| should populate logs when loadRecentWeights succeeds | Test logs populate correctly on successful load| weight-log.component.spec.ts | PASS |
-| should show error when loadRecentWeights fails   | Test error message is shown when loading logs fails| weight-log.component.spec.ts | PASS |
-| should toggle logs and load them first time only | Test logs toggle and load only on first expansion| weight-log.component.spec.ts | PASS |
-| should not refresh logs when logs are hidden | Test logs do not refresh if hidden after submit      | weight-log.component.spec.ts | PASS |
-| should refresh logs after successful submit  | Test logs refresh if visible after submit            | weight-log.component.spec.ts | PASS |
-| should not submit if form is invalid         | Test form submission is blocked when invalid         | weight-log.component.spec.ts | PASS |
-| should submit kg weight directly             | Test kg value is submitted without conversion        | weight-log.component.spec.ts | PASS |
-| should convert lbs to kg before submit       | Test lbs input is converted to kg before submission  | weight-log.component.spec.ts | PASS |
-| should show error message when submit fails  | Test error message appears on submission failure     | weight-log.component.spec.ts | PASS |
-| should display weight in kg when unit is kg  | Test weight is displayed correctly in kg             | weight-log.component.spec.ts | PASS |
-| should display weight in lbs when unit is lbs| Test weight is displayed correctly in lbs            | weight-log.component.spec.ts | PASS |
+| should create                     | Test component instantiation                  | weight-log.spec.ts  | PASS   |
+| should load recent weights on init| Test recent weights are loaded on component initialization | weight-log.spec.ts | PASS |
+| should populate logs when loadRecentWeights succeeds | Test logs populate correctly on successful load| weight-log.spec.ts | PASS |
+| should show error when loadRecentWeights fails   | Test error message is shown when loading logs fails| weight-log.spec.ts | PASS |
+| should toggle logs and load them first time only | Test logs toggle and load only on first expansion| weight-log.spec.ts | PASS |
+| should not refresh logs when logs are hidden | Test logs do not refresh if hidden after submit      | weight-log.spec.ts | PASS |
+| should refresh logs after successful submit  | Test logs refresh if visible after submit            | weight-log.spec.ts | PASS |
+| should not submit if form is invalid         | Test form submission is blocked when invalid         | weight-log.spec.ts | PASS |
+| should submit kg weight directly             | Test kg value is submitted without conversion        | weight-log.spec.ts | PASS |
+| should convert lbs to kg before submit       | Test lbs input is converted to kg before submission  | weight-log.spec.ts | PASS |
+| should show error message when submit fails  | Test error message appears on submission failure     | weight-log.spec.ts | PASS |
+| should display weight in kg when unit is kg  | Test weight is displayed correctly in kg             | weight-log.spec.ts | PASS |
+| should display weight in lbs when unit is lbs| Test weight is displayed correctly in lbs            | weight-log.spec.ts | PASS |
+| should create the component | Test component instantiation | calorie-input.spec.ts | PASS |
+| should have quick consumed amounts | Test quick-add food buttons exist | calorie-input.spec.ts | PASS |
+| should have quick burned amounts | Test quick-add exercise buttons exist | calorie-input.spec.ts | PASS |
+| should start with custom inputs hidden | Test custom forms hidden initially | calorie-input.spec.ts | PASS |
+| should add quick consumed calories | Test quick food button calls service | calorie-input.spec.ts | PASS |
+| should add quick burned calories | Test quick exercise button calls service | calorie-input.spec.ts | PASS |
+| should toggle custom consumed | Test custom food form toggles correctly | calorie-input.spec.ts | PASS |
+| should toggle custom burned | Test custom exercise form toggles correctly | calorie-input.spec.ts | PASS |
+| should add custom consumed calories | Test custom food entry calls service | calorie-input.spec.ts | PASS |
+| should add custom burned calories | Test custom exercise entry calls service | calorie-input.spec.ts | PASS |
+| should not add invalid amount | Test invalid amount not submitted | calorie-input.spec.ts | PASS |
+| should call undo on service | Test undo button calls service method | calorie-input.spec.ts | PASS |
+| should create the component | Test component instantiation | calorie-display.spec.ts | PASS |
+| should subscribe to updates | Test subscribes to calorie intake Observable | calorie-display.spec.ts | PASS |
+| should start with 0 net calories | Test initial net calories is zero | calorie-display.spec.ts | PASS |
+| should format numbers with commas | Test number formatting (1234 → 1,234) | calorie-display.spec.ts | PASS |
+| should toggle goal editing | Test goal edit mode toggle | calorie-display.spec.ts | PASS |
+| should save new goal | Test saving new goal calls service | calorie-display.spec.ts | PASS |
+| should cancel goal editing | Test cancel button exits edit mode | calorie-display.spec.ts | PASS |
+| should get correct color for low % | Test progress bar color for < 50% | calorie-display.spec.ts | PASS |
+| should get correct color for mid % | Test progress bar color for 50–99% | calorie-display.spec.ts | PASS |
+| should get correct color for 100% | Test progress bar color for ≥ 100% | calorie-display.spec.ts | PASS |
+| should display motivational message | Test appropriate message based on progress | calorie-display.spec.ts | PASS |
+
 
 
 
@@ -207,7 +263,16 @@
 | TestGetExerciseLogs_Unauthorized | Tests what happens when an unauthorized user tries to retrieve their exercise logs. | `backend/handlers/exercise_test.go` | PASS |
 | TestGetExerciseLogs_MultipleUsers | Stress tests exercise log retrieval to ensure different users are kept separate. | `backend/handlers/exercise_test.go` | PASS |
 | TestGetExerciseLogs_LimitTo30 | Tests to make sure that the retrieved logs are limited to the last 30. | `backend/handlers/exercise_test.go` | PASS |
-
+|  TestLogCalorieIntake_Success | Tests a successful logging of calorie intake. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestLogCalorieIntake_InvalidAmount | Tests the validation of calorie amounts, making sure not negative, zero, or too large. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestLogCalorieIntake_InvalidMealType | Tests validation of meal types. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetCalorieIntakeLogs_Success | Tests retrieval of calorie logs. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetCalorieIntakeLogs_FilterByDate | Tests calorie log filtering by date. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetDailyCalorieSummary_Success | Tests daily summary feature. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestGetRecentCalorieLogs_Success | Tests retrieval of recent calorie logs. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestDeleteCalorieLog_Success | Tests deletion of calorie logs.  | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestDeleteCalorieLog_NotFound | Tests attempted deletion of nonexistent log. | `backend/handlers/calorie_intake_test.go` | PASS |
+| TestCalorieIntake_Unauthorized | Tests unauthorized attempt to log calorie intake. | `backend/handlers/calorie_intake_test.go` | PASS |
 
 ## API Documentation
 
@@ -236,11 +301,11 @@ Allows an existing user to sign into their account and access protected endpoint
 Allows a user to access their profile.
 ```
 {
-  	"date_of_birth": "DATE",
-	  "sex": "SEX",
-	  "height_cm": HEIGHT,
-  	"weight_kg": WEIGHT,
-  	"activity_level": "ACTIVITY LEVEL"
+  	"date_of_birth": "DATE",             # required
+	"sex": "SEX",						 # required
+	"height_cm": HEIGHT,                 # required
+  	"weight_kg": WEIGHT,                 # required
+  	"activity_level": "ACTIVITY LEVEL"   # required
 }
 ```
 
@@ -249,11 +314,12 @@ Allows a user to access their profile.
 Allows a user to update their profile data.
 ```
 {
-  	"date_of_birth": "DATE",
-	  "sex": "SEX",
-	  "height_cm": HEIGHT,
-  	"weight_kg": WEIGHT,
-  	"activity_level": "ACTIVITY LEVEL"
+  	"date_of_birth": "DATE",         # required
+    "sex": "SEX",                    # required
+    "height_cm": HEIGHT,             # required
+  	"weight_kg": WEIGHT,             # required
+  	"activity_level": "sedentary" | "light" | "moderate" | "active" | "very_active",  # required
+	"weight_goal": "lose" | "hold" | "gain"         # optional, defaults to "hold"
 }
 ```
 ### `GET api/profile/stats`
@@ -275,6 +341,8 @@ Allows a user to log their water intake.
 ```
 {
   	"amount_ml": AMOUNT
+	"unit": "ml" | "oz"
+	"logged_at": TIME
 }
 ```
 
@@ -283,6 +351,8 @@ Allows a user to log their water intake.
 Allows a user to view their water intake log.
 ```
 # NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD
 ```
 
 ### `GET api/water/summary`
@@ -290,6 +360,8 @@ Allows a user to view their water intake log.
 Allows a user to view their water intake summary.
 ```
 # NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD
 ```
 
 ### `PUT api/weight/add`
@@ -301,6 +373,13 @@ Allows a user to add a datapoint to their weight log.
     "unit":      UNIT,     # optional, "metric" (default) or "imperial"
     "logged_at": DATETIME  # optional, handled automatically
 }
+```
+
+### `DELETE api/water/:id`
+
+Deletes a specific water intake log.
+```
+# NO BODY NECESSARY
 ```
 
 ### `GET api/weight/list`
@@ -349,6 +428,51 @@ Allows the user to retrieve their last 30 exercise log records.
 # NO BODY NECESSARY
 ```
 
+### `POST api/calories`
+
+Allows user to log calorie intake with optional meal information.
+```
+{
+	"calories": INT,                                          # required, pos integer, max 10000
+	"food_name": STRING,									  # optional, max 200 characters
+	"meal_type": "breakfast" | "lunch" | "dinner" | "snack",  # optional
+	"logged_at": TIME										  # optional
+}
+```
+
+### `GET api/calories`
+
+Retrieves all calorie intake logs for the user.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD    # Filter logs by specific date
+```
+
+### `GET api/calories/recent`
+
+Retrieves the most recent calorie intake logs for the user.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?limit=INT    # Number of logs to retrieve (1-100, defaults to 30)
+```
+
+### `GET api/calories/summary`
+
+Retrieves daily calorie intake summary with goal tracking.
+```
+# NO BODY NECESSARY
+# OPTIONAL QUERY PARAMETERS:
+?date=YYYY-MM-DD    # Gets summary for specific date (defaults to today)
+```
+
+### `DELETE api/calories/:id`
+
+Deletes a specific calorie intake log.
+```
+NO BODY NECESSARY
+```
 ## Demo
 
 TODO (April 13, 2026 @ 3 pm)

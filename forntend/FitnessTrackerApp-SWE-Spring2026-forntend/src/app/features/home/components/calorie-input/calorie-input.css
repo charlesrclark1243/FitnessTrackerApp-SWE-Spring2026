@@ -1,0 +1,97 @@
+.calorie-input-card {
+  margin-bottom: 20px;
+}
+
+mat-card-header {
+  margin-bottom: 16px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+}
+
+.title-icon {
+  color: #ff9800;
+}
+
+.tab-content {
+  padding: 16px 0;
+}
+
+/* Quick Add Buttons */
+.quick-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.quick-add-btn {
+  flex: 1;
+  min-width: 140px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.quick-add-btn mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-label {
+  font-weight: 500;
+}
+
+.btn-calories {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* Custom Section */
+.custom-section {
+  margin-bottom: 20px;
+}
+
+.custom-toggle-btn {
+  width: 100%;
+  height: 48px;
+  font-size: 15px;
+}
+
+.custom-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+}

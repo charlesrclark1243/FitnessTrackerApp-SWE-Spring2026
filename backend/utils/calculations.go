@@ -108,3 +108,16 @@ func CalculateAgeYears(dob *time.Time) float32 {
 
 	return float32(age)
 }
+func RoundToTwo(val float64) float64 {
+	return float64(int(val*100+0.5)) / 100
+}
+
+const MLPerOZ = 29.5735
+
+func OzToML(oz float64) int {
+	return int(oz * MLPerOZ)
+}
+
+func MLToOz(ml int) float64 {
+	return float64(ml) / MLPerOZ
+}

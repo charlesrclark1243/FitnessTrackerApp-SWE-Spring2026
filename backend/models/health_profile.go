@@ -14,6 +14,7 @@ type HealthProfile struct {
     HipsCM         *float64   `json:"hips_cm"`
     ActivityLevel  string     `gorm:"size:20" json:"activity_level"`
     PreferredUnits string     `gorm:"size:10;default:metric" json:"preferred_units"`
+    WeightGoal     string     `gorm:"size:20;default:'hold'" json:"weight_goal"`
     UpdatedAt      time.Time  `json:"updated_at"`
 }
 
