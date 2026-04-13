@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
+import { ProfileService } from '../../../core/services/profile';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileStatsComponent } from '../profile-stats/profile-stats';
 import { LengthUnit, cmToIn, inToCm, ftInToCm, cmToFtIn, kgToLbs, lbsToKg  } from '../../../shared/utils/unit-conversion';
 
@@ -36,12 +38,13 @@ type CircUnit = 'cm' | 'ftin';
     MatNativeDateModule,
     MatButtonToggleModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     ProfileStatsComponent
   ],
   templateUrl: './health-profile.html',
   styleUrl: './health-profile.css',
 })
-export class HealthProfileComponent {
+export class HealthProfileComponent implements OnInit {
   heightUnit: HeightUnit = 'cm';
   weightUnit: WeightUnit = 'kg';
   circUnit: LengthUnit = 'cm';
@@ -65,31 +68,83 @@ export class HealthProfileComponent {
   });
 
   savedMsg = '';
+  loading = true;
+  errorMsg = '';
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(
+    private fb: FormBuilder, 
+    private auth: AuthService,
+    private profileService: ProfileService
+  ) {}
+
+  ngOnInit() {
+    // Load profile from backend
+    this.loading = true;
+    this.errorMsg = '';
+    this.profileService.loadProfile().subscribe({
+      next: (profile) => {
+        const hasData = profile && (profile.height_cm || profile.weight_kg || profile.sex || profile.date_of_birth);
+        if (hasData) {
+          this.populateForm(profile);
+        }
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  private populateFromUser() {
     const u = this.auth.currentUserValue;
+    if (u) {
+      this.populateForm({
+        date_of_birth: u.dateOfBirth,
+        sex: u.sex,
+        height_cm: u.height,
+        weight_kg: u.weight,
+        neck_cm: u.neck,
+        waist_cm: u.waist,
+        hips_cm: u.hips,
+      });
+    }
+  }
 
-    if (u?.dateOfBirth) this.form.patchValue({ dateOfBirth: new Date(u.dateOfBirth) });
-    if (u?.sex) this.form.patchValue({ sex: u.sex as any });
+  private populateForm(profile: any) {
+    if (profile?.date_of_birth) {
+      const dob = typeof profile.date_of_birth === 'string' 
+        ? new Date(profile.date_of_birth) 
+        : profile.date_of_birth;
+      this.form.patchValue({ dateOfBirth: dob });
+    }
+    if (profile?.sex) this.form.patchValue({ sex: profile.sex as any });
 
-    if (u?.height != null) this.form.patchValue({ heightCm: u.height });
-    if (u?.weight != null) this.form.patchValue({ weightKg: u.weight });
+    const heightCm = profile?.height_cm || profile?.heightCM;
+    if (heightCm != null) this.form.patchValue({ heightCm });
 
-    if (u?.neck != null) this.form.patchValue({ neckCm: u.neck });
-    if (u?.waist != null) this.form.patchValue({ waistCm: u.waist });
-    if (u?.hips != null) this.form.patchValue({ hipsCm: u.hips });
+    const weightKg = profile?.weight_kg || profile?.weightKG;
+    if (weightKg != null) this.form.patchValue({ weightKg });
+
+    const neckCm = profile?.neck_cm || profile?.neckCM;
+    if (neckCm != null) this.form.patchValue({ neckCm });
+
+    const waistCm = profile?.waist_cm || profile?.waistCM;
+    if (waistCm != null) this.form.patchValue({ waistCm });
+
+    const hipsCm = profile?.hips_cm || profile?.hipsCM;
+    if (hipsCm != null) this.form.patchValue({ hipsCm });
 
     const h = this.form.value.heightCm;
     if (h != null) {
-    const { ft, inch } = cmToFtIn(h);
-    this.form.patchValue({ heightFt: ft, heightIn: inch }, { emitEvent: false });
+      const { ft, inch } = cmToFtIn(h);
+      this.form.patchValue({ heightFt: ft, heightIn: inch }, { emitEvent: false });
     }
 
     const w = this.form.value.weightKg;
     if (w != null) {
-    this.form.patchValue({ weightLbs: this.round1(kgToLbs(w)!) }, { emitEvent: false });
+      this.form.patchValue({ weightLbs: this.round1(kgToLbs(w)!) }, { emitEvent: false });
     }
-}
+  }
 
   setHeightUnit(unit: HeightUnit) {
     if (this.heightUnit === unit) return;
@@ -186,18 +241,28 @@ export class HealthProfileComponent {
         ? this.num(this.form.value.weightKg)
         : lbsToKg(this.num(this.form.value.weightLbs));
 
-    this.auth.updateProfile({
-        dateOfBirth: dob.toISOString(),
+    // Send data in snake_case format to match backend
+    this.profileService.updateProfile({
+        date_of_birth: dob.toISOString(),
         sex,
-        height: heightCm ?? undefined,
-        weight: weightKg ?? undefined, 
-        neck: this.form.value.neckCm ?? undefined,
-        waist: this.form.value.waistCm ?? undefined,
-        hips: this.form.get('sex')?.value === 'female'
+        height_cm: heightCm ?? undefined,
+        weight_kg: weightKg ?? undefined, 
+        neck_cm: this.form.value.neckCm ?? undefined,
+        waist_cm: this.form.value.waistCm ?? undefined,
+        hips_cm: this.form.get('sex')?.value === 'female'
         ? (this.form.value.hipsCm ?? undefined)
         : undefined,
         }).subscribe({
-        next: () => (this.savedMsg = 'Saved!'),
+        next: () => {
+          this.savedMsg = 'Saved!';
+          // Also update auth service so other components see the change
+          if (this.auth.currentUserValue) {
+            this.auth.currentUserValue.dateOfBirth = dob.toISOString();
+            this.auth.currentUserValue.sex = sex;
+            this.auth.currentUserValue.height = heightCm ?? undefined;
+            this.auth.currentUserValue.weight = weightKg ?? undefined;
+          }
+        },
         error: () => (this.savedMsg = 'Save failed'),
         });
     }

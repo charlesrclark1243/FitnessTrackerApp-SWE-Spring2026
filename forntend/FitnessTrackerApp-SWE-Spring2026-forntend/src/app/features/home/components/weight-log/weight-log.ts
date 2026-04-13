@@ -83,11 +83,7 @@ export class WeightLogComponent implements OnInit {
         this.successMessage = 'Weight logged successfully.';
         this.loading = false;
         this.form.reset();
-
-        // only refresh when logs are visible
-        if (this.showLogs) {
-          this.loadRecentWeights();
-        }
+        this.loadRecentWeights();
 
         // update profile weight
         this.authService.updateProfile({ weight: weightKG }).subscribe({
