@@ -13,6 +13,25 @@
   box-shadow: none;
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fafafa;
+  border-top-width: 4px;
+}
+
+.stat-box:nth-child(1) {
+  background: #eef6ff;
+  border-color: #c8def8;
+  border-top-color: #4d8fcc;
+}
+
+.stat-box:nth-child(2) {
+  background: #eefaf3;
+  border-color: #c9e8d4;
+  border-top-color: #4f9f72;
+}
+
+.stat-box:nth-child(3) {
+  background: #fff6ec;
+  border-color: #f1dbc4;
+  border-top-color: #d08a46;
 }
 
 .stat-label {

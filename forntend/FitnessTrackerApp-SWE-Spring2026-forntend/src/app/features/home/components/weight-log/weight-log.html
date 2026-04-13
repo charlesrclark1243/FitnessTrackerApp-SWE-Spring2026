@@ -52,21 +52,16 @@
               No weight logs yet.
             </div>
 
-            <div *ngIf="logs.length > 0" class="logs-table-wrap">
-              <table class="logs-table">
-                <thead>
-                  <tr>
-                    <th>Recorded At</th>
-                    <th>Weight</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let log of logs" data-cy="weight-log-row">
-                    <td>{{ log.loggedAt | date:'medium' }}</td>
-                    <td>{{ displayWeight(log.weightKG) }}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div *ngIf="logs.length > 0" class="entries-section weight-entries-section">
+              <div class="entries-list weight-entries-list">
+                <div class="weight-entry-chip" *ngFor="let log of logs" data-cy="weight-log-row">
+                  <div class="entry-left">
+                    <mat-icon class="entry-icon">monitor_weight</mat-icon>
+                    <span class="entry-amount">{{ displayWeight(log.weightKG) }}</span>
+                  </div>
+                  <span class="entry-time">{{ log.loggedAt | date:'short' }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </mat-tab>

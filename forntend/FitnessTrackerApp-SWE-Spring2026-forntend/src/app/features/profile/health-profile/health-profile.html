@@ -32,7 +32,12 @@
         <p>{{ errorMsg }}</p>
       </div>
 
-      <form class="form" [formGroup]="form" (ngSubmit)="save()" [attr.disabled]="loading ? true : null" data-cy="health-profile-form">
+      <div *ngIf="noProfileData && !loading && !errorMsg" class="empty-message" data-cy="health-profile-empty" role="status">
+        <mat-icon>info</mat-icon>
+        <p>No health profile data found yet. Complete the form and save your profile.</p>
+      </div>
+
+      <form *ngIf="!loading" class="form" [formGroup]="form" (ngSubmit)="save()" [attr.disabled]="loading ? true : null" data-cy="health-profile-form">
         <!-- DOB -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Date of Birth</mat-label>

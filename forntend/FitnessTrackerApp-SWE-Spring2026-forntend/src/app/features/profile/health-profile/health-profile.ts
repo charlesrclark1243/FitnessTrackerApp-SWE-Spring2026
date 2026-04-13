@@ -70,6 +70,7 @@ export class HealthProfileComponent implements OnInit {
   savedMsg = '';
   loading = true;
   errorMsg = '';
+  noProfileData = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -81,15 +82,20 @@ export class HealthProfileComponent implements OnInit {
     // Load profile from backend
     this.loading = true;
     this.errorMsg = '';
+    this.noProfileData = false;
     this.profileService.loadProfile().subscribe({
       next: (profile) => {
         const hasData = profile && (profile.height_cm || profile.weight_kg || profile.sex || profile.date_of_birth);
         if (hasData) {
           this.populateForm(profile);
+          this.noProfileData = false;
+        } else {
+          this.noProfileData = true;
         }
         this.loading = false;
       },
       error: () => {
+        this.noProfileData = false;
         this.loading = false;
       }
     });
@@ -255,6 +261,7 @@ export class HealthProfileComponent implements OnInit {
         }).subscribe({
         next: () => {
           this.savedMsg = 'Saved!';
+          this.noProfileData = false;
           // Also update auth service so other components see the change
           if (this.auth.currentUserValue) {
             this.auth.currentUserValue.dateOfBirth = dob.toISOString();
@@ -262,6 +269,11 @@ export class HealthProfileComponent implements OnInit {
             this.auth.currentUserValue.height = heightCm ?? undefined;
             this.auth.currentUserValue.weight = weightKg ?? undefined;
           }
+
+          // Refresh stats so the profile stats card reflects the saved profile.
+          this.profileService.loadStats().subscribe({
+            error: () => {}
+          });
         },
         error: () => (this.savedMsg = 'Save failed'),
         });
