@@ -2,12 +2,23 @@
 <div class="home-container">
   <!-- Welcome Card -->
   <mat-card class="welcome-card">
-    <mat-card-header>
-      <mat-card-title>Welcome to Your Dashboard</mat-card-title>
-    </mat-card-header>
     <mat-card-content>
-      <p>Hello, <strong>{{ username$ | async }}</strong>!</p>
-      <p>Track your daily water intake and calorie balance to stay healthy!</p>
+      <div class="welcome-shell">
+        <p class="welcome-kicker">Fitness Dashboard</p>
+        <h1 class="welcome-title">
+          Welcome back,
+          <span>{{ (username$ | async) || 'Athlete' }}</span>
+        </h1>
+        <p class="welcome-subtitle">
+          Keep building momentum today. Log your calories, water intake, and weight to stay on track with your goals.
+        </p>
+
+        <div class="welcome-highlights" aria-label="dashboard highlights">
+          <div class="highlight-pill">Hydration Tracking</div>
+          <div class="highlight-pill">Calorie Balance</div>
+          <div class="highlight-pill">Weight Progress</div>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
 

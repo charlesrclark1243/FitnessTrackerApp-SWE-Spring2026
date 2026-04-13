@@ -6,16 +6,62 @@
 
 .welcome-card {
   margin-bottom: 32px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f1f0f0;
+  color: #1e1b4b;
+  border: 2px solid #7c6fd4;
+  box-shadow: 0 8px 28px rgba(99, 82, 199, 0.14), 0 0 0 4px rgba(124, 111, 212, 0.08);
 }
 
-mat-card-title {
-  font-size: 24px;
-  margin-bottom: 16px;
+.welcome-shell {
+  padding: 10px 8px;
 }
 
-p {
-  margin-bottom: 12px;
-  line-height: 1.6;
+.welcome-kicker {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6352c7;
+}
+
+.welcome-title {
+  margin: 0;
+  font-size: clamp(28px, 3.6vw, 42px);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.welcome-title span {
+  color: #5b50bb;
+}
+
+.welcome-subtitle {
+  margin: 14px 0 0;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #4a4870;
+}
+
+.welcome-highlights {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.highlight-pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #5044a8;
+  background: #f0eeff;
+  border: 1px solid #b8b0e8;
 }
 
 /* Tracking Grid */
@@ -35,5 +81,15 @@ p {
 @media (min-width: 768px) {
   .tracking-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-container {
+    padding: 24px 14px;
+  }
+
+  .welcome-subtitle {
+    font-size: 14px;
   }
 }
