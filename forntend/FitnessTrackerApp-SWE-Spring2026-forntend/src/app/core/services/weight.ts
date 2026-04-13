@@ -43,10 +43,10 @@ export class WeightService {
     private auth: AuthService
   ) {}
 
-  getRecentWeights(days = 30): Observable<WeightLog[]> {
+  getRecentWeights(): Observable<WeightLog[]> {
     return this.http.get<GetWeightLogsResponse>(`${this.baseUrl}/logs`).pipe(
       map((response) =>
-        (response.entries || []).slice(0, days).map((entry) => ({
+        (response.entries || []).map((entry) => ({
           id: entry.id,
           userId: entry.user_id,
           weightKG: entry.unit === 'lbs' ? entry.weight * 0.45359237 : entry.weight,

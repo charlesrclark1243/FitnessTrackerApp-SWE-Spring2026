@@ -1,6 +1,8 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 export interface CalorieIntake {
   date: string;  // Format: YYYY-MM-DD
@@ -17,11 +19,16 @@ export interface CalorieEntry {
   description?: string;
 }
 
+interface CalorieGoalResponse {
+  adjusted_calories: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CalorieService {
   private platformId = inject(PLATFORM_ID);
+  private http = inject(HttpClient, { optional: true });
   private isBrowser: boolean;
   
   // Default daily goal (2000 calories)
@@ -189,6 +196,22 @@ export class CalorieService {
     
     this.calorieIntakeSubject.next(updatedData);
     this.saveData(updatedData);
+  }
+
+  // Set daily goal using backend calorie goal API.
+  setDailyGoal(targetDirection: 'lose' | 'hold' | 'gain'): Observable<number> {
+    if (!this.http) {
+      return throwError(() => new Error('HttpClient is not available'));
+    }
+
+    return this.http
+      .post<CalorieGoalResponse>('http://localhost:8080/api/caloriegoal', {
+        target_direction: targetDirection
+      })
+      .pipe(
+        map((res) => Math.round(res.adjusted_calories)),
+        tap((goal) => this.updateGoal(goal))
+      );
   }
 
   // Get current calorie data

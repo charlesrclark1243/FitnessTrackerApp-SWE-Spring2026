@@ -55,28 +55,34 @@
         @if (isEditingGoal) {
           <div class="goal-edit">
             <mat-form-field appearance="outline" class="goal-input">
-              <mat-label>Daily Goal</mat-label>
-              <input 
-                matInput 
-                type="number"
-                [(ngModel)]="newGoal"
-                min="500"
-                max="10000"
-                (keyup.enter)="saveGoal()">
-              <span matTextSuffix>cal</span>
+              <mat-label>Target Direction</mat-label>
+              <mat-select [(ngModel)]="selectedGoalDirection">
+                <mat-option value="lose">Lose Weight</mat-option>
+                <mat-option value="hold">Maintain Weight</mat-option>
+                <mat-option value="gain">Gain Weight</mat-option>
+              </mat-select>
             </mat-form-field>
             <button 
               mat-icon-button 
               color="primary"
-              (click)="saveGoal()">
+              (click)="saveGoal()"
+              [disabled]="goalLoading">
               <mat-icon>check</mat-icon>
             </button>
             <button 
               mat-icon-button
-              (click)="cancelEditGoal()">
+              (click)="cancelEditGoal()"
+              [disabled]="goalLoading">
               <mat-icon>close</mat-icon>
             </button>
           </div>
+
+          @if (goalError) {
+            <div class="no-entries">
+              <mat-icon>error_outline</mat-icon>
+              <p>{{ goalError }}</p>
+            </div>
+          }
         }
       </div>
 

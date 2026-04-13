@@ -7,9 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { CalorieService, CalorieIntake } from '../../../../core/services/calorie';
+import { ProfileService } from '../../../../core/services/profile';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,6 +26,7 @@ import { Subscription } from 'rxjs';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatTooltipModule,
     MatChipsModule
   ],
@@ -36,24 +39,33 @@ export class CalorieDisplayComponent implements OnInit, OnDestroy {
   netCalories = 0;
   remainingCalories = 0;
   isEditingGoal = false;
-  newGoal = 0;
+  selectedGoalDirection: 'lose' | 'hold' | 'gain' = 'hold';
+  goalLoading = false;
+  goalError = '';
   
-  private subscription?: Subscription;
+  private subscriptions = new Subscription();
 
-  constructor(private calorieService: CalorieService) {}
+  constructor(
+    private calorieService: CalorieService,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to calorie intake changes
-    this.subscription = this.calorieService.calorieIntake$.subscribe(data => {
-      this.calorieData = data;
-      this.percentage = this.calorieService.getPercentage();
-      this.netCalories = this.calorieService.getNetCalories();
-      this.remainingCalories = this.calorieService.getRemainingCalories();
-    });
+    this.subscriptions.add(
+      this.calorieService.calorieIntake$.subscribe(data => {
+        this.calorieData = data;
+        this.percentage = this.calorieService.getPercentage();
+        this.netCalories = this.calorieService.getNetCalories();
+        this.remainingCalories = this.calorieService.getRemainingCalories();
+      })
+    );
+
+    this.initializeGoalFromBackend();
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   // Get progress bar color based on percentage
@@ -71,15 +83,12 @@ export class CalorieDisplayComponent implements OnInit, OnDestroy {
   // Start editing goal
   startEditGoal(): void {
     this.isEditingGoal = true;
-    this.newGoal = this.calorieData?.goal || 2000;
+    this.goalError = '';
   }
 
-  // Save new goal
+  // Save new goal from backend calculation
   saveGoal(): void {
-    if (this.newGoal > 0 && this.newGoal <= 10000) {
-      this.calorieService.updateGoal(this.newGoal);
-      this.isEditingGoal = false;
-    }
+    this.setGoalFromBackend(this.selectedGoalDirection, true);
   }
 
   // Cancel editing goal
@@ -100,5 +109,50 @@ export class CalorieDisplayComponent implements OnInit, OnDestroy {
     } else {
       return '🎯 Let\'s track your calories!';
     }
+  }
+
+  private initializeGoalFromBackend(): void {
+    this.goalLoading = true;
+    this.goalError = '';
+
+    this.subscriptions.add(
+      this.profileService.loadProfile().subscribe({
+        next: (profile) => {
+          const direction = this.normalizeDirection(profile?.weight_goal);
+          this.selectedGoalDirection = direction;
+          this.setGoalFromBackend(direction, false);
+        },
+        error: () => {
+          this.setGoalFromBackend(this.selectedGoalDirection, false);
+        }
+      })
+    );
+  }
+
+  private setGoalFromBackend(direction: 'lose' | 'hold' | 'gain', closeEditor: boolean): void {
+    this.goalLoading = true;
+    this.goalError = '';
+
+    this.subscriptions.add(
+      this.calorieService.setDailyGoal(direction).subscribe({
+        next: () => {
+          this.goalLoading = false;
+          if (closeEditor) {
+            this.isEditingGoal = false;
+          }
+        },
+        error: () => {
+          this.goalLoading = false;
+          this.goalError = 'Could not update goal from backend.';
+        }
+      })
+    );
+  }
+
+  private normalizeDirection(value?: string): 'lose' | 'hold' | 'gain' {
+    if (value === 'lose' || value === 'gain' || value === 'hold') {
+      return value;
+    }
+    return 'hold';
   }
 }

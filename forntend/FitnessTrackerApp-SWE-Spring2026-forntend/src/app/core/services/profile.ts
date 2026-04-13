@@ -8,6 +8,7 @@ export interface HealthProfile {
   user_id?: number;
   date_of_birth?: string | Date;
   sex?: 'male' | 'female' | 'other' | 'na';
+  weight_goal?: 'lose' | 'hold' | 'gain';
   height_cm?: number;
   weight_kg?: number;
   neck_cm?: number;
