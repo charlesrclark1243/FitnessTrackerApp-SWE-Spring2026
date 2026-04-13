@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Profile page and profile stats', () => {
   beforeEach(() => {
     cy.clearCookies();
