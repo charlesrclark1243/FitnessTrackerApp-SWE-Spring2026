@@ -1,29 +1,23 @@
-
 <div class="home-container">
   <!-- Welcome Card -->
   <mat-card class="welcome-card">
+    <mat-card-header>
+      <mat-card-title>Welcome to Your Dashboard</mat-card-title>
+    </mat-card-header>
     <mat-card-content>
-      <div class="welcome-shell">
-        <p class="welcome-kicker">Fitness Dashboard</p>
-        <h1 class="welcome-title">
-          Welcome back,
-          <span>{{ (username$ | async) || 'Athlete' }}</span>
-        </h1>
-        <p class="welcome-subtitle">
-          Keep building momentum today. Log your calories, water intake, and weight to stay on track with your goals.
-        </p>
-
-        <div class="welcome-highlights" aria-label="dashboard highlights">
-          <div class="highlight-pill">Hydration Tracking</div>
-          <div class="highlight-pill">Calorie Balance</div>
-          <div class="highlight-pill">Weight Progress</div>
-        </div>
-      </div>
+      <p>Hello, <strong>{{ username$ | async }}</strong>!</p>
+      <p>Track your daily steps, water intake, and calorie balance to stay healthy!</p>
     </mat-card-content>
   </mat-card>
 
-  <!-- Tracking Section -->
+  <!-- Tracking Grid -->
   <div class="tracking-grid">
+    <!-- Step Tracking -->
+    <div class="tracking-column">
+      <app-step-display></app-step-display>
+      <app-step-input></app-step-input>
+    </div>
+    
     <!-- Calorie Tracking -->
     <div class="tracking-column">
       <app-calorie-display></app-calorie-display>
@@ -34,15 +28,13 @@
     <div class="tracking-column">
       <app-water-display></app-water-display>
       <app-water-intake></app-water-intake>
-    </div>
+    </div> 
+    <!-- Weight Tracking -->
     <div class="tracking-column">
      <app-weight-log></app-weight-log>
     </div>
   </div>
 </div>
-
-
-
 
 
 
