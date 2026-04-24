@@ -9,12 +9,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/middleware"
 	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
+	"github.com/gin-gonic/gin"
 )
 
 // Test 1: Log water intake successfully
+
 func TestLogWaterIntake_Success(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	db := setupProfileTestDB(t)
@@ -25,7 +26,7 @@ func TestLogWaterIntake_Success(t *testing.T) {
 	router.POST("/water", LogWaterIntake)
 
 	body := map[string]interface{}{
-		"amount_ml": 250,
+		"amount": 250,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/water", bytes.NewBuffer(jsonBody))
@@ -59,7 +60,7 @@ func TestLogWaterIntake_InvalidAmount(t *testing.T) {
 
 	// Test negative amount
 	body := map[string]interface{}{
-		"amount_ml": -100,
+		"amount": -100,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/water", bytes.NewBuffer(jsonBody))
@@ -249,7 +250,7 @@ func TestWaterIntake_Unauthorized(t *testing.T) {
 	router.POST("/water", LogWaterIntake)
 
 	body := map[string]interface{}{
-		"amount_ml": 250,
+		"amount": 250,
 	}
 	jsonBody, _ := json.Marshal(body)
 	req := httptest.NewRequest("POST", "/water", bytes.NewBuffer(jsonBody))
