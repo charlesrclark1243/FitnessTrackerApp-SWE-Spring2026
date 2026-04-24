@@ -39,6 +39,7 @@ func Connect() {
                 &models.WeightLog{},
                 &models.ExerciseLog{},
                 &models.CalorieIntake{},
+                &models.StepLog{},
         )
 
         if err != nil {
