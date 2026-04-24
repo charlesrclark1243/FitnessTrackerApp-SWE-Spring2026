@@ -98,6 +98,16 @@ mat-card-title {
   color: #333;
 }
 
+.goal-mode {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5e35b1;
+  background: #ede7f6;
+  border: 1px solid #d1c4e9;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
 .edit-goal-btn {
   width: 24px;
   height: 24px;
@@ -122,13 +132,76 @@ mat-card-title {
 
 .goal-edit {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-.goal-input {
-  width: 150px;
+.goal-direction-group {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.save-goal-btn {
+  color: #2e7d32 !important;
+}
+
+.save-goal-btn:not([disabled]):hover {
+  background: #e8f5e9 !important;
+}
+
+.cancel-goal-btn {
+  color: #757575 !important;
+}
+
+.cancel-goal-btn:not([disabled]):hover {
+  background: #f5f5f5 !important;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spin-icon {
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+.goal-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.goal-feedback.error {
+  background: #ffebee;
+  color: #c62828;
+  border-color: #ffcdd2;
+}
+
+.goal-feedback mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.goal-feedback p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Progress Bar */

@@ -1,6 +1,6 @@
 .home-container {
   padding: 40px 20px;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -31,9 +31,15 @@ p {
   gap: 20px;
 }
 
-/* Responsive layout for larger screens */
+/* Responsive layout */
 @media (min-width: 768px) {
   .tracking-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .tracking-grid {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }

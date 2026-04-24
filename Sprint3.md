@@ -64,6 +64,7 @@
 | Shows BFP as N/A for unsupported sex   | Test BFP displays N/A when sex is unsupported                 | profile.cy.ts        | PASS   |
 | Profile stats missing state            |                                                               |                      |        |
 | Shows missing data message             | Test message appears when required profile data is incomplete | profile.cy.ts        | PASS   |
+| Update calory goal and activity level | saves calorie goal and activity level in profile payload | profile.cy.ts | PASS
 |Weight Log & Display Tests              |                                                               |                      |        |
 | Logs a weight & display the history    | Test whether user can log a weight & its displays in history  | weight-log.cy.ts     | PASS   |
 | Show the last 30 logs                  | Test last 30 weight logs are displayed when user clicks       | weight-log.cy.ts     | PASS   |
@@ -77,6 +78,10 @@
 | should show warning at goal | Test warning when goal reached | calorie-tracking.cy.ts | PASS |
 | should edit daily calorie goal | Test user can change goal | calorie-tracking.cy.ts | PASS |
 | should show entries with descriptions | Test entries display names | calorie-tracking.cy.ts | PASS |
+| weight log graph | logs a new weight and keeps graph view available | weight-log.cy.ts | PASS
+| editing most recent weight |opens Correct Recent form pre-filled with the most recent weight | weight-log.cy.ts | PASS
+| successfully editing most recent weight | updates most recent weight entry and shows success message | weight-log.cy.ts | PASS
+| failure of editing most recent weight | shows an error message when updating most recent weight fails | weight-log.cy.ts |PASS
 
 
 
@@ -475,4 +480,6 @@ NO BODY NECESSARY
 ```
 ## Demo
 
-TODO (April 13, 2026 @ 3 pm)
+New Functionality Demo **(REQUIRES UF LOGIN)**: [https://uflorida-my.sharepoint.com/](https://uflorida-my.sharepoint.com/:v:/g/personal/cclark9_ufl_edu/IQDHVtwla_2MSq1yDHkBjvFkAWLenLOcXi5kHATLoej98Wg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=j4OPVa)
+
+Old Unit Tests Demo **(REQUIRES UF LOGIN)**: [https://uflorida-my.sharepoint.com/](https://uflorida-my.sharepoint.com/:v:/g/personal/cclark9_ufl_edu/IQDD2JJHGtpoSq57Z-hF0ETbAWH0ePWDpv6bcRcwp_RR3Y4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=qyDBaG)

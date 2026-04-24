@@ -37,29 +37,152 @@
       </div>
 
       <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
-      <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
-      <button
-        mat-button
-        type="button"
-        class="toggle-logs-btn"
-        (click)="toggleLogs()" data-cy="toggle-weight-logs-btn">
-        {{ showLogs ? 'Hide last 30 logs' : 'View last 30 logs' }}
-      </button>
+      <div class="message error" *ngIf="errorMessage" data-cy="modify-weight-error">{{ errorMessage }}</div>
     </form>
 
-    <div class="history" *ngIf="showLogs" data-cy="weight-history">
-    <div class="history-header">
-      <h3>Last 30 Logs</h3>
+    <!-- Modify Most Recent Weight Form -->
+    <div *ngIf="logs.length > 0" class="modify-section">
+      <button
+        mat-stroked-button
+        color="accent"
+        class="modify-toggle-btn"
+        (click)="toggleModifyForm()"
+        matTooltip="Update your most recent weight entry">
+        <mat-icon>{{ showModifyForm ? 'close' : 'edit' }}</mat-icon>
+        {{ showModifyForm ? 'Correct Recent (Cancel)' : 'Correct Recent' }}
+      </button>
+
+      <form *ngIf="showModifyForm" [formGroup]="modifyForm" (ngSubmit)="modifyMostRecent()" class="modify-form">
+        <p class="modify-info">Update your most recent weight entry</p>
+        
+        <div class="modify-input-row">
+          <mat-form-field appearance="outline" class="modify-input">
+            <mat-label>New Weight</mat-label>
+            <input matInput type="number" formControlName="weight" data-cy="modify-weight-input"/>
+            <span matTextSuffix>{{ unit }}</span>
+            <mat-error *ngIf="modifyForm.get('weight')?.invalid && modifyForm.get('weight')?.touched">
+              Enter a valid weight
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="warn"
+            type="submit"
+            class="modify-btn"
+            [disabled]="loading || modifyForm.invalid"
+            data-cy="modify-weight-btn">
+            <mat-icon>{{ loading ? 'sync' : 'check' }}</mat-icon>
+            {{ loading ? 'Updating...' : 'Update' }}
+          </button>
+        </div>
+
+        <div class="message error" *ngIf="modifyErrorMessage || errorMessage" data-cy="modify-weight-error">
+          {{ modifyErrorMessage || errorMessage }}
+        </div>
+      </form>
     </div>
 
-    <div *ngIf="logs.length === 0" class="empty">
-      No weight logs yet.
-    </div>
+    <div class="history" data-cy="weight-history">
+      <mat-tab-group>
+        <mat-tab label="View Logs">
+          <div class="tab-body">
+            <div class="history-header">
+              <h3>Last 30 Weight Logs</h3>
+            </div>
 
-    <div *ngFor="let log of logs" class="log-row" data-cy="weight-log-row">
-      <div class="log-main">{{ displayWeight(log.weightKG) }}</div>
-      <div class="log-date">{{ log.loggedAt | date:'medium' }}</div>
+            <div *ngIf="logs.length === 0" class="empty">
+              No weight logs yet.
+            </div>
+
+            <div *ngIf="logs.length > 0" class="entries-section weight-entries-section">
+              <div class="entries-list weight-entries-list">
+                <div class="weight-entry-chip" *ngFor="let log of logs" data-cy="weight-log-row">
+                  <div class="entry-left">
+                    <mat-icon class="entry-icon">monitor_weight</mat-icon>
+                    <span class="entry-amount">{{ displayWeight(log.weightKG) }}</span>
+                  </div>
+                  <span class="entry-time">{{ log.loggedAt | date:'short' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Graphs">
+          <div class="tab-body">
+            <div class="history-header">
+              <h3>Last Recorded Weights</h3>
+            </div>
+
+            <div *ngIf="logs.length === 0" class="empty">
+              No data available for graph.
+            </div>
+
+            <div *ngIf="logs.length > 0" class="chart-wrap" data-cy="weight-graph">
+              <div class="y-label top">{{ chartMaxLabel }}</div>
+              <svg
+                class="weight-chart"
+                [attr.viewBox]="'0 0 ' + graphWidth + ' ' + graphHeight"
+                preserveAspectRatio="none"
+                role="img"
+                aria-label="Weight trend graph">
+                <defs>
+                  <linearGradient id="weightLineGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#2d728f"></stop>
+                    <stop offset="100%" stop-color="#1b998b"></stop>
+                  </linearGradient>
+                  <linearGradient id="weightAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#2d728f" stop-opacity="0.28"></stop>
+                    <stop offset="100%" stop-color="#2d728f" stop-opacity="0.02"></stop>
+                  </linearGradient>
+                </defs>
+
+                <line
+                  *ngFor="let y of chartGridLinesY"
+                  [attr.x1]="graphPadding"
+                  [attr.y1]="y"
+                  [attr.x2]="graphWidth - graphPadding"
+                  [attr.y2]="y"
+                  class="chart-grid-line">
+                </line>
+
+                <polygon
+                  [attr.points]="chartAreaPoints"
+                  fill="url(#weightAreaGradient)">
+                </polygon>
+
+                <polyline
+                  [attr.points]="chartPoints"
+                  fill="none"
+                  stroke="url(#weightLineGradient)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                </polyline>
+
+                <circle
+                  *ngFor="let point of chartPointData"
+                  [attr.cx]="point.x"
+                  [attr.cy]="point.y"
+                  r="4"
+                  class="chart-point">
+                  <title>{{ point.weightLabel }} on {{ point.dateLabel }}</title>
+                </circle>
+              </svg>
+              <div class="y-label bottom">{{ chartMinLabel }}</div>
+              <div class="x-axis-markers">
+                <span
+                  *ngFor="let marker of chartDateMarkers"
+                  class="x-axis-marker"
+                  [style.left.%]="marker.leftPercent">
+                  {{ marker.label }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
-  </div>
   </mat-card-content>
 </mat-card>

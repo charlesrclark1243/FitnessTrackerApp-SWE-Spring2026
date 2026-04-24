@@ -1,0 +1,93 @@
+<mat-card class="step-input-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">directions_walk</mat-icon>
+      Add Steps
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Quick Add Buttons -->
+    <div class="quick-buttons">
+      @for (quickBtn of quickSteps; track quickBtn.value) {
+        <button 
+          mat-raised-button 
+          color="primary"
+          class="quick-add-btn"
+          (click)="addQuickSteps(quickBtn.value, quickBtn.label)"
+          [matTooltip]="'Add ' + quickBtn.value + ' steps'">
+          <mat-icon>{{ quickBtn.icon }}</mat-icon>
+          <span class="btn-label">{{ quickBtn.label }}</span>
+          <span class="btn-steps">{{ quickBtn.value }} steps</span>
+        </button>
+      }
+    </div>
+
+    <!-- Custom Amount Section -->
+    <div class="custom-section">
+      @if (!showCustomInput) {
+        <button 
+          mat-stroked-button 
+          color="accent"
+          class="custom-toggle-btn"
+          (click)="toggleCustomInput()">
+          <mat-icon>add_circle_outline</mat-icon>
+          Custom Steps
+        </button>
+      }
+
+      @if (showCustomInput) {
+        <div class="custom-input-container">
+          <mat-form-field appearance="outline" class="custom-input">
+            <mat-label>Steps</mat-label>
+            <input 
+              matInput 
+              type="number"
+              [(ngModel)]="customAmount"
+              placeholder="Enter steps"
+              min="0"
+              max="50000">
+            <span matTextSuffix>steps</span>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="custom-input">
+            <mat-label>Activity</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="customDescription"
+              placeholder="e.g., Morning walk"
+              (keyup.enter)="addCustomSteps()">
+          </mat-form-field>
+          
+          <button 
+            mat-raised-button 
+            color="accent"
+            [disabled]="!customAmount || customAmount <= 0"
+            (click)="addCustomSteps()">
+            <mat-icon>add</mat-icon>
+            Add
+          </button>
+          
+          <button 
+            mat-icon-button
+            (click)="toggleCustomInput()"
+            matTooltip="Cancel">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Undo Button -->
+    <div class="actions">
+      <button 
+        mat-button 
+        color="warn"
+        (click)="undoLast()"
+        matTooltip="Remove last entry">
+        <mat-icon>undo</mat-icon>
+        Undo Last
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

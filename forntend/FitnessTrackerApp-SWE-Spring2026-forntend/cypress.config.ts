@@ -1,13 +1,13 @@
-import { defineConfig } from "cypress";
-
-export default defineConfig({
+export default {
   allowCypressEnv: false,
+  screenshotOnRunFailure: false,
+  video: false,
 
   e2e: {
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // implement node event listeners here
     },
     baseUrl: 'http://localhost:4200',
     supportFile: 'cypress/support/e2e.ts'
   },
-});
+};

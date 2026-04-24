@@ -34,50 +34,15 @@
 
       <!-- Goal Display -->
       <div class="goal-section">
-        @if (!isEditingGoal) {
-          <div class="goal-display">
-            <span class="goal-label">Daily Goal:</span>
-            <span class="goal-value">{{ formatNumber(calorieData.goal) }} cal</span>
-            <button 
-              mat-icon-button 
-              class="edit-goal-btn"
-              (click)="startEditGoal()"
-              matTooltip="Edit daily goal">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-          <div class="remaining-display" [class.over-goal]="remainingCalories < 0">
-            <span>{{ remainingCalories >= 0 ? 'Remaining' : 'Over goal' }}: </span>
-            <strong>{{ formatNumber(remainingCalories >= 0 ? remainingCalories : -remainingCalories) }} cal</strong>
-          </div>
-        }
-        
-        @if (isEditingGoal) {
-          <div class="goal-edit">
-            <mat-form-field appearance="outline" class="goal-input">
-              <mat-label>Daily Goal</mat-label>
-              <input 
-                matInput 
-                type="number"
-                [(ngModel)]="newGoal"
-                min="500"
-                max="10000"
-                (keyup.enter)="saveGoal()">
-              <span matTextSuffix>cal</span>
-            </mat-form-field>
-            <button 
-              mat-icon-button 
-              color="primary"
-              (click)="saveGoal()">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button 
-              mat-icon-button
-              (click)="cancelEditGoal()">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
-        }
+        <div class="goal-display">
+          <span class="goal-label">Daily Goal:</span>
+          <span class="goal-value">{{ formatNumber(calorieData.goal) }} cal</span>
+          <span class="goal-mode">{{ goalDirectionLabel }}</span>
+        </div>
+        <div class="remaining-display" [class.over-goal]="remainingCalories < 0">
+          <span>{{ remainingCalories >= 0 ? 'Remaining' : 'Over goal' }}: </span>
+          <strong>{{ formatNumber(remainingCalories >= 0 ? remainingCalories : -remainingCalories) }} cal</strong>
+        </div>
       </div>
 
       <!-- Progress Bar -->

@@ -1,0 +1,138 @@
+<mat-card class="step-display-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">show_chart</mat-icon>
+      Today's Step Count
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (stepData) {
+      <!-- Current Step Display -->
+      <div class="step-display">
+        <div class="current-steps">
+          <span class="steps-number">{{ formatNumber(stepData.steps) }}</span>
+          <span class="steps-unit">steps</span>
+        </div>
+        <div class="goal-display">
+          @if (!isEditingGoal) {
+            <span class="goal-text">
+              of {{ formatNumber(stepData.goal) }} steps
+              <button 
+                mat-icon-button 
+                class="edit-goal-btn"
+                (click)="startEditGoal()"
+                matTooltip="Edit daily goal">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </span>
+          }
+          
+          @if (isEditingGoal) {
+            <div class="goal-edit">
+              <mat-form-field appearance="outline" class="goal-input">
+                <mat-label>Daily Goal</mat-label>
+                <input 
+                  matInput 
+                  type="number"
+                  [(ngModel)]="newGoal"
+                  min="1000"
+                  max="100000"
+                  (keyup.enter)="saveGoal()">
+                <span matTextSuffix>steps</span>
+              </mat-form-field>
+              <button 
+                mat-icon-button 
+                color="primary"
+                (click)="saveGoal()">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button 
+                mat-icon-button
+                (click)="cancelEditGoal()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="percentage"
+          [color]="getProgressColor()"
+          class="step-progress">
+        </mat-progress-bar>
+        <div class="percentage-label">{{ percentage }}%</div>
+      </div>
+
+      <!-- Motivational Message -->
+      <div class="motivational-message">
+        {{ getMotivationalMessage() }}
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <mat-icon>straighten</mat-icon>
+          <div class="stat-label">Distance</div>
+          <div class="stat-value">{{ estimatedDistance }}</div>
+          <div class="stat-unit">km</div>
+        </div>
+
+        <div class="stat-box calorie-sync">
+          <mat-icon>local_fire_department</mat-icon>
+          <div class="stat-label">Calories Burned</div>
+          <div class="stat-value">{{ formatNumber(estimatedCalories) }}</div>
+          <div class="stat-unit">kcal</div>
+          <div class="sync-badge">
+            <mat-icon class="sync-icon">sync</mat-icon>
+            Synced
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <mat-icon>flag</mat-icon>
+          <div class="stat-label">Remaining</div>
+          <div class="stat-value">{{ formatNumber(remainingSteps) }}</div>
+          <div class="stat-unit">steps</div>
+        </div>
+      </div>
+
+      <!-- Today's Entries -->
+      @if (stepData.entries.length > 0) {
+        <div class="entries-section">
+          <h4>Today's Activities ({{ stepData.entries.length }})</h4>
+          <div class="entries-list">
+            @for (entry of stepData.entries.slice().reverse(); track entry.timestamp) {
+              <mat-chip-row class="step-chip">
+                <mat-icon matChipAvatar>directions_walk</mat-icon>
+                <span class="entry-description">
+                  {{ entry.description || 'Walking' }}
+                </span>
+                <span class="entry-steps">
+                  +{{ formatNumber(entry.amount) }} steps
+                </span>
+                <span class="entry-calories">
+                  🔥 {{ entry.calories }} cal
+                </span>
+                <span class="entry-time">
+                  {{ entry.timestamp | date:'shortTime' }}
+                </span>
+              </mat-chip-row>
+            }
+          </div>
+        </div>
+      }
+
+      @if (stepData.entries.length === 0) {
+        <div class="no-entries">
+          <mat-icon>info_outline</mat-icon>
+          <p>No steps logged yet today. Start moving!</p>
+        </div>
+      }
+    }
+  </mat-card-content>
+</mat-card>
