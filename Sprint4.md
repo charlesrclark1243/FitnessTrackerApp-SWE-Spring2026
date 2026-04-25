@@ -284,7 +284,14 @@
 | TestDeleteHeartHealthEntry_InvalidID/missing_heart_rate_id | Tests the failure case for trying to delete a heart rate record from the log with missing ID. | `backend/handlers/heart_health_test.go` | PASS |
 | TestDeleteHeartHealthEntry_InvalidID/missing_blood_pressure_id | Tests the failure case for trying to delete a blood pressure (diastolic, systolic) record from the log with missing ID. | `backend/handlers/heart_health_test.go ` | PASS |
 | TestDeleteHeartHealthEntry_InvalidType | Tests the failure case for trying to delete a record of invalid type. | `backend/handlers/heart_health_test.go` | PASS |
-
+| TestComputeMedianHeartRate/empty | Tests the private median heart rate computation logic in the case where the input is empty. | `backend/utils/heart_health_test.go` | PASS |
+| TestComputeMedianHeartRate/odd_count | Tests the private median heart rate computation logic in the case where there's an odd number of heart rate records in the log. | `backend/utils/heart_health_test.go` | PASS |
+| TestComputeMedianHeartRate/even_count | Tests the private median heart rate computation logic in the case where there's an even number of heart rate records in the log. | `backend/utils/heart_health_test.go` | PASS |
+| TestCalculateMedianHeartRate | Tests the public median heart rate computation function. | `backend/utils/heart_health_test.go` | PASS |
+| TestComputeMedianBloodPressure_OddCount | Tests the private median BP computation logic in the case where there's an odd number of (systolic, diastolic) BP pairs. | `backend/utils/heart_health_test.go` | PASS |
+| TestComputeMedianBloodPressure_EvenCountChoosesNearestPair | Tests the private median BP computation logic in the case where there's an even number of (systolic, diastolic) BP pairs. | `backend/utils/heart_health_test.go` | PASS |
+| TestComputeMedianBloodPressure_Empty | Tests the private median BP computation logic in the even that the user's BP log is empty. | `backend/utils/heart_health_test.go` | PASS |
+| TestCalculateMedianBloodPressure | Tests the public median BP computation function. | `backend/utils/heart_health_test.go` | PASS |
 
 ## API Documentation
 
