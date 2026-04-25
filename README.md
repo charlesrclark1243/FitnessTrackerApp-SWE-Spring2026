@@ -43,8 +43,7 @@ Fitness Tracker is a full-stack app for logging and monitoring day-to-day wellne
 │   └── main.go
 ├── forntend/
 │   └── FitnessTrackerApp-SWE-Spring2026-forntend/
-├── start-servers.sh
-└── Sprint4.md
+└── start-servers.sh
 ```
 
 Note: the folder name is intentionally spelled `forntend` in this repository.
@@ -166,11 +165,6 @@ All routes are under `/api`.
 - `GET /heart/summary`
 - `DELETE /heart/:type/:id` where `type` is `heart_rate` or `blood_pressure`
 
-Heart health logging notes:
-
-- `logged_at` is optional for both heart logging endpoints.
-- If omitted, the server auto-fills current UTC time.
-
 ## Testing
 
 ### Backend
@@ -218,4 +212,4 @@ npx cypress open
 
 ## Additional Project Notes
 
-Detailed sprint-specific documentation and test inventories are in `Sprint4.md`.
+Detailed sprint-specific documentation and test inventories are in `Sprint1.md`, `Sprint2.md`, `Sprint3.md`, and `Sprint4.md`.
