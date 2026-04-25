@@ -60,6 +60,12 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			protected.GET("/steps/recent", handlers.GetRecentStepLogs)
 			protected.GET("/steps/summary", handlers.GetDailyStepSummary)
 			protected.DELETE("/steps/:id", handlers.DeleteStepLog)
+
+			// Heart health routes
+			protected.POST("/heart/rate", handlers.LogHeartRate)
+			protected.POST("/heart/blood-pressure", handlers.LogBloodPressure)
+			protected.GET("/heart/summary", handlers.GetHeartHealthSummary)
+			protected.DELETE("/heart/:type/:id", handlers.DeleteHeartHealthEntry)
 		}
 	}
 }

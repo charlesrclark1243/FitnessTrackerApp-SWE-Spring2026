@@ -1,50 +1,52 @@
 package database
 
 import (
-        "log"
+	"log"
 
-        "gorm.io/driver/sqlite"
-        "gorm.io/gorm"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 
-        "github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
+	"github.com/charlesrclark1243/FitnessTrackerApp-SWE-Spring2026/backend/models"
 )
 
 var DB *gorm.DB
 
 func InitDatabase() {
-        var err error
-        DB, err = gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
-        if err != nil {
-                log.Fatal("Failed to connect to database:", err)
-        }
+	var err error
+	DB, err = gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
 
-        log.Println("Database connected successfully")
+	log.Println("Database connected successfully")
 }
 
 func GetDB() *gorm.DB {
-        return DB
+	return DB
 }
 
 func Connect() {
-        var err error
-        DB, err = gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
-        if err != nil {
-                log.Fatal("Failed to connect to database:", err)
-        }
+	var err error
+	DB, err = gorm.Open(sqlite.Open("fitness.db"), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
 
-        err = DB.AutoMigrate(
-                &models.User{},
-                &models.HealthProfile{},
-                &models.WaterIntake{},
-                &models.WeightLog{},
-                &models.ExerciseLog{},
-                &models.CalorieIntake{},
-                &models.StepLog{},
-        )
+	err = DB.AutoMigrate(
+		&models.User{},
+		&models.HealthProfile{},
+		&models.WaterIntake{},
+		&models.WeightLog{},
+		&models.ExerciseLog{},
+		&models.CalorieIntake{},
+		&models.StepLog{},
+		&models.HeartRate{},
+		&models.BloodPressure{},
+	)
 
-        if err != nil {
-                log.Fatal("Failed to migrate database:", err)
-        }
+	if err != nil {
+		log.Fatal("Failed to migrate database:", err)
+	}
 
-        log.Println("Database connected and migrated successfully")
+	log.Println("Database connected and migrated successfully")
 }

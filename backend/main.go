@@ -12,18 +12,14 @@ import (
 )
 
 func main() {
-	// Initialize database
-
-	database.InitDatabase()
+	// Connect database and run migrations
+	database.Connect()
 
 	// Get database instance
 	db := database.GetDB()
 	if db == nil {
 		log.Fatal("Database not initialized")
 	}
-
-	// Connect database and run migrations
-	database.Connect()
 
 	//Create a new Gin router with default middleware (logger and recovery)
 	r := gin.Default()
