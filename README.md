@@ -12,7 +12,7 @@ Fitness Tracker is a full-stack app for logging and monitoring day-to-day wellne
 - Exercise logs
 - Step tracking
 - Weight tracking
-- Heart health logging (heart rate + blood pressure) and median summary
+- Heart health logging
 
 ## Team
 
