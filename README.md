@@ -25,7 +25,7 @@ Fitness Tracker is a full-stack app for logging and monitoring day-to-day wellne
 
 - Frontend: Angular 20 (TypeScript, Angular Material)
 - Backend: Go (Gin + GORM)
-- Database: SQLite
+- Database: SQLit
 - Tests:
   - Backend: Go unit tests
   - Frontend: Angular/Karma unit tests and Cypress E2E tests

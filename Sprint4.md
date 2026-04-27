@@ -676,3 +676,5 @@ Allows a user to delete a logged step count.
 ```
 
 ## Demo
+
+**Sprint 4 Demo (REQUIRES UF LOGIN):** [https://uflorida-my.sharepoint.com/:v:/g/personal/cclark9_ufl_edu/IQA8XUGByWu_T7iJ0U0B38zkAed2N4WuOasfXn_ScCc5PUA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=XM2beY](https://uflorida-my.sharepoint.com/:v:/g/personal/cclark9_ufl_edu/IQA8XUGByWu_T7iJ0U0B38zkAed2N4WuOasfXn_ScCc5PUA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=XM2beY)
