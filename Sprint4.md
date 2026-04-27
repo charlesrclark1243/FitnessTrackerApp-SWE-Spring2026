@@ -104,20 +104,20 @@
 | Heart Health – log updates display    |                                                                |                        |         |
 | display refreshes with new heart rate after logging   | Test whether the display refreshes after a new heart rate entry is logged                | heart-health.cy.ts | PASS |
 | deleting a heart rate entry from display triggers a refresh | Test whether deleting a heart rate entry refreshes the displayed log data                | heart-health.cy.ts | PASS |
-| Step Counter Tests   | should display step counter components                     | Test step counter UI components are visible                 | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should start with 0 steps                                  | Test initial state shows zero steps                         | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should add steps (quick add)                               | Test quick-add Short Walk button adds 500 steps             | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should add multiple step entries                           | Test multiple step entries accumulate correctly             | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should calculate distance correctly                        | Test distance calculation (1,250 steps ≈ 1 km)              | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should calculate calories burned                           | Test calorie calculation (20 steps ≈ 1 calorie)             | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should show remaining steps to goal                        | Test remaining steps display (goal - current)               | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should undo last step entry                                | Test undo removes most recent step entry                    | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should update progress bar                                 | Test progress bar updates as steps are added                | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should show success at goal                                | Test success message when daily goal is reached             | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should edit daily step goal                                | Test user can change daily step target                      | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should show entries with descriptions                      | Test step entries display with activity names               | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should show step stats correctly                           | Test distance, calories, and remaining stats display        | step-counter.cy.ts | PASS   |
-| Step Counter Tests   | should calculate percentage correctly                      | Test percentage calculation (steps/goal * 100)              | step-counter.cy.ts | PASS   |
+| should display step counter components                     | Test step counter UI components are visible                 | step-counter.cy.ts | PASS   |
+| should start with 0 steps                                  | Test initial state shows zero steps                         | step-counter.cy.ts | PASS   |
+| should add steps (quick add)                               | Test quick-add Short Walk button adds 500 steps             | step-counter.cy.ts | PASS   |
+| should add multiple step entries                           | Test multiple step entries accumulate correctly             | step-counter.cy.ts | PASS   |
+| should calculate distance correctly                        | Test distance calculation (1,250 steps ≈ 1 km)              | step-counter.cy.ts | PASS   |
+| should calculate calories burned                           | Test calorie calculation (20 steps ≈ 1 calorie)             | step-counter.cy.ts | PASS   |
+| should show remaining steps to goal                        | Test remaining steps display (goal - current)               | step-counter.cy.ts | PASS   |
+| should undo last step entry                                | Test undo removes most recent step entry                    | step-counter.cy.ts | PASS   |
+| should update progress bar                                 | Test progress bar updates as steps are added                | step-counter.cy.ts | PASS   |
+| should show success at goal                                | Test success message when daily goal is reached             | step-counter.cy.ts | PASS   |
+| should edit daily step goal                                | Test user can change daily step target                      | step-counter.cy.ts | PASS   |
+| should show entries with descriptions                      | Test step entries display with activity names               | step-counter.cy.ts | PASS   |
+| should show step stats correctly                           | Test distance, calories, and remaining stats display        | step-counter.cy.ts | PASS   |
+| should calculate percentage correctly                      | Test percentage calculation (steps/goal * 100)              | step-counter.cy.ts | PASS   |
 
 
 
