@@ -76,7 +76,34 @@
 | editing most recent weight |opens Correct Recent form pre-filled with the most recent weight | weight-log.cy.ts | PASS
 | successfully editing most recent weight | updates most recent weight entry and shows success message | weight-log.cy.ts | PASS
 | failure of editing most recent weight | shows an error message when updating most recent weight fails | weight-log.cy.ts |PASS
-
+| Heart Health Display Card Tests |                                                                 |                          |        |
+| Renders the summary card        | Test whether Heart Health Summary card is displayed              | heart-health.cy.ts       | PASS   |
+| Shows empty state when no data  | Test empty state is shown when no data is logged                 | heart-health.cy.ts       | PASS   |
+| Displays median heart rate      | Test median heart rate box appears when data exists              | heart-health.cy.ts       | PASS   |
+| Displays median blood pressure  | Test median blood pressure box appears when data exists          | heart-health.cy.ts       | PASS   |
+| Shows heart rate category badge | Test category badge is displayed for heart rate                  | heart-health.cy.ts       | PASS   |
+| Shows blood pressure category badge   | Test category badge is displayed for blood pressure              | heart-health.cy.ts       | PASS   |
+| Shows heart rate motivational message | Test motivational message appears for heart rate                 | heart-health.cy.ts       | PASS   |
+| Shows blood pressure motivational message| Test motivational message appears for blood pressure          | heart-health.cy.ts       | PASS   |
+| Lists all heart rate entries         | Test all logged heart rate entries are displayed                 | heart-health.cy.ts       | PASS   |
+| Lists all blood pressure entries     | Test all logged blood pressure entries are displayed             | heart-health.cy.ts       | PASS   |
+| Shows error on summary failure       | Test error message appears when summary request fails            | heart-health.cy.ts       | PASS   |
+| Heart Health Log Card – Heart Rate Tests  |                                                             |                        |        |
+| Renders log card with Heart Rate tab | Test Log Heart Data card renders with Heart Rate tab            | heart-log.cy.ts        | PASS   |
+| Heart Rate tab active by default     | Test Heart Rate tab is selected by default                      | heart-log.cy.ts        | PASS   |
+| Disable log button on empty input    | Test Log Heart Rate button is disabled when input is empty      | heart-log.cy.ts        | PASS   |
+| Enable log button on valid input     | Test Log Heart Rate button enables on valid BPM input           | heart-log.cy.ts        | PASS   |
+| Logs heart rate and shows snackbar   | Test successful heart rate log shows snackbar                   | heart-log.cy.ts        | PASS   |
+| Clears input after successful log    | Test input field is cleared after logging heart rate            | heart-log.cy.ts        | PASS   |
+| Shows Undo button after log          | Test Undo Last button appears after logging heart rate          | heart-log.cy.ts        | PASS   |
+| Undo last heart rate entry           | Test last heart rate entry is removed and Undo button hides     | heart-log.cy.ts        | PASS   |
+| Shows error snackbar on failure      | Test error snackbar appears when heart rate logging fails       | heart-log.cy.ts        | PASS   |
+| Heart Health Log Card – Blood Pressure                      |                                          |                        |        |
+| Blood Pressure tab is reachable and shows two inputs  | Test whether Blood Pressure tab is reachable and shows systolic and diastolic inputs     | heart-health.cy.ts | PASS |
+| Log Blood Pressure button is disabled when inputs are empty | Test whether Log Blood Pressure button remains disabled when no input values are entered | heart-health.cy.ts | PASS |
+| Heart Health – log updates display    |                                                                |                        |         |
+| display refreshes with new heart rate after logging   | Test whether the display refreshes after a new heart rate entry is logged                | heart-health.cy.ts | PASS |
+| deleting a heart rate entry from display triggers a refresh | Test whether deleting a heart rate entry refreshes the displayed log data                | heart-health.cy.ts | PASS |
 
 
 
