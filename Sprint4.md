@@ -168,7 +168,6 @@
 | should save to localStorage | Test data persists to localStorage | calorie.spec.ts | PASS |
 | should add timestamps | Test each entry has accurate timestamp | calorie.spec.ts | PASS |
 | should handle mixed entry types | Test both consumed and burned entries together | calorie.spec.ts | PASS |
-
 |should be created                      | Test service instantiation                                  | step.spec.ts  | PASS   |
 | should start with 0 steps              | Test initial state shows zero steps                         | step.spec.ts  | PASS   |
 |  should have default goal               | Test default daily goal is 10,000 steps                     | step.spec.ts  | PASS   |
