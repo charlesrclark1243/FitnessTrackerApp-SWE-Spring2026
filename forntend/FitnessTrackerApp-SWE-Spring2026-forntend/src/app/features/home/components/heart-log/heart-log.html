@@ -1,0 +1,100 @@
+<mat-card class="heart-log-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">monitor_heart</mat-icon>
+      Log Heart Data
+    </mat-card-title>
+    <mat-card-subtitle>Record your heart rate and blood pressure</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-tab-group>
+      <!-- Heart Rate Tab -->
+      <mat-tab label="Heart Rate">
+        <div class="tab-content">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Heart Rate (BPM)</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="heartRate"
+              min="1"
+              max="300"
+              placeholder="e.g. 72"
+            />
+            <mat-icon matSuffix>monitor_heart</mat-icon>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="log-btn"
+            [disabled]="!heartRate || heartRate <= 0 || saving"
+            (click)="logHeartRate()"
+          >
+            <mat-icon>add</mat-icon>
+            Log Heart Rate
+          </button>
+
+          <div class="actions" *ngIf="lastHeartRateId">
+            <button mat-button color="warn" (click)="undoLastHeartRate()" matTooltip="Remove last heart rate entry">
+              <mat-icon>undo</mat-icon>
+              Undo Last
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Blood Pressure Tab -->
+      <mat-tab label="Blood Pressure">
+        <div class="tab-content">
+          <div class="bp-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Systolic (mmHg)</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="systolic"
+                min="1"
+                max="300"
+                placeholder="e.g. 120"
+              />
+            </mat-form-field>
+
+            <span class="bp-separator">/</span>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Diastolic (mmHg)</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="diastolic"
+                min="1"
+                max="200"
+                placeholder="e.g. 80"
+              />
+            </mat-form-field>
+          </div>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="log-btn"
+            [disabled]="!systolic || systolic <= 0 || !diastolic || diastolic <= 0 || saving"
+            (click)="logBloodPressure()"
+          >
+            <mat-icon>add</mat-icon>
+            Log Blood Pressure
+          </button>
+
+          <div class="actions" *ngIf="lastBPId">
+            <button mat-button color="warn" (click)="undoLastBP()" matTooltip="Remove last blood pressure entry">
+              <mat-icon>undo</mat-icon>
+              Undo Last
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

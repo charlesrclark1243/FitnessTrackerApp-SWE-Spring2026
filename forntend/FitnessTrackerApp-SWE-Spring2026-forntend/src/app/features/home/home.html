@@ -29,10 +29,19 @@
       <app-water-display></app-water-display>
       <app-water-intake></app-water-intake>
     </div> 
+
+    <!-- Heart Tracking -->
+    <div class="tracking-column">
+      <app-heart-display #heartDisplay></app-heart-display>
+      <app-heart-log (logged)="heartDisplay.load()"></app-heart-log>
+    </div>
+
     <!-- Weight Tracking -->
     <div class="tracking-column">
-     <app-weight-log></app-weight-log>
+      <app-weight-display #weightDisplay></app-weight-display>
+      <app-weight-log (logged)="weightDisplay.loadLogs()"></app-weight-log>
     </div>
+
   </div>
 </div>
 

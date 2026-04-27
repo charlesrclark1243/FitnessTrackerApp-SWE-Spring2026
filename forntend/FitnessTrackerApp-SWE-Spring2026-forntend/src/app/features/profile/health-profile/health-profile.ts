@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../../core/services/auth';
 import { ProfileService } from '../../../core/services/profile';
 
@@ -77,28 +79,33 @@ export class HealthProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private auth: AuthService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    // Load profile from backend
     this.loading = true;
     this.errorMsg = '';
     this.noProfileData = false;
-    this.profileService.loadProfile().subscribe({
+
+    this.profileService.loadProfile().pipe(
+      finalize(() => { this.loading = false; this.cdr.markForCheck(); })
+    ).subscribe({
       next: (profile) => {
         const hasData = profile && (profile.height_cm || profile.weight_kg || profile.sex || profile.date_of_birth);
         if (hasData) {
           this.populateForm(profile);
-          this.noProfileData = false;
         } else {
           this.noProfileData = true;
         }
-        this.loading = false;
       },
-      error: () => {
-        this.noProfileData = false;
-        this.loading = false;
+      error: (err: unknown) => {
+        const status = (err instanceof HttpErrorResponse) ? err.status : 0;
+        if (status === 404) {
+          this.noProfileData = true;
+        } else {
+          this.errorMsg = 'Failed to load profile. Please try again.';
+        }
       }
     });
   }

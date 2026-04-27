@@ -1,0 +1,45 @@
+.heart-log-card {
+  width: 100%;
+}
+
+.title-icon {
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #e53935;
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.bp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bp-separator {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #555;
+  padding-bottom: 18px;
+}
+
+.log-btn {
+  align-self: flex-start;
+}
+
+.actions {
+  margin-top: 4px;
+}

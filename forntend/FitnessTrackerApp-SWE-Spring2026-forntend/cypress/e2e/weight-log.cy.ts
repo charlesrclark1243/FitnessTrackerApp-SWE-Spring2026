@@ -55,7 +55,7 @@ describe('Weight logging on Home page', () => {
   });
 
   it('renders the graph tab with plotted weight records and date markers', () => {
-    cy.contains('.mdc-tab__text-label', 'Graphs').click();
+    cy.contains('.mdc-tab__text-label', 'Graph').click();
 
     cy.get('[data-cy="weight-graph"]').should('be.visible');
     cy.get('[data-cy="weight-graph"] svg polyline')
@@ -98,12 +98,13 @@ describe('Weight logging on Home page', () => {
     cy.wait('@getWeights');
     cy.wait('@updateProfile');
 
-    cy.contains('.mdc-tab__text-label', 'Graphs').click();
+    cy.contains('.mdc-tab__text-label', 'Graph').click();
     cy.get('[data-cy="weight-graph"]').should('be.visible');
   });
 
   it('opens Correct Recent form pre-filled with the most recent weight', () => {
     cy.contains('button', 'Correct Recent').click();
+    cy.wait('@getWeights');
     cy.get('[data-cy="modify-weight-input"]').should('be.visible');
     cy.get('[data-cy="modify-weight-input"]').should('have.value', '74.9');
   });
@@ -128,11 +129,13 @@ describe('Weight logging on Home page', () => {
     }).as('updateProfileAfterModify');
 
     cy.contains('button', 'Correct Recent').click();
+    cy.wait('@getWeights');
     cy.get('[data-cy="modify-weight-input"]').should('be.visible');
     cy.get('[data-cy="modify-weight-input"]').clear().type('73.5');
     cy.get('[data-cy="modify-weight-btn"]').click();
 
     cy.wait('@modifyWeight');
+    cy.wait('@getWeights');
 
     cy.contains('Weight updated successfully.').should('be.visible');
     cy.get('[data-cy="modify-weight-input"]').should('not.exist');
@@ -145,6 +148,7 @@ describe('Weight logging on Home page', () => {
     }).as('modifyWeightFail');
 
     cy.contains('button', 'Correct Recent').click();
+    cy.wait('@getWeights');
     cy.get('[data-cy="modify-weight-input"]').should('be.visible');
     cy.get('[data-cy="modify-weight-input"]').clear().type('80.0');
     cy.get('[data-cy="modify-weight-btn"]').click();

@@ -1,0 +1,114 @@
+<mat-card class="heart-display-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">health_and_safety</mat-icon>
+      Heart Health Summary
+    </mat-card-title>
+    <!-- <mat-card-subtitle>Full history</mat-card-subtitle> -->
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="load()" [disabled]="loading" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Loading -->
+    <div *ngIf="loading" class="center">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error && !loading" class="error-msg">
+      <mat-icon>warning</mat-icon> {{ error }}
+    </div>
+
+    <!-- No data yet -->
+    <div *ngIf="noData && !loading && !error" class="empty-msg">
+      <mat-icon>favorite_border</mat-icon>
+      <p>No heart data logged yet.</p>
+    </div>
+
+    <ng-container *ngIf="!loading && !error && !noData && summary">
+      <!-- Median Summary Row -->
+      <div class="medians-row">
+        <div class="median-box heart-rate" *ngIf="summary.median_heart_rate && summary.median_heart_rate !== 0">
+          <mat-icon class="median-icon">monitor_heart</mat-icon>
+          <div class="median-value">{{ summary.median_heart_rate }} <span class="unit">BPM</span></div>
+          <div class="median-label">Median Heart Rate</div>
+          <span class="category-badge" [ngClass]="heartRateCategoryClass(summary.median_heart_rate)">
+            {{ heartRateCategory(summary.median_heart_rate) }}
+          </span>
+        </div>
+
+        <div class="median-box blood-pressure" *ngIf="summary.median_systolic && summary.median_systolic !== 0 && summary.median_diastolic && summary.median_diastolic !== 0">
+          <mat-icon class="median-icon">bloodtype</mat-icon>
+          <div class="median-value">
+            {{ summary.median_systolic }}<span class="unit">mmHg</span> /
+            {{ summary.median_diastolic }}<span class="unit">mmHg</span>
+          </div>
+          <div class="median-label">Median Blood Pressure</div>
+          <span class="category-badge" [ngClass]="bpCategoryClass(summary.median_systolic, summary.median_diastolic)">
+            {{ bpCategory(summary.median_systolic, summary.median_diastolic) }}
+          </span>
+        </div>
+
+        <div class="median-box empty" *ngIf="!summary.median_heart_rate && !summary.median_systolic">
+          <mat-icon>info</mat-icon>
+          <p>No data yet. Log your first entry above.</p>
+        </div>
+      </div>
+
+      <!-- Motivational Messages -->
+      <div class="motivational-message hr-message" *ngIf="getHeartRateMessage()">
+        {{ getHeartRateMessage() }}
+      </div>
+      <div class="motivational-message bp-message" *ngIf="getBloodPressureMessage()">
+        {{ getBloodPressureMessage() }}
+      </div>
+
+      <mat-divider class="divider"></mat-divider>
+
+      <!-- Heart Rate Entries -->
+      <div class="section" *ngIf="summary.heart_rate_entries && summary.heart_rate_entries.length > 0">
+        <h3 class="section-title"><mat-icon>monitor_heart</mat-icon> Heart Rate Entries</h3>
+        <div class="entry-list">
+          <div class="entry-row" *ngFor="let entry of summary.heart_rate_entries">
+            <mat-icon class="entry-icon" [ngClass]="heartRateCategoryClass(entry.rate)">circle</mat-icon>
+            <div class="entry-details">
+              <span class="entry-value">{{ entry.rate }} BPM</span>
+              <span class="entry-date">{{ formatDate(entry.logged_at) }}</span>
+            </div>
+            <span class="category-badge small" [ngClass]="heartRateCategoryClass(entry.rate)">
+              {{ heartRateCategory(entry.rate) }}
+            </span>
+            <button mat-icon-button color="warn" (click)="deleteHeartRate(entry)" matTooltip="Delete">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider class="divider" *ngIf="summary.heart_rate_entries?.length && summary.blood_pressure_entries?.length"></mat-divider>
+
+      <!-- Blood Pressure Entries -->
+      <div class="section" *ngIf="summary.blood_pressure_entries && summary.blood_pressure_entries.length > 0">
+        <h3 class="section-title"><mat-icon>bloodtype</mat-icon> Blood Pressure Entries</h3>
+        <div class="entry-list">
+          <div class="entry-row" *ngFor="let entry of summary.blood_pressure_entries">
+            <mat-icon class="entry-icon" [ngClass]="bpCategoryClass(entry.systolic, entry.diastolic)">circle</mat-icon>
+            <div class="entry-details">
+              <span class="entry-value">{{ entry.systolic }} / {{ entry.diastolic }} mmHg</span>
+              <span class="entry-date">{{ formatDate(entry.logged_at) }}</span>
+            </div>
+            <span class="category-badge small" [ngClass]="bpCategoryClass(entry.systolic, entry.diastolic)">
+              {{ bpCategory(entry.systolic, entry.diastolic) }}
+            </span>
+            <button mat-icon-button color="warn" (click)="deleteBloodPressure(entry)" matTooltip="Delete">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

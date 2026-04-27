@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthService } from './auth';
 
 export interface WeightLog {
@@ -82,13 +82,6 @@ export class WeightService {
         userId: response.log.user_id,
         weightKG: response.log.weight_kg,
         loggedAt: response.log.logged_at,
-      })),
-      // Keep UI logic deterministic: emit an invalid sentinel on failure.
-      catchError(() => of({
-        id: 0,
-        userId: 0,
-        weightKG: Number.NaN,
-        loggedAt: ''
       }))
     );
   }
