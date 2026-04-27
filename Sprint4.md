@@ -126,52 +126,74 @@
 | Name                         | Description                                      | File                      | Status |
 |------------------------------|--------------------------------------------------|---------------------------|--------|
 | AuthService Tests            |                                                  |                           |        |
-| should be created            | Test service instantiation                       | auth.service.spec.ts      | PASS   |
-| should return null user initially | Test currentUserValue returns null         | auth.service.spec.ts      | PASS   |
-| should return null token     | Test getToken() returns null when logged out     | auth.service.spec.ts      | PASS   |
-| should login successfully    | Test login with valid credentials                | auth.service.spec.ts      | PASS   |
-| should save to localStorage  | Test user persistence after login                | auth.service.spec.ts      | PASS   |
-| should register successfully | Test registration with valid data                | auth.service.spec.ts      | PASS   |
+| should be created            | Test service instantiation                       | auth.spec.ts      | PASS   |
+| should return null user initially | Test currentUserValue returns null         | auth.spec.ts      | PASS   |
+| should return null token     | Test getToken() returns null when logged out     | auth.spec.ts      | PASS   |
+| should login successfully    | Test login with valid credentials                | auth.spec.ts      | PASS   |
+| should save to localStorage  | Test user persistence after login                | auth.spec.ts      | PASS   |
+| should register successfully | Test registration with valid data                | auth.spec.ts      | PASS   |
 | WaterService Tests           |                                                  |                           |        |
-| should be created            | Test service instantiation                       | water.service.spec.ts     | PASS   |
-| should start with 0ml        | Test initial water intake is zero                | water.service.spec.ts     | PASS   |
-| should have 2000ml goal      | Test default daily goal                          | water.service.spec.ts     | PASS   |
-| should add water correctly   | Test adding water intake                         | water.service.spec.ts     | PASS   |
-| should accumulate multiple   | Test multiple entries accumulate                 | water.service.spec.ts     | PASS   |
-| should remove last entry     | Test removeLastEntry() function                  | water.service.spec.ts     | PASS   |
-| should handle empty undo     | Test undo with no entries                        | water.service.spec.ts     | PASS   |
-| should update goal           | Test updateGoal() changes target                 | water.service.spec.ts     | PASS   |
-| should calculate percentage  | Test percentage calculation                      | water.service.spec.ts     | PASS   |
-| should cap at 100%           | Test percentage max is 100%                      | water.service.spec.ts     | PASS   |
-| should adjust with goal change | Test percentage updates with new goal         | water.service.spec.ts     | PASS   |
-| should reset daily data      | Test resetDay() clears entries                   | water.service.spec.ts     | PASS   |
-| should emit on changes       | Test Observable emits updates                    | water.service.spec.ts     | PASS   |
-| should save to localStorage  | Test data persistence                            | water.service.spec.ts     | PASS   |
-| should add timestamps        | Test timestamp on each entry                     | water.service.spec.ts     | PASS   |
-| should be created | Test service instantiation | calorie.service.spec.ts | PASS |
-| should start with 0 consumed and burned | Test initial state is zero | calorie.service.spec.ts | PASS |
-| should have default goal of 2000 | Test default daily calorie goal | calorie.service.spec.ts | PASS |
-| should add consumed calories correctly | Test adding food calories | calorie.service.spec.ts | PASS |
-| should add burned calories correctly | Test adding exercise calories | calorie.service.spec.ts | PASS |
-| should accumulate multiple entries | Test multiple calorie entries accumulate | calorie.service.spec.ts | PASS |
-| should calculate net calories | Test net = consumed - burned | calorie.service.spec.ts | PASS |
-| should remove last entry | Test removeLastEntry() removes most recent | calorie.service.spec.ts | PASS |
-| should handle undo when empty | Test undo on empty entries list | calorie.service.spec.ts | PASS |
-| should update daily goal | Test updateGoal() changes target | calorie.service.spec.ts | PASS |
-| should calculate percentage | Test percentage = net/goal * 100 | calorie.service.spec.ts | PASS |
-| should calculate percentage with burned | Test percentage accounts for exercise | calorie.service.spec.ts | PASS |
-| should cap percentage at 100% | Test percentage max is 100% | calorie.service.spec.ts | PASS |
-| should calculate remaining calories | Test remaining = goal - net | calorie.service.spec.ts | PASS |
-| should calculate remaining with burned | Test remaining considers exercise | calorie.service.spec.ts | PASS |
-| should reset daily data | Test resetDay() clears all entries | calorie.service.spec.ts | PASS |
-| should emit on changes | Test Observable emits when calories added | calorie.service.spec.ts | PASS |
-| should save to localStorage | Test data persists to localStorage | calorie.service.spec.ts | PASS |
-| should add timestamps | Test each entry has accurate timestamp | calorie.service.spec.ts | PASS |
-| should handle mixed entry types | Test both consumed and burned entries together | calorie.service.spec.ts | PASS |
+| should be created            | Test service instantiation                       | water.spec.ts     | PASS   |
+| should start with 0ml        | Test initial water intake is zero                | water.spec.ts     | PASS   |
+| should have 2000ml goal      | Test default daily goal                          | water.spec.ts     | PASS   |
+| should add water correctly   | Test adding water intake                         | water.spec.ts     | PASS   |
+| should accumulate multiple   | Test multiple entries accumulate                 | water.spec.ts     | PASS   |
+| should remove last entry     | Test removeLastEntry() function                  | water.spec.ts     | PASS   |
+| should handle empty undo     | Test undo with no entries                        | water.spec.ts     | PASS   |
+| should update goal           | Test updateGoal() changes target                 | water.spec.ts     | PASS   |
+| should calculate percentage  | Test percentage calculation                      | water.spec.ts     | PASS   |
+| should cap at 100%           | Test percentage max is 100%                      | water.spec.ts     | PASS   |
+| should adjust with goal change | Test percentage updates with new goal         | water.spec.ts     | PASS   |
+| should reset daily data      | Test resetDay() clears entries                   | water.spec.ts     | PASS   |
+| should emit on changes       | Test Observable emits updates                    | water.spec.ts     | PASS   |
+| should save to localStorage  | Test data persistence                            | water.spec.ts     | PASS   |
+| should add timestamps        | Test timestamp on each entry                     | water.spec.ts     | PASS   |
+| should be created | Test service instantiation | calorie.spec.ts | PASS |
+| should start with 0 consumed and burned | Test initial state is zero | calorie.spec.ts | PASS |
+| should have default goal of 2000 | Test default daily calorie goal | calorie.spec.ts | PASS |
+| should add consumed calories correctly | Test adding food calories | calorie.spec.ts | PASS |
+| should add burned calories correctly | Test adding exercise calories | calorie.spec.ts | PASS |
+| should accumulate multiple entries | Test multiple calorie entries accumulate | calorie.spec.ts | PASS |
+| should calculate net calories | Test net = consumed - burned | calorie.spec.ts | PASS |
+| should remove last entry | Test removeLastEntry() removes most recent | calorie.spec.ts | PASS |
+| should handle undo when empty | Test undo on empty entries list | calorie.spec.ts | PASS |
+| should update daily goal | Test updateGoal() changes target | calorie.spec.ts | PASS |
+| should calculate percentage | Test percentage = net/goal * 100 | calorie.spec.ts | PASS |
+| should calculate percentage with burned | Test percentage accounts for exercise | calorie.spec.ts | PASS |
+| should cap percentage at 100% | Test percentage max is 100% | calorie.spec.ts | PASS |
+| should calculate remaining calories | Test remaining = goal - net | calorie.spec.ts | PASS |
+| should calculate remaining with burned | Test remaining considers exercise | calorie.spec.ts | PASS |
+| should reset daily data | Test resetDay() clears all entries | calorie.spec.ts | PASS |
+| should emit on changes | Test Observable emits when calories added | calorie.spec.ts | PASS |
+| should save to localStorage | Test data persists to localStorage | calorie.spec.ts | PASS |
+| should add timestamps | Test each entry has accurate timestamp | calorie.spec.ts | PASS |
+| should handle mixed entry types | Test both consumed and burned entries together | calorie.spec.ts | PASS |
 
-
-
-
+|should be created                      | Test service instantiation                                  | step.spec.ts  | PASS   |
+| should start with 0 steps              | Test initial state shows zero steps                         | step.spec.ts  | PASS   |
+|  should have default goal               | Test default daily goal is 10,000 steps                     | step.spec.ts  | PASS   |
+|  should add steps and sync              | Test adding steps syncs calories to CalorieService          | step.spec.ts  | PASS   |
+|  should accumulate multiple             | Test multiple step entries accumulate correctly             | step.spec.ts  | PASS   |
+|  should remove last entry               | Test removeLastEntry() removes most recent                  | step.spec.ts  | PASS   |
+| should handle empty undo               | Test undo on empty entries list                             | step.spec.ts  | PASS   |
+| should update daily goal               | Test updateGoal() changes target                            | step.spec.ts  | PASS   |
+| should calculate percentage            | Test percentage = steps/goal * 100                          | step.spec.ts  | PASS   |
+|  should cap at 100%                     | Test percentage maximum is 100%                             | step.spec.ts  | PASS   |
+|  should calc % with new goal            | Test percentage updates with goal changes                   | step.spec.ts  | PASS   |
+| should get remaining steps             | Test remaining = goal - current                             | step.spec.ts  | PASS   |
+| should return 0 at goal                | Test remaining is 0 when goal reached                       | step.spec.ts  | PASS   |
+|should return 0 over goal              | Test remaining is 0 when over goal                          | step.spec.ts  | PASS   |
+|should estimate distance               | Test distance = steps / 1,250 km                            | step.spec.ts  | PASS   |
+|  should calc distance decimal           | Test distance calculation with decimal precision            | step.spec.ts  | PASS   |
+| should estimate calories               | Test calories = steps / 20                                  | step.spec.ts  | PASS   |
+|  should calc large calories             | Test calorie calculation for large step counts              | step.spec.ts  | PASS   |
+| should reset daily data                | Test resetDay() clears all entries                          | step.spec.ts  | PASS   |
+|  should emit on changes                 | Test Observable emits when steps added                      | step.spec.ts  | PASS   |
+|should save to localStorage            | Test data persists to localStorage                          | step.spec.ts  | PASS   |
+|  should add timestamps                  | Test each entry has accurate timestamp                      | step.spec.ts  | PASS   |
+| should add without desc                | Test adding steps without description                       | step.spec.ts  | PASS   |
+|  should store entry calories            | Test calories stored for each individual entry              | step.spec.ts  | PASS   |
+| should handle large counts             | Test handling of very large step counts                     | step.spec.ts  | PASS   |
 
 ## Unit Tests - Components
 
@@ -238,6 +260,39 @@
 | should get correct color for mid % | Test progress bar color for 50–99% | calorie-display.spec.ts | PASS |
 | should get correct color for 100% | Test progress bar color for ≥ 100% | calorie-display.spec.ts | PASS |
 | should display motivational message | Test appropriate message based on progress | calorie-display.spec.ts | PASS |
+| should create the component                  | Test component instantiation                                | step-input.spec.ts      | PASS   |
+| should have quick step amounts               | Test quick-add button configuration exists                  | step-input.spec.ts      | PASS   |
+| should have correct quick values             | Test quick-add values (500, 1000, 2500)                     | step-input.spec.ts      | PASS   |
+| should start with input hidden               | Test custom input form hidden initially                     | step-input.spec.ts      | PASS   |
+| should add quick steps                       | Test quick-add button calls service                         | step-input.spec.ts      | PASS   |
+| should toggle custom input                   | Test custom form toggle works correctly                     | step-input.spec.ts      | PASS   |
+| should add custom with desc                  | Test custom step entry with description                     | step-input.spec.ts      | PASS   |
+| should add custom default desc               | Test custom entry uses default description                  | step-input.spec.ts      | PASS   |
+| should not add invalid amount                | Test invalid amount (0 or negative) rejected                | step-input.spec.ts      | PASS   |
+| should not add negative amount               | Test negative values are rejected                           | step-input.spec.ts      | PASS   |
+| should reset after adding                   | Test form resets after successful submission                | step-input.spec.ts      | PASS   |
+|  should call undo on service                  | Test undo button calls service method                       | step-input.spec.ts      | PASS   |
+| should reset on toggle off                   | Test form resets when custom input closed                   | step-input.spec.ts      | PASS   |
+| should create the component                  | Test component instantiation                                | step-display.spec.ts    | PASS   |
+| should subscribe to updates                  | Test subscribes to step data Observable                     | step-display.spec.ts    | PASS   |
+|  should start with 0 steps                    | Test initial step count is zero                             | step-display.spec.ts    | PASS   |
+|  should format numbers                        | Test number formatting with commas                          | step-display.spec.ts    | PASS   |
+|  should toggle goal editing                   | Test goal edit mode toggles                                 | step-display.spec.ts    | PASS   |
+|  should save new goal                         | Test saving new goal calls service                          | step-display.spec.ts    | PASS   |
+|  should cancel goal editing                   | Test cancel button exits edit mode                          | step-display.spec.ts    | PASS   |
+| should get color for low %                   | Test progress bar color for < 50%                           | step-display.spec.ts    | PASS   |
+|  should get color for mid %                   | Test progress bar color for 50-99%                          | step-display.spec.ts    | PASS   |
+| should get color for 100%                    | Test progress bar color for >= 100%                         | step-display.spec.ts    | PASS   |
+| should show message for 0%                   | Test motivational message at 0%                             | step-display.spec.ts    | PASS   |
+| should show message for 50%                  | Test motivational message at 50%                            | step-display.spec.ts    | PASS   |
+| should show message for 100%                 | Test motivational message at 100%                           | step-display.spec.ts    | PASS   |
+|  should update on add                         | Test display updates when steps added                       | step-display.spec.ts    | PASS   |
+| should calculate percentage                  | Test percentage calculation from service                    | step-display.spec.ts    | PASS   |
+| should show remaining steps                  | Test remaining steps display                                | step-display.spec.ts    | PASS   |
+| should show estimated distance               | Test distance calculation display                           | step-display.spec.ts    | PASS   |
+|should show estimated calories               | Test calories calculation display                           | step-display.spec.ts    | PASS   |
+
+
 
 
 
