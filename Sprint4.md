@@ -387,6 +387,17 @@
 | TestComputeMedianBloodPressure_EvenCountChoosesNearestPair | Tests the private median BP computation logic in the case where there's an even number of (systolic, diastolic) BP pairs. | `backend/utils/heart_health_test.go` | PASS |
 | TestComputeMedianBloodPressure_Empty | Tests the private median BP computation logic in the even that the user's BP log is empty. | `backend/utils/heart_health_test.go` | PASS |
 | TestCalculateMedianBloodPressure | Tests the public median BP computation function. | `backend/utils/heart_health_test.go` | PASS |
+| TestLogSteps_Success | Tests successful step count logging. | `backend/handlers/step_log_test.go` | PASS |
+| TestLogSteps_InvalidAmount | Tests an attempted step count logging with invalid amount. | `backend/handlers/step_log_test.go` | PASS |
+| TestLogSteps_NegativeDistance | Tests attempted step count logging with negative distnace (invalid). | `backend/handlers/step_log_test.go` | PASS |
+| TestGetStepLogs_Success | Tests successful retrieval of step count logs. | `backend/handlers/step_log_test.go` | PASS |
+| TestGetStepLogs_FilterByDate | Tests retrieval of step count logs, filtering by date. | `backend/handlers/step_log_test.go` | PASS |
+| TestGetDailyStepSummary_Success | Tests successful access of step count summary. | `backend/handlers/step_log_test.go` | PASS |
+| TestGetRecentStepLogs_Success | Tests successful access of recent step count logs. | `backend/handlers/step_log_test.go` | PASS |
+| TestDeleteStepLog_Success | Tests successful deletion of step count logs. | `backend/handlers/step_log_test.go` | PASS |
+| TestDeleteStepLog_NotFound | Tests attempted deletion of nonexistent log. | `backend/handlers/step_log_test.go` | PASS |
+| TestStepLog_Unauthorized | Tests unauthorized deleteion attempt. | `backend/handlers/step_log_test.go` | PASS |
+
 
 ## API Documentation
 
@@ -623,6 +634,44 @@ Allows a user to delete a specific heart health log entry.
 # NO BODY NECESSARY
 # PATH PARAMETERS:
 :type = "heart_rate" | "blood_pressure"
+:id   = ENTRY_ID
+```
+
+### `POST api/steps`
+
+Allows a user to log their daily step count.
+```
+{
+    "steps": STEPS              # required
+    "distance_km": DISTANCE
+}
+```
+
+### `GET api/steps`
+
+Allows a user to access their step count logs.
+```
+# NO BODY NECESSARY
+```
+### `GET api/steps/recent`
+
+Allows a user to access their recent step logs.
+```
+# NO BODY NECESSARY
+```
+### `GET api/steps/summary`
+
+Allows a user to view a summary of their step logging.
+```
+# NO BODY NECESSARY
+```
+
+### `DELETE api/steps/:id`
+
+Allows a user to delete a logged step count.
+```
+# NO BODY NECESSARY
+# PATH PARAMETERS:
 :id   = ENTRY_ID
 ```
 
